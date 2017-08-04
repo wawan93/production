@@ -26,7 +26,7 @@
                         <br/>
                         <br/>
                         <div class="table-responsive">
-                            <table class="table table-borderless">
+                            <table class="table table-borderless table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>Район</th>
@@ -42,12 +42,11 @@
                                         <th>Дата выхода</th>
                                         <th>Дата доставки</th>
                                         <th>Контакт</th>
-                                        <th>actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($order as $item)
-                                    <tr>
+                                    <tr onclick="document.location = '{{ url('/order/' . $item->id . '/edit') }}';">
                                         <td>{{ $item->team()->region_name }}</td>
                                         <td>{{ $item->team()->district_number }}</td>
                                         <td>{{ $item->code_name }}</td>
@@ -61,9 +60,6 @@
                                         <td>{{ $item->final_date }}</td>
                                         <td>{{ $item->ship_date }}</td>
                                         <td>{{ $item->contact }}</td>
-                                        <td>
-                                            <a href="{{ url('/order/' . $item->id . '/edit') }}" title="Edit order"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
