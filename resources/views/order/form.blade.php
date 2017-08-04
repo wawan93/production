@@ -25,7 +25,7 @@
 </div><div class="form-group {{ $errors->has('alert') ? 'has-error' : ''}}">
     {!! Form::label('alert', 'Alert', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::select('alert', ['Да', 'Нет'], null, ['class' => 'form-control']) !!}
+        {!! Form::select('alert', ['Нет', 'Да'], null, ['class' => 'form-control']) !!}
         {!! $errors->first('alert', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('edition_initial') ? 'has-error' : ''}}">
@@ -49,7 +49,9 @@
 </div><div class="form-group {{ $errors->has('polygraphy_format') ? 'has-error' : ''}}">
     {!! Form::label('polygraphy_format', 'Polygraphy Format', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::select('polygraphy_format', ['A4', 'A3', 'vizitka', 'paper'], null, ['class' => 'form-control']) !!}
+        {!! Form::select('polygraphy_format', [
+            'A4'=>'A4', 'A3'=>'A3', 'vizitka'=> 'vizitka', 'paper' => 'paper'
+        ], null, ['class' => 'form-control']) !!}
         {!! $errors->first('polygraphy_format', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('edition_final') ? 'has-error' : ''}}">
@@ -79,7 +81,7 @@
 </div><div class="form-group {{ $errors->has('ship_date') ? 'has-error' : ''}}">
     {!! Form::label('ship_date', 'Ship Date', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::input('datetime-local', 'ship_date', null, ['class' => 'form-control']) !!}
+        {!! Form::input('datetime', 'ship_date', null, ['class' => 'form-control']) !!}
         {!! $errors->first('ship_date', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('contact') ? 'has-error' : ''}}">
