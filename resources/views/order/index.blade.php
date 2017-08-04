@@ -53,7 +53,7 @@
                                         <td>{{ $item->code_name }}</td>
                                         <td>{{ $item->manager()->name . ' ' . $item->manager()->surname }}</td>
                                         <td>{{ $item->alert ? 'Да' : 'Нет' }}</td>
-                                        <td>{{ $item->status }}</td>
+                                        <td>{{ $item->getStatus() }}</td>
                                         <td>{{ $item->edition_initial }}</td>
                                         <td>{{ $item->edition_final }}</td>
                                         <td>{{ $item->manufacturer }}</td>

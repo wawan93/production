@@ -37,7 +37,13 @@
 </div><div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
     {!! Form::label('status', 'Status', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::select('status', ['approved', 'invoices', 'paid', 'production', 'shipped'], null, ['class' => 'form-control']) !!}
+        {!! Form::select('status', [
+            'approved' => 'Согласован',
+            'invoices' => 'Выставлены счета',
+            'paid' => 'Оплачено',
+            'production' => 'В производстве',
+            'shipped' => 'Доставлено'
+        ], null, ['class' => 'form-control']) !!}
         {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('polygraphy_format') ? 'has-error' : ''}}">
@@ -73,7 +79,7 @@
 </div><div class="form-group {{ $errors->has('ship_date') ? 'has-error' : ''}}">
     {!! Form::label('ship_date', 'Ship Date', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::input('datetime', 'ship_date', null, ['class' => 'form-control']) !!}
+        {!! Form::input('datetime-local', 'ship_date', null, ['class' => 'form-control']) !!}
         {!! $errors->first('ship_date', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('contact') ? 'has-error' : ''}}">

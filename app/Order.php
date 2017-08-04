@@ -19,4 +19,15 @@ class Order extends Model
 	public function manager() {
 		return $this->hasOne(User::class, 'id', 'manager_id')->first();
 	}
+
+	public function getStatus() {
+		$all = [
+			'approved' => 'Согласован',
+			'invoices' => 'Выставлены счета',
+			'paid' => 'Оплачено',
+			'production' => 'В производстве',
+			'shipped' => 'Доставлено'
+		];
+		return $all[$this->status];
+	}
 }
