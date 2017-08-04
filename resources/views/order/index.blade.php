@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
 
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">Order</div>
                     <div class="panel-body">
@@ -29,29 +29,40 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Team Id</th><th>Code Name</th><th>Polygraphy Type</th><th>Actions</th>
+                                        <th>Район</th>
+                                        <th>Округ</th>
+                                        <th>Заказ</th>
+                                        <th>Менеджер</th>
+                                        <th>Лампочка</th>
+                                        <th>Статус</th>
+                                        <th>Тираж из квеста</th>
+                                        <th>Тираж финальный</th>
+                                        <th>Изготовитель</th>
+                                        <th>Дата оплаты</th>
+                                        <th>Дата выхода</th>
+                                        <th>Дата доставки</th>
+                                        <th>Контакт</th>
+                                        <th>actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($order as $item)
                                     <tr>
-                                        <td>{{ $item->id }}</td>
-                                        <td>{{ $item->team_id }}</td><td>{{ $item->code_name }}</td><td>{{ $item->polygraphy_type }}</td>
+                                        <td>{{ $item->team()->region_name }}</td>
+                                        <td>{{ $item->team()->district_number }}</td>
+                                        <td>{{ $item->code_name }}</td>
+                                        <td>{{ $item->manager()->name . ' ' . $item->manager()->surname }}</td>
+                                        <td>{{ $item->alert ? 'Да' : 'Нет' }}</td>
+                                        <td>{{ $item->status }}</td>
+                                        <td>{{ $item->edition_initial }}</td>
+                                        <td>{{ $item->edition_final }}</td>
+                                        <td>{{ $item->manufacturer }}</td>
+                                        <td>{{ $item->paid_date }}</td>
+                                        <td>{{ $item->final_date }}</td>
+                                        <td>{{ $item->ship_date }}</td>
+                                        <td>{{ $item->contact }}</td>
                                         <td>
-                                            <a href="{{ url('/order/' . $item->id) }}" title="View order"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/order/' . $item->id . '/edit') }}" title="Edit order"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-                                            {!! Form::open([
-                                                'method'=>'DELETE',
-                                                'url' => ['/order', $item->id],
-                                                'style' => 'display:inline'
-                                            ]) !!}
-                                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
-                                                        'type' => 'submit',
-                                                        'class' => 'btn btn-danger btn-xs',
-                                                        'title' => 'Delete order',
-                                                        'onclick'=>'return confirm("Confirm delete?")'
-                                                )) !!}
-                                            {!! Form::close() !!}
                                         </td>
                                     </tr>
                                 @endforeach
