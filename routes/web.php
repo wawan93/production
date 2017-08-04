@@ -11,10 +11,13 @@
 |
 */
 
-Route::get('/production', function () {
+Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+//Auth::routes();
+
+Route::get('/orders', 'OrderController@index');
+Route::get('/order/{order}', 'OrderController@show');
 
 Route::get('/home', 'HomeController@index')->name('home');
