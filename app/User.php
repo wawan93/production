@@ -31,6 +31,13 @@ class User extends Authenticatable
 
 	public static function managers()
 	{
-		return static::where('role="admin" AND extra_class LIKE "%c_orders_manager%"')->all();
+		$users = static::where('extra_class', 'like', '%c_orders_manager%')->get();
+
+		$result = [];
+		foreach ($users as $user) {
+			$result[$user->id] = $user->surname . ' ' . $user->name;
+		}
+
+		return $result;
 	}
 }
