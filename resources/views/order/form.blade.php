@@ -7,13 +7,13 @@
 </div><div class="form-group {{ $errors->has('code_name') ? 'has-error' : ''}}">
     {!! Form::label('code_name', 'Code Name', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::textarea('code_name', null, ['class' => 'form-control']) !!}
+        {!! Form::text('code_name', null, ['class' => 'form-control']) !!}
         {!! $errors->first('code_name', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('polygraphy_type') ? 'has-error' : ''}}">
     {!! Form::label('polygraphy_type', 'Polygraphy Type', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::textarea('polygraphy_type', null, ['class' => 'form-control']) !!}
+        {!! Form::text('polygraphy_type', null, ['class' => 'form-control']) !!}
         {!! $errors->first('polygraphy_type', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('manager_id') ? 'has-error' : ''}}">
@@ -73,13 +73,13 @@
 </div><div class="form-group {{ $errors->has('ship_date') ? 'has-error' : ''}}">
     {!! Form::label('ship_date', 'Ship Date', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::input('datetime-local', 'ship_date', null, ['class' => 'form-control']) !!}
+        {!! Form::input('datetime', 'ship_date', null, ['class' => 'form-control']) !!}
         {!! $errors->first('ship_date', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('contact') ? 'has-error' : ''}}">
     {!! Form::label('contact', 'Contact', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::textarea('contact', null, ['class' => 'form-control']) !!}
+        {!! Form::text('contact', null, ['class' => 'form-control']) !!}
         {!! $errors->first('contact', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
