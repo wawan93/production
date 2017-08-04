@@ -2,85 +2,139 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
 use App\Order;
 use Illuminate\Http\Request;
+use Session;
 
 class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::all();
-        return view('order.list', ['orders' => $orders]);
+        $keyword = $request->get('search');
+        $perPage = 25;
+
+        if (!empty($keyword)) {
+            $order = Order::where('team_id', 'LIKE', "%$keyword%")
+				->orWhere('code_name', 'LIKE', "%$keyword%")
+				->orWhere('polygraphy_type', 'LIKE', "%$keyword%")
+				->orWhere('manager_id', 'LIKE', "%$keyword%")
+				->orWhere('alert', 'LIKE', "%$keyword%")
+				->orWhere('edition_initial', 'LIKE', "%$keyword%")
+				->orWhere('status', 'LIKE', "%$keyword%")
+				->orWhere('polygraphy_format', 'LIKE', "%$keyword%")
+				->orWhere('edition_final', 'LIKE', "%$keyword%")
+				->orWhere('manufacturer', 'LIKE', "%$keyword%")
+				->orWhere('paid_date', 'LIKE', "%$keyword%")
+				->orWhere('final_date', 'LIKE', "%$keyword%")
+				->orWhere('ship_date', 'LIKE', "%$keyword%")
+				->orWhere('contact', 'LIKE', "%$keyword%")
+				->paginate($perPage);
+        } else {
+            $order = Order::paginate($perPage);
+        }
+
+        return view('order.index', compact('order'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
-
+        return view('order.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
-        //
+        
+        $requestData = $request->all();
+        
+        Order::create($requestData);
+
+        Session::flash('flash_message', 'Order added!');
+
+        return redirect('order');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     *
+     * @return \Illuminate\View\View
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        $order = Order::findOrFail($id);
+
+        return view('order.show', compact('order'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     *
+     * @return \Illuminate\View\View
      */
-    public function edit(Order $order)
+    public function edit($id)
     {
-        //
+        $order = Order::findOrFail($id);
+
+        return view('order.edit', compact('order'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, Order $order)
+    public function update($id, Request $request)
     {
-        //
+        
+        $requestData = $request->all();
+        
+        $order = Order::findOrFail($id);
+        $order->update($requestData);
+
+        Session::flash('flash_message', 'Order updated!');
+
+        return redirect('order');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroy(Order $order)
+    public function destroy($id)
     {
-        //
+        Order::destroy($id);
+
+        Session::flash('flash_message', 'Order deleted!');
+
+        return redirect('order');
     }
 }
