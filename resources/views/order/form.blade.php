@@ -43,7 +43,7 @@
 </div><div class="form-group {{ $errors->has('ship_date') ? 'has-error' : ''}}">
     {!! Form::label('ship_date', 'Дата доставки', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::input('datetime', 'ship_date', null, ['class' => 'form-control']) !!}
+        {!! Form::datetimeLocal('ship_date', $order->ship_date, ['class' => 'form-control']) !!}
         {!! $errors->first('ship_date', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

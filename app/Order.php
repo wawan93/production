@@ -13,6 +13,9 @@ class Order extends Model
 		'invoice_subject'
 	];
 
+//	protected $dateFormat = 'Y-m-d H:i';
+	protected $dates = ['ship_date'];
+
 	public function team() {
 		return $this->hasOne(Team::class, 'team_id', 'team_id')->first();
 	}
@@ -43,4 +46,5 @@ class Order extends Model
 			'format' => $this->polygraphy_format,
 		])->first();
 	}
+
 }
