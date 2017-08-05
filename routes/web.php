@@ -19,3 +19,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('order', 'OrderController');
 Route::resource('polygraphy-type', 'PolygraphyTypeController');
+Route::resource('manufacturer', 'ManufacturerController');
