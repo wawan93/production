@@ -10,11 +10,8 @@ class Order extends Model
 	protected $fillable = [
 		'team_id', 'code_name', 'polygraphy_type', 'manager_id', 'alert', 'edition_initial', 'status', 'polygraphy_format',
 		'edition_final', 'manufacturer', 'paid_date', 'final_date', 'ship_date', 'contact',
-		'invoice_subject'
+		'invoice_subject',  'ship_time'
 	];
-
-//	protected $dateFormat = 'Y-m-d H:i';
-	protected $dates = ['ship_date'];
 
 	public function team() {
 		return $this->hasOne(Team::class, 'team_id', 'team_id')->first();

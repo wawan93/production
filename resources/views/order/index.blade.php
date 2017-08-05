@@ -56,9 +56,9 @@
                                         <td>{{ $item->edition_initial }}</td>
                                         <td>{{ $item->edition_final }}</td>
                                         <td>{{ $item->manufacturer }}</td>
-                                        <td>{{ date('d.m', strtotime($item->paid_date)) }}</td>
-                                        <td>{{ date('d.m', strtotime($item->final_date)) }}</td>
-                                        <td>{{ date('d.m.Y H:i', strtotime($item->ship_date)) }}</td>
+                                        <td>{{ date('d.m.Y', strtotime($item->paid_date)) }}</td>
+                                        <td>{{ date('d.m.Y', strtotime($item->final_date)) }}</td>
+                                        <td>{{ date('d.m.Y', strtotime($item->ship_date)) }} {{ $item->ship_time }}</td>
                                         <td>{{ $item->contact }}</td>
                                     </tr>
                                 @endforeach

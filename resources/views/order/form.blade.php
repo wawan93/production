@@ -37,13 +37,21 @@
 </div><div class="form-group {{ $errors->has('final_date') ? 'has-error' : ''}}">
     {!! Form::label('final_date', 'Дата выхода', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::date('final_date', null, ['class' => 'form-control']) !!}
+        {!! Form::date('final_date', null, ['class' => 'form-control', 'pattern'=>"[0-9]{4}-[0-9]{2}-[0-9]{2}"]) !!}
         {!! $errors->first('final_date', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('ship_date') ? 'has-error' : ''}}">
+</div>
+<div class="form-group {{ $errors->has('ship_date') ? 'has-error' : ''}}">
     {!! Form::label('ship_date', 'Дата доставки', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::datetimeLocal('ship_date', $order->ship_date, ['class' => 'form-control']) !!}
+        {!! Form::date('ship_date', $order->ship_date, ['class' => 'form-control']) !!}
+        {!! $errors->first('ship_date', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
+<div class="form-group {{ $errors->has('ship_date') ? 'has-error' : ''}}">
+    {!! Form::label('ship_date', 'Время доставки', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::time('ship_time', null, ['class' => 'form-control']) !!}
         {!! $errors->first('ship_date', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
