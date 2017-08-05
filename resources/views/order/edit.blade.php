@@ -23,6 +23,9 @@
                             <p>{{ $user->surname }} {{ $user->name }} {{ $user->middlename }} (#{{ $user->id }})</p>
                         @endforeach
 
+                        <p>Заказ:</p>
+                        <p>{!! nl2br($order->getInfo()) !!}</p>
+
                         {!! Form::model($order, [
                             'method' => 'PATCH',
                             'url' => ['/order', $order->id],
