@@ -25,8 +25,8 @@
                         @endforeach
 
                         <h3>Заказ: {{ $order->code_name }}</h3>
-                        <p><strong>{!! nl2br($order->getInfo()['type']) !!}, Изначальный тираж: {{ $order->edition_initial }}</strong></p>
-                        <p>{!! nl2br($order->getInfo()['description']) !!}</p>
+                        <p><strong>{!! $order->type()->mat_name !!}, Изначальный тираж: {{ $order->edition_initial }}</strong></p>
+                        <p>{!! nl2br($order->type()->mat_descr) !!}</p>
                         </div>
 
 

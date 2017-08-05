@@ -37,6 +37,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         <li><a href="/order">Карточки заказов</a></li>
+                        <li><a href="/polygraphy-type">Форматы</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

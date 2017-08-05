@@ -19,7 +19,7 @@
 </div><div class="form-group {{ $errors->has('mat_descr') ? 'has-error' : ''}}">
     {!! Form::label('mat_descr', 'Mat Descr', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::text('mat_descr', null, ['class' => 'form-control']) !!}
+        {!! Form::textarea('mat_descr', null, ['class' => 'form-control']) !!}
         {!! $errors->first('mat_descr', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('order_code') ? 'has-error' : ''}}">
