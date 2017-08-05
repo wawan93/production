@@ -17,7 +17,12 @@ class Order extends Model
 	}
 
 	public function manager() {
-		return $this->hasOne(User::class, 'id', 'manager_id')->first();
+		$manager = $this->hasOne(User::class, 'id', 'manager_id')->first();
+		if ($manager) {
+			return $manager;
+		} else {
+			return new User(['id'=>0]);
+		}
 	}
 
 	public function getStatus() {

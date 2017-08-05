@@ -33,7 +33,9 @@ class User extends Authenticatable
 	{
 		$users = static::where('extra_class', 'like', '%c_orders_manager%')->get();
 
-		$result = [];
+		$result = [
+			0 => 'нет'
+		];
 		foreach ($users as $user) {
 			$result[$user->id] = $user->surname . ' ' . $user->name;
 		}
