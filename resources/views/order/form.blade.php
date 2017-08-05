@@ -25,7 +25,7 @@
 </div><div class="form-group {{ $errors->has('manufacturer') ? 'has-error' : ''}}">
     {!! Form::label('manufacturer', 'Изготовитель', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::text('manufacturer', null, ['class' => 'form-control']) !!}
+        {!! Form::select('manufacturer', \App\Manufacturer::forSelect(), null, ['class' => 'form-control']) !!}
         {!! $errors->first('manufacturer', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('paid_date') ? 'has-error' : ''}}">
@@ -45,13 +45,6 @@
     {!! Form::label('ship_date', 'Дата доставки', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::date('ship_date', $order->ship_date, ['class' => 'form-control']) !!}
-        {!! $errors->first('ship_date', '<p class="help-block">:message</p>') !!}
-    </div>
-</div>
-<div class="form-group {{ $errors->has('ship_date') ? 'has-error' : ''}}">
-    {!! Form::label('ship_date', 'Время доставки', ['class' => 'col-md-4 control-label']) !!}
-    <div class="col-md-6">
-        {!! Form::time('ship_time', null, ['class' => 'form-control']) !!}
         {!! $errors->first('ship_date', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

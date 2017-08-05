@@ -55,7 +55,7 @@
                                         <td>{{ $item->getStatus() }}</td>
                                         <td>{{ $item->edition_initial }}</td>
                                         <td>{{ $item->edition_final }}</td>
-                                        <td>{{ $item->manufacturer }}</td>
+                                        <td>{{ $item->manufacturer() ? $item->manufacturer()->short_name : '' }}</td>
                                         <td>{{ $item->paid_date ? date('d.m.Y', strtotime($item->paid_date)) : '' }}</td>
                                         <td>{{ $item->final_date ? date('d.m.Y', strtotime($item->final_date)) : '' }}</td>
                                         <td>{{ $item->ship_date ? date('d.m.Y', strtotime($item->ship_date)) : '' }} {{ $item->ship_time  }}</td>
