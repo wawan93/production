@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Mail\OrderRequest;
 use App\Order;
 use Illuminate\Http\Request;
 use Session;
@@ -138,4 +139,15 @@ class OrderController extends Controller
 
         return redirect('order');
     }
+
+    public function sendMail($id, Request $request)
+	{
+		$order = Order::findOrFail($id);
+
+		$template = new OrderRequest($order);
+		dump($order);
+
+		dump(\Mail::to($order->manufacturer())->send($template));
+//		return redirect('/');
+	}
 }
