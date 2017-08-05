@@ -1,10 +1,4 @@
-<div class="form-group {{ $errors->has('code_name') ? 'has-error' : ''}}">
-    {!! Form::label('code_name', 'Заказ', ['class' => 'col-md-4 control-label']) !!}
-    <div class="col-md-6">
-        {!! Form::text('code_name', null, ['class' => 'form-control']) !!}
-        {!! $errors->first('code_name', '<p class="help-block">:message</p>') !!}
-    </div>
-</div><div class="form-group {{ $errors->has('manager_id') ? 'has-error' : ''}}">
+<div class="form-group {{ $errors->has('manager_id') ? 'has-error' : ''}}">
     {!! Form::label('manager_id', 'Менеджер', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::select('manager_id', \App\User::managers(), null, ['class' => 'form-control']) !!}

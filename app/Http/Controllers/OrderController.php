@@ -36,6 +36,7 @@ class OrderController extends Controller
 				->orWhere('final_date', 'LIKE', "%$keyword%")
 				->orWhere('ship_date', 'LIKE', "%$keyword%")
 				->orWhere('contact', 'LIKE', "%$keyword%")
+				->orderBy('created_at', 'desc')
 				->paginate($perPage);
         } else {
             $order = Order::paginate($perPage);

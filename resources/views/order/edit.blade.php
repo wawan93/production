@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">Заказ команды #{{ $order->team_id }} ({{ $order->team()->region_name }} {{ $order->team()->district_number }})</div>
                     <div class="panel-body">
@@ -19,12 +19,16 @@
                             </ul>
                         @endif
 
+                        <div class="col-md-offset-4 col-md-8">
                         @foreach($order->team()->members() as $user)
                             <p>{{ $user->surname }} {{ $user->name }} {{ $user->middlename }} (#{{ $user->id }})</p>
                         @endforeach
 
-                        <p>Заказ:</p>
-                        <p>{!! nl2br($order->getInfo()) !!}</p>
+                        <h3>Заказ: {{ $order->code_name }}</h3>
+                        <p><strong>{!! nl2br($order->getInfo()['type']) !!}, Изначальный тираж: {{ $order->edition_initial }}</strong></p>
+                        <p>{!! nl2br($order->getInfo()['description']) !!}</p>
+                        </div>
+
 
                         {!! Form::model($order, [
                             'method' => 'PATCH',

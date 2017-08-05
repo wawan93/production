@@ -9,7 +9,8 @@ class Order extends Model
 {
 	protected $fillable = [
 		'team_id', 'code_name', 'polygraphy_type', 'manager_id', 'alert', 'edition_initial', 'status', 'polygraphy_format',
-		'edition_final', 'manufacturer', 'paid_date', 'final_date', 'ship_date', 'contact'
+		'edition_final', 'manufacturer', 'paid_date', 'final_date', 'ship_date', 'contact',
+		'invoice_subject'
 	];
 
 	public function team() {
@@ -59,6 +60,9 @@ class Order extends Model
 			"Афиши большие  630*594\n Тираж: 20 000 шт —  9,5-10р/шт (2016г)",
 		];
 
-		return $descriptions[0];
+		return [
+			'description' => $descriptions[0],
+			'type' => $types[0],
+		];
 	}
 }
