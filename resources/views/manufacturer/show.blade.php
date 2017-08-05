@@ -33,7 +33,34 @@
                                     <tr>
                                         <th>ID</th><td>{{ $manufacturer->id }}</td>
                                     </tr>
-                                    <tr><th> Short Name </th><td> {{ $manufacturer->short_name }} </td></tr><tr><th> Full Name </th><td> {{ $manufacturer->full_name }} </td></tr><tr><th> Full Name Decl </th><td> {{ $manufacturer->full_name_decl }} </td></tr>
+                                    <tr>
+                                        <th> Короткое название </th>
+                                        <td> {{ $manufacturer->short_name }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Полное название </th>
+                                        <td> {{ $manufacturer->full_name }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Склоненное название </th>
+                                        <td> {{ $manufacturer->full_name_decl }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> ИНН </th>
+                                        <td> {{ $manufacturer->contact }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Юридический адрес </th>
+                                        <td> {{ $manufacturer->domicile }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Email </th>
+                                        <td> {{ $manufacturer->email }} </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Контакт </th>
+                                        <td> {{ $manufacturer->contact }} </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

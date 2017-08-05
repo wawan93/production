@@ -56,7 +56,7 @@
     </div>
 </div>
 <div class="form-group {{ $errors->has('contact') ? 'has-error' : ''}}">
-    {!! Form::label('contact', 'Контакт', ['class' => 'col-md-4 control-label']) !!}
+    {!! Form::label('contact', 'Контакт доставки', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::text('contact', null, ['class' => 'form-control']) !!}
         {!! $errors->first('contact', '<p class="help-block">:message</p>') !!}

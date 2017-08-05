@@ -30,29 +30,19 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Short Name</th><th>Full Name</th><th>Full Name Decl</th><th>Actions</th>
+                                        <th>ID</th><th>Название</th><th>Email</th><th>Контакт</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($manufacturer as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td>{{ $item->short_name }}</td><td>{{ $item->full_name }}</td><td>{{ $item->full_name_decl }}</td>
+                                        <td>{{ $item->short_name }}</td>
+                                        <td>{{ $item->email }}</td>
+                                        <td>{{ $item->contact }}</td>
                                         <td>
                                             <a href="{{ url('/manufacturer/' . $item->id) }}" title="View Manufacturer"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/manufacturer/' . $item->id . '/edit') }}" title="Edit Manufacturer"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-                                            {!! Form::open([
-                                                'method'=>'DELETE',
-                                                'url' => ['/manufacturer', $item->id],
-                                                'style' => 'display:inline'
-                                            ]) !!}
-                                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
-                                                        'type' => 'submit',
-                                                        'class' => 'btn btn-danger btn-xs',
-                                                        'title' => 'Delete Manufacturer',
-                                                        'onclick'=>'return confirm("Confirm delete?")'
-                                                )) !!}
-                                            {!! Form::close() !!}
                                         </td>
                                     </tr>
                                 @endforeach
