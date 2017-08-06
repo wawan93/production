@@ -13,7 +13,7 @@ class SaveFiles extends Migration
      */
     public function up()
     {
-        Schema::table('invoices', function (Blueprint $table) {
+        Schema::table('polygraphy_invoices', function (Blueprint $table) {
             $table->text('data')->nullable();
             $table->text('download_hash_md5');
         });
@@ -26,7 +26,7 @@ class SaveFiles extends Migration
      */
     public function down()
     {
-        Schema::table('invoices', function (Blueprint $table) {
+        Schema::table('polygraphy_invoices', function (Blueprint $table) {
             //
         });
     }

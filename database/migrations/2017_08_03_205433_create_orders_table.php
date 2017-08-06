@@ -13,7 +13,7 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('polygraphy_orders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('team_id');
             $table->text('code_name');
@@ -44,6 +44,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('polygraphy_orders');
     }
 }

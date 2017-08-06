@@ -13,7 +13,7 @@ class OrderInvoiceSubject extends Migration
      */
     public function up()
     {
-		Schema::table('orders', function (Blueprint $table) {
+		Schema::table('polygraphy_orders', function (Blueprint $table) {
 			$table->string('invoice_subject');
 		});
     }

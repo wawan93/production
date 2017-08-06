@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-    protected $table = 'invoices';
+    protected $table = 'polygraphy_invoices';
 
     protected $fillable = ['user_id', 'order_id', 'download_hash_md5', 'data'];
 

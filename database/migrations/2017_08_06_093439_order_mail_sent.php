@@ -13,7 +13,7 @@ class OrderMailSent extends Migration
      */
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('polygraphy_orders', function (Blueprint $table) {
         	$table->boolean('mail_sent')->default(false);
 		});
     }
