@@ -178,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
 		Collective\Html\HtmlServiceProvider::class,
+		Unisharp\Ckeditor\ServiceProvider::class,
 	],
 
     /*
@@ -229,6 +230,7 @@ return [
 
 		'Form' => Collective\Html\FormFacade::class,
 		'HTML' => Collective\Html\HtmlFacade::class,
+
 
     ],
 

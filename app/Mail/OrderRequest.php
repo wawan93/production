@@ -13,11 +13,15 @@ class OrderRequest extends Mailable
     use Queueable, SerializesModels;
 
     protected $order;
+    protected $intro;
+    protected $signature;
 
-    public function __construct(Order $order)
+    public function __construct(Order $order, $intro = '', $signature = '')
     {
     	$this->order = $order;
-    	$this->subject('Заказ ' . $order->invoice_subject);
+    	$this->intro = $intro;
+    	$this->signature = $signature;
+    	$this->subject('Заказ ' . $order->code_name);
     }
 
     /**
@@ -27,6 +31,10 @@ class OrderRequest extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.order_request', ['order' => $this->order]);
+        return $this->view('emails.order_request', [
+            'order' => $this->order,
+            'intro' => $this->intro,
+            'signature' => $this->signature
+        ]);
     }
 }

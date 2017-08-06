@@ -32,16 +32,7 @@
                                 @if($order->mail_sent)
                                     <p><strong>Письмо отправлено</strong></p>
                                 @else
-                                    {!! Form::model($order, [
-                                        'method' => 'POST',
-                                        'url' => ['/sendMail', $order->id],
-                                        'class' => 'form-horizontal',
-                                        'files' => true
-                                    ]) !!}
-                                    <p>
-                                    {!! Form::submit('Написать письмо', ['class' => 'btn btn-primary']) !!}
-                                    </p>
-                                    {!! Form::close() !!}
+                                    <a href="/viewMail/{{ $order->id }}">Написать письмо</a>
                                 @endif
                             @endif
                         </div>

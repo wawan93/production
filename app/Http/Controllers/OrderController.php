@@ -146,13 +146,14 @@ class OrderController extends Controller
 		$order = Order::findOrFail($id);
 		$template = new OrderRequest($order);
 
-		$template->build();
+		return view('order.request', ['order' => $order]);
 	}
 
     public function sendMail($id, Request $request)
 	{
 		$order = Order::findOrFail($id);
-		$template = new OrderRequest($order);
+		$template = new OrderRequest($order, $request->get('intro'), $request->get('signature'));
+		dump($template);
 
 		Mail::to($order->manufacturer())->send($template);
 		$order->mail_sent = 1;

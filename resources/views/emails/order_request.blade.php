@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p>Здравствуйте, пожалуйста, примите в работу заказ и подготовьте счета для кандидатов.</p>
+        <p>{!! nl2br($intro) !!}</p>
         @foreach($order->team()->members() as $user)
             <p><strong>Кандидат {{ $user->surname }} {{ $user->name }} {{ $user->middlename }}</strong></p>
             <p><em>В счёте-договоре в поле Заказчик нужно написать</em></p>
@@ -34,6 +34,7 @@
                 </tbody>
             </table>
         @endforeach
+        <p>{!! nl2br($signature) !!}</p>
     </body>
 </html>
 
