@@ -17,6 +17,7 @@ class OrderRequest extends Mailable
     public function __construct(Order $order)
     {
     	$this->order = $order;
+    	$this->subject('Заказ ' . $order->invoice_subject);
     }
 
     /**
@@ -26,6 +27,6 @@ class OrderRequest extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.order_request');
+        return $this->view('emails.order_request', ['order' => $this->order]);
     }
 }

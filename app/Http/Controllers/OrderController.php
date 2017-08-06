@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\OrderRequest;
 use App\Order;
 use Illuminate\Http\Request;
+use Mail;
 use Session;
 
 class OrderController extends Controller
@@ -121,7 +122,7 @@ class OrderController extends Controller
 
         Session::flash('flash_message', 'Order updated!');
 
-        return redirect('order');
+        return redirect('/order/' . $id . '/edit');
     }
 
     /**
@@ -140,14 +141,23 @@ class OrderController extends Controller
         return redirect('order');
     }
 
+    public function viewMail($id, Request $request)
+	{
+		$order = Order::findOrFail($id);
+		$template = new OrderRequest($order);
+
+		$template->build();
+	}
+
     public function sendMail($id, Request $request)
 	{
 		$order = Order::findOrFail($id);
-
 		$template = new OrderRequest($order);
-		dump($order);
 
-		dump(\Mail::to($order->manufacturer())->send($template));
-//		return redirect('/');
+		Mail::to($order->manufacturer())->send($template);
+		$order->mail_sent = 1;
+		$order->saveOrFail();
+
+		return redirect('/order/' . $order->id . '/edit');
 	}
 }

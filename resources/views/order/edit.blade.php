@@ -27,8 +27,25 @@
                         <h3>Заказ: {{ $order->code_name }}</h3>
                         <p><strong>{!! $order->type()->mat_name !!}, Изначальный тираж: {{ $order->edition_initial }}</strong></p>
                         <p>{!! nl2br($order->type()->mat_descr) !!}</p>
-                        </div>
 
+                            @if($order->manufacturer)
+                                @if($order->mail_sent)
+                                    <p><strong>Письмо отправлено</strong></p>
+                                @else
+                                    {!! Form::model($order, [
+                                        'method' => 'POST',
+                                        'url' => ['/sendMail', $order->id],
+                                        'class' => 'form-horizontal',
+                                        'files' => true
+                                    ]) !!}
+                                    <p>
+                                    {!! Form::submit('Написать письмо', ['class' => 'btn btn-primary']) !!}
+                                    </p>
+                                    {!! Form::close() !!}
+                                @endif
+                            @endif
+                        </div>
+                        <br>
 
                         {!! Form::model($order, [
                             'method' => 'PATCH',

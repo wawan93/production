@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Schema\Grammars\RenameColumn;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -41,5 +42,10 @@ class User extends Authenticatable
 		}
 
 		return $result;
+	}
+
+	public function getElectionAttribute() {
+		$region_names = $this->hasOne(RegionNames::class, 'region_name', 'region_name')->first();
+		return $region_names->election;
 	}
 }

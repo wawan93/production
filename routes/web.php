@@ -17,7 +17,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/sendMail/{id}', 'OrderController@sendMail');
+Route::get('/viewMail/{id}', 'OrderController@viewMail');
+Route::post('/sendMail/{id}', 'OrderController@sendMail');
 
 Route::resource('order', 'OrderController');
 Route::resource('polygraphy-type', 'PolygraphyTypeController');
