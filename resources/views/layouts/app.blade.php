@@ -77,6 +77,7 @@
     </div>
 
     <!-- Scripts -->
+    <script type="text/javascript" src="https://mundep.gudkov.ru/static/js/main_gd.js?v8"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
