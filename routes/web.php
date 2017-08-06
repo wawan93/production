@@ -20,6 +20,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/viewMail/{id}', 'OrderController@viewMail');
 Route::post('/sendMail/{id}', 'OrderController@sendMail');
 
+Route::get('/invoice/save', 'InvoiceController@save');
+
 Route::resource('order', 'OrderController');
 Route::resource('polygraphy-type', 'PolygraphyTypeController');
 Route::resource('manufacturer', 'ManufacturerController');

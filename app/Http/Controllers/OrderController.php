@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\OrderRequest;
 use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Mail;
 use Session;
 
@@ -25,21 +26,21 @@ class OrderController extends Controller
 
         if (!empty($keyword)) {
             $order = Order::where('team_id', 'LIKE', "%$keyword%")
-				->orWhere('code_name', 'LIKE', "%$keyword%")
-				->orWhere('polygraphy_type', 'LIKE', "%$keyword%")
-				->orWhere('manager_id', 'LIKE', "%$keyword%")
-				->orWhere('alert', 'LIKE', "%$keyword%")
-				->orWhere('edition_initial', 'LIKE', "%$keyword%")
-				->orWhere('status', 'LIKE', "%$keyword%")
-				->orWhere('polygraphy_format', 'LIKE', "%$keyword%")
-				->orWhere('edition_final', 'LIKE', "%$keyword%")
-				->orWhere('manufacturer', 'LIKE', "%$keyword%")
-				->orWhere('paid_date', 'LIKE', "%$keyword%")
-				->orWhere('final_date', 'LIKE', "%$keyword%")
-				->orWhere('ship_date', 'LIKE', "%$keyword%")
-				->orWhere('contact', 'LIKE', "%$keyword%")
-				->orderBy('created_at', 'desc')
-				->paginate($perPage);
+                ->orWhere('code_name', 'LIKE', "%$keyword%")
+                ->orWhere('polygraphy_type', 'LIKE', "%$keyword%")
+                ->orWhere('manager_id', 'LIKE', "%$keyword%")
+                ->orWhere('alert', 'LIKE', "%$keyword%")
+                ->orWhere('edition_initial', 'LIKE', "%$keyword%")
+                ->orWhere('status', 'LIKE', "%$keyword%")
+                ->orWhere('polygraphy_format', 'LIKE', "%$keyword%")
+                ->orWhere('edition_final', 'LIKE', "%$keyword%")
+                ->orWhere('manufacturer', 'LIKE', "%$keyword%")
+                ->orWhere('paid_date', 'LIKE', "%$keyword%")
+                ->orWhere('final_date', 'LIKE', "%$keyword%")
+                ->orWhere('ship_date', 'LIKE', "%$keyword%")
+                ->orWhere('contact', 'LIKE', "%$keyword%")
+                ->orderBy('created_at', 'desc')
+                ->paginate($perPage);
         } else {
             $order = Order::paginate($perPage);
         }
@@ -66,9 +67,9 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         Order::create($requestData);
 
         Session::flash('flash_message', 'Order added!');
@@ -79,7 +80,7 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      *
      * @return \Illuminate\View\View
      */
@@ -93,7 +94,7 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      *
      * @return \Illuminate\View\View
      */
@@ -107,28 +108,26 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update($id, Request $request)
     {
-        
         $requestData = $request->all();
-        
+
         $order = Order::findOrFail($id);
         $order->update($requestData);
 
         Session::flash('flash_message', 'Order updated!');
-
         return redirect('/order/' . $id . '/edit');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
@@ -142,22 +141,22 @@ class OrderController extends Controller
     }
 
     public function viewMail($id, Request $request)
-	{
-		$order = Order::findOrFail($id);
-		$template = new OrderRequest($order);
+    {
+        $order = Order::findOrFail($id);
+        $template = new OrderRequest($order);
 
-		return view('order.request', ['order' => $order]);
-	}
+        return view('order.request', ['order' => $order]);
+    }
 
     public function sendMail($id, Request $request)
-	{
-		$order = Order::findOrFail($id);
-		$template = new OrderRequest($order, $request->get('intro'), $request->get('signature'));
-		dump($template);
+    {
+        $order = Order::findOrFail($id);
+        $template = new OrderRequest($order, $request->get('intro'), $request->get('signature'));
+        dump($template);
 
-		Mail::to($order->manufacturer())->send($template);
-		$order->mail_sent = 1;
-		$order->saveOrFail();
+        Mail::to($order->manufacturer())->send($template);
+        $order->mail_sent = 1;
+        $order->saveOrFail();
 
 		return redirect('/order/' . $order->id . '/edit');
 	}

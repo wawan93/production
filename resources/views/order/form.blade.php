@@ -62,7 +62,6 @@
         {!! $errors->first('invoice_subject', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
-
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">
         {!! Form::submit(isset($submitButtonText) ? $submitButtonText : 'Create', ['class' => 'btn btn-primary']) !!}

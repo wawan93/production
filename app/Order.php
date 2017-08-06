@@ -53,4 +53,8 @@ class Order extends Model
 		return $this->hasOne(Manufacturer::class, 'id', 'manufacturer')->first();
 	}
 
+	public function invoices()
+    {
+        return $this->hasMany(Invoice::class, 'order_id', 'id');
+    }
 }

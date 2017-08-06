@@ -49,6 +49,32 @@
 
                         {!! Form::close() !!}
 
+                        <div class="form-horizontal">
+                            <div class="form-group {{ $errors->has('invoice_subject') ? 'has-error' : ''}}">
+                                {!! Form::label('invoice_subject', 'Счёт', ['class' => 'col-md-4 control-label']) !!}
+                                <div class="col-md-6">
+                                    @foreach($order->team()->members() as $user)
+                                        <?php $invoice = $order->invoices()->where('user_id', $user->id)->first() ?>
+                                        @if($invoice)
+                                            <p>
+                                                <strong>{{ $user->surname }} {{  $user->name }}</strong>
+                                                <a target="_blank" href="https://dmachine.gudkov.ru/chainsigns/ajax/ajax_ext_attach.php?context=previewSignchain&download_hash_md5={{$invoice->download_hash_md5}}">Счёт отправлен</a></p>
+                                        @else
+                                            {!! Form::open() !!}
+                                            <label for="gdfile_upload_input"
+                                                   onclick="fileUploader.initLoaderWith.apply(this, ['production_doc', fileUploader.onSuccessUploaded_question_doc]); fileUploader.container = $(this) ;"
+                                                   style="background: none;padding-left: 0px;"
+                                                   data-order="{{ $order->id }}"
+                                                   data-user="{{ $user->id }}"
+                                            >
+                                                {{ $user->surname }} {{  $user->name }} <div class="btn btn-primary">Загрузить файл</div></label>
+                                            {!! Form::close() !!}
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
