@@ -34,7 +34,7 @@
                                         <th>{!! Form::select('filter[manufacturer]', \App\Manufacturer::forSelect(), null, ['class' => 'form-control filter']) !!}</th>
                                         <th>{!! Form::date('filter[paid_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;']) !!}</th>
                                         <th>{!! Form::date('filter[final_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;']) !!}</th>
-                                        <th></th>
+                                        <th>{!! Form::date('filter[ship_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;']) !!}</th>
                                         <th></th>
                                     </tr>
                                 </thead>

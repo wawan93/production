@@ -55,6 +55,10 @@ class OrderController extends Controller
             $order->where('final_date', $filter['final_date']);
         }
 
+        if (@$filter['ship_date']) {
+            $order->where('ship_date', $filter['ship_date']);
+        }
+
         return view('order.index', ['order'=> $order->paginate(1000), 'filter' => $filter, 'count' => $order->count()]);
     }
 
