@@ -28,7 +28,7 @@
                                     <tr>
                                         <th>{!! Form::text('filter[code_name]',  @$filter['code_name'],['class' => 'form-control filter']) !!}</th>
                                         <th>{!! Form::select('filter[manager]', \App\User::managers(), @$filter['manager'], ['class' => 'form-control filter']) !!}</th>
-                                        <th>{!! Form::select('filter[status]', [''=>'', 'approved' => 'Согласован','invoices' => 'Выставлены счета','paid' => 'Оплачено','production' => 'В производстве','shipped' => 'Доставлено'], @$filter['status'], ['class' => 'form-control filter']) !!}</th>
+                                        <th>{!! Form::select('filter[status]', \App\Order::allStatuses(), @$filter['status'], ['class' => 'form-control filter']) !!}</th>
                                         <th></th>
                                         <th></th>
                                         <th>{!! Form::select('filter[manufacturer]', \App\Manufacturer::forSelect(), null, ['class' => 'form-control filter']) !!}</th>

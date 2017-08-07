@@ -45,16 +45,25 @@ class Order extends Model
         }
     }
 
-    public function getStatus()
+    public static function allStatuses()
     {
         $all = [
-            '' => 'Чооооооо?',
+            '' => '',
             'approved' => 'Согласован',
+            'fundraising_finished' => 'Фандрайзинг закончился',
             'invoices' => 'Выставлены счета',
             'paid' => 'Оплачено',
             'production' => 'В производстве',
-            'shipped' => 'Доставлено'
+            'shipped' => 'Доставлено',
+            'cancelled' => 'Отменено',
         ];
+
+        return $all;
+    }
+
+    public function getStatus()
+    {
+        $all = static::allStatuses();
         return $all[$this->status];
     }
 
