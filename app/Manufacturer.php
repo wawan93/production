@@ -49,7 +49,8 @@ class Manufacturer extends Model
 
     public function getRestrictedAttribute()
     {
-        return $this->hasMany(AllowedManufacturers::class, 'manufacturer_id', 'id');
+        $regions =  $this->hasMany(AllowedManufacturers::class, 'manufacturer_id', 'id')->pluck('region_name','region_name');
+        return $regions;
     }
 
 }

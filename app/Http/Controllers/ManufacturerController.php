@@ -68,7 +68,7 @@ class ManufacturerController extends Controller
         $manufacturer = Manufacturer::create($requestData);
 
         foreach ($requestData['restricted'] as $restricted) {
-            AllowedManufacturers::create([
+            AllowedManufacturers::firstOrCreate([
                 'manufacturer_id' => $manufacturer->id,
                 'region_name' => $restricted,
             ]);
@@ -124,7 +124,7 @@ class ManufacturerController extends Controller
         $manufacturer->update($requestData);
 
         foreach ($requestData['restricted'] as $restricted) {
-            AllowedManufacturers::create([
+            AllowedManufacturers::firstOrCreate([
                 'manufacturer_id' => $manufacturer->id,
                 'region_name' => $restricted,
             ]);
