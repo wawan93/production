@@ -32,8 +32,8 @@ class InvoiceController extends Controller
         GdLogEntry::create([
             'type' => 'invoice_polygraphy',
             'tg_bot_status' => 'inqueue',
-            'user_id' => 2,
-            'arg_id' => -1,
+            'user_id' => Auth::id(),
+            'arg_id' => Auth::id(),
             'details' => serialize([
                 'polygraphy_type' => $order->polygraphy_type,
                 'invoice_id' => $invoice->first()->id,
