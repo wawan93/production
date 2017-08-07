@@ -22,7 +22,7 @@ class AddStatuses extends Migration
                 'production',
                 'shipped',
                 'cancelled'
-            ]);
+            ])->change();
         });
     }
 
