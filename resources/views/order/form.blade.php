@@ -48,6 +48,13 @@
         {!! $errors->first('ship_date', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
+<div class="form-group {{ $errors->has('ship_date') ? 'has-error' : ''}}">
+    {!! Form::label('ship_date', 'Время доставки', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::time('ship_time', $order->ship_time, ['class' => 'form-control']) !!}
+        {!! $errors->first('ship_time', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
 <div class="form-group {{ $errors->has('contact') ? 'has-error' : ''}}">
     {!! Form::label('contact', 'Контакт доставки', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
