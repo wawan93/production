@@ -28,7 +28,6 @@
                             'files' => true
                         ]) !!}
 
-                        {{dump($manufacturer->restricted)}}
                         @include ('manufacturer.form', ['submitButtonText' => 'Update'])
 
                         {!! Form::close() !!}

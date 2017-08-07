@@ -29,9 +29,8 @@ class Manufacturer extends Model
 
     public static function forSelect()
     {
-        $select = static::all(['id', 'short_name'])->toArray();
-        $select = array_combine(array_column($select, 'id'), array_column($select, 'short_name'));
-        array_push($select, 'не выбран');
+        $select = static::all(['id', 'short_name'])->pluck('short_name', 'id');
+        $select->prepend('не выбран', 0);
         return $select;
     }
 
