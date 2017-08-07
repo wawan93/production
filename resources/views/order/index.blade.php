@@ -34,7 +34,7 @@
                                         <th>{!! Form::text('filter[code_name]',  @$filter['code_name'],['class' => 'form-control filter']) !!}</th>
                                         <th>{!! Form::select('filter[manager]', \App\User::managers(), @$filter['manager'], ['class' => 'form-control filter']) !!}</th>
                                         <th></th>
-                                        <th></th>
+                                        <th>{!! Form::select('filter[status]', [''=>'', 'approved' => 'Согласован','invoices' => 'Выставлены счета','paid' => 'Оплачено','production' => 'В производстве','shipped' => 'Доставлено'], @$filter['status'], ['class' => 'form-control filter']) !!}</th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -83,6 +83,7 @@
                     'district': 0,
                     'code_name': '',
                     'manager': 0,
+                    'status': '',
                 };
                 $(document).ready(function(){
                     $('.filter').on('change', function (e) {

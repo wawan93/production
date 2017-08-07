@@ -52,6 +52,10 @@ class OrderController extends Controller
             $order->where('code_name', 'like', '%' . $filter['code_name'] . '%');
         }
 
+        if (@$filter['status']) {
+            $order->where('status', $filter['status']);
+        }
+
         return view('order.index', ['order'=> $order->paginate(10000), 'filter' => $filter, 'count' => $order->count()]);
     }
 
