@@ -15,12 +15,10 @@
                                 <thead>
                                     <tr>
                                         <th>Район</th>
-                                        <th>Округ</th>
                                         <th>Заказ</th>
                                         <th>Менеджер</th>
-                                        <th>Лампочка</th>
                                         <th>Статус</th>
-                                        <th>Тираж из квеста</th>
+                                        <th>Тираж начальный</th>
                                         <th>Тираж финальный</th>
                                         <th>Изготовитель</th>
                                         <th>Дата оплаты</th>
@@ -29,17 +27,15 @@
                                         <th>Контакт</th>
                                     </tr>
                                     <tr>
-                                        <th>{!! Form::select('filter[region_name]', \App\RegionNames::forSelect(), @$filter['region_name'], ['class' => 'form-control filter']) !!}</th>
-                                        <th>{!! Form::text('filter[district]',  @$filter['district'],['class' => 'form-control filter']) !!}</th>
+                                        <th></th>
                                         <th>{!! Form::text('filter[code_name]',  @$filter['code_name'],['class' => 'form-control filter']) !!}</th>
                                         <th>{!! Form::select('filter[manager]', \App\User::managers(), @$filter['manager'], ['class' => 'form-control filter']) !!}</th>
-                                        <th></th>
                                         <th>{!! Form::select('filter[status]', [''=>'', 'approved' => 'Согласован','invoices' => 'Выставлены счета','paid' => 'Оплачено','production' => 'В производстве','shipped' => 'Доставлено'], @$filter['status'], ['class' => 'form-control filter']) !!}</th>
                                         <th></th>
                                         <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
+                                        <th>{!! Form::select('filter[manufacturer]', \App\Manufacturer::forSelect(), null, ['class' => 'form-control filter']) !!}</th>
+                                        <th>{!! Form::date('filter[paid_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;']) !!}</th>
+                                        <th>{!! Form::date('filter[final_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;']) !!}</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -48,11 +44,9 @@
                                 <tbody>
                                 @foreach($order as $item)
                                     <tr onclick="document.location = '{{ url('/order/' . $item->id . '/edit') }}';">
-                                        <td>{{ $item->team()->region_name }}</td>
-                                        <td>{{ $item->team()->district_number }}</td>
+                                        <td>{{ $item->team()->region_name }} {{ $item->team()->district_number }}</td>
                                         <td>{{ $item->code_name }}</td>
                                         <td>{{ $item->manager()->name . ' ' . $item->manager()->surname }}</td>
-                                        <td>{{ $item->alert ? 'Да' : 'Нет' }}</td>
                                         <td>{{ $item->getStatus() }}</td>
                                         <td>{{ $item->edition_initial }}</td>
                                         <td>{{ $item->edition_final }}</td>
@@ -79,8 +73,6 @@
         <script type="text/javascript">
             (function($) {
                 var filters = {
-                    'region_name': '',
-                    'district': 0,
                     'code_name': '',
                     'manager': 0,
                     'status': '',

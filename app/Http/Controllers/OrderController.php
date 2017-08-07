@@ -31,19 +31,6 @@ class OrderController extends Controller
 
         $filter = (array)$request->get('filter');
 
-        $teams = [];
-        if (@$filter['region_name']) {
-            $select = Team::where('region_name', $filter['region_name'])->get()->toArray();
-            $teams = array_column($select, 'team_id');
-        }
-        if (@$filter['district']) {
-            $select = Team::where('district_number', $filter['district'])->get()->toArray();
-            $teams = array_merge($teams, array_column($select, 'team_id'));
-        }
-        if ($teams) {
-            $order->whereIn('team_id', $teams);
-        }
-
         if (@$filter['manager']) {
             $order->where('manager_id', $filter['manager']);
         }
@@ -56,7 +43,19 @@ class OrderController extends Controller
             $order->where('status', $filter['status']);
         }
 
-        return view('order.index', ['order'=> $order->paginate(10000), 'filter' => $filter, 'count' => $order->count()]);
+        if (@$filter['manufacturer']) {
+            $order->where('manufacturer', $filter['manufacturer']);
+        }
+
+        if (@$filter['paid_date']) {
+            $order->where('paid_date', $filter['paid_date']);
+        }
+
+        if (@$filter['final_date']) {
+            $order->where('final_date', $filter['final_date']);
+        }
+
+        return view('order.index', ['order'=> $order->paginate(1000), 'filter' => $filter, 'count' => $order->count()]);
     }
 
     /**

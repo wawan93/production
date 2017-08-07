@@ -30,7 +30,7 @@ class Manufacturer extends Model
 	public static function forSelect() {
 		$select = static::all(['id', 'short_name'])->toArray();
 		$select = array_combine(array_column($select, 'id'), array_column($select, 'short_name'));
-		$select[0] = 'не выбран';
+		array_push($select,'не выбран');
 		return $select;
 	}
 
