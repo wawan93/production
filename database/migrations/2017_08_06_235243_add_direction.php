@@ -28,7 +28,8 @@ class AddDirection extends Migration
     public function down()
     {
         Schema::table('polygraphy_invoices', function (Blueprint $table) {
-            //
+            $table->dropColumn('direction');
+            $table->unique(['order_id', 'user_id']);
         });
     }
 }
