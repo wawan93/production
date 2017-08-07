@@ -8,23 +8,6 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Order</div>
                     <div class="panel-body">
-                        <a href="{{ url('/order/create') }}" class="btn btn-success btn-sm" title="Add New order">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
-
-                        {!! Form::open(['method' => 'GET', 'url' => '/order', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="search" placeholder="Search...">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                        {!! Form::close() !!}
-
-                        <br/>
-                        <br/>
                         <div class="table-responsive">
                             <table class="table table-borderless table-striped table-hover">
                                 <thead>
@@ -42,6 +25,21 @@
                                         <th>Дата выхода</th>
                                         <th>Дата доставки</th>
                                         <th>Контакт</th>
+                                    </tr>
+                                    <tr>
+                                        <th>{!! Form::select('region_name', \App\RegionNames::forSelect(), @$filter['region_name'], ['class' => 'form-control']) !!}</th>
+                                        <th><input type="text" class="form-control"/></th>
+                                        <th><input type="text" class="form-control"/></th>
+                                        <th><input type="text" class="form-control"/></th>
+                                        <th><input type="text" class="form-control"/></th>
+                                        <th><input type="text" class="form-control"/></th>
+                                        <th><input type="text" class="form-control"/></th>
+                                        <th><input type="text" class="form-control"/></th>
+                                        <th><input type="text" class="form-control"/></th>
+                                        <th><input type="text" class="form-control"/></th>
+                                        <th><input type="text" class="form-control"/></th>
+                                        <th><input type="text" class="form-control"/></th>
+                                        <th><input type="text" class="form-control"/></th>
                                     </tr>
                                 </thead>
                                 <tbody>
