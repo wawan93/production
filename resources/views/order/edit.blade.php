@@ -28,14 +28,25 @@
                         <p><strong>{!! $order->type()->mat_name !!}, Изначальный тираж: {{ $order->edition_initial }}</strong></p>
                         <p>{!! nl2br($order->type()->mat_descr) !!}</p>
 
+                            @if($order->status == 'fundraising_finished')
+                                @if($order->alert == false)
+                                    <p>👍💅💰 <strong>Деньги собраны! Можно печатать</strong></p>
+                                @else
+                                    <p>👎😱🐋 <strong>Денег нет, но вы свяжитесь</strong><br>с отделом дипломатии и согласуйте новый тираж</p>
+                                @endif
+                            @endif
+
                             @if($order->manufacturer)
                                 @if($order->mail_sent)
                                     <p><strong>Письмо отправлено</strong></p>
                                 @else
-                                    <a href="/viewMail/{{ $order->id }}">Написать письмо</a>
+                                    <p><a href="/viewMail/{{ $order->id }}" class="btn btn-primary">Написать письмо</a></p>
                                 @endif
                             @endif
+
                         </div>
+                        <br>
+                        <p>&nbsp;</p>
                         <br>
 
                         {!! Form::model($order, [
