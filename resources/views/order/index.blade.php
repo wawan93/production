@@ -14,7 +14,6 @@
 
                                 <thead>
                                     <tr>
-                                        <th>Район</th>
                                         <th>Заказ</th>
                                         <th>Менеджер</th>
                                         <th>Статус</th>
@@ -27,7 +26,6 @@
                                         <th>Контакт</th>
                                     </tr>
                                     <tr>
-                                        <th></th>
                                         <th>{!! Form::text('filter[code_name]',  @$filter['code_name'],['class' => 'form-control filter']) !!}</th>
                                         <th>{!! Form::select('filter[manager]', \App\User::managers(), @$filter['manager'], ['class' => 'form-control filter']) !!}</th>
                                         <th>{!! Form::select('filter[status]', [''=>'', 'approved' => 'Согласован','invoices' => 'Выставлены счета','paid' => 'Оплачено','production' => 'В производстве','shipped' => 'Доставлено'], @$filter['status'], ['class' => 'form-control filter']) !!}</th>
@@ -44,7 +42,6 @@
                                 <tbody>
                                 @foreach($order as $item)
                                     <tr onclick="document.location = '{{ url('/order/' . $item->id . '/edit') }}';">
-                                        <td>{{ $item->team()->region_name }} {{ $item->team()->district_number }}</td>
                                         <td>{{ $item->code_name }}</td>
                                         <td>{{ $item->manager()->name . ' ' . $item->manager()->surname }}</td>
                                         <td>{{ $item->getStatus() }}</td>
