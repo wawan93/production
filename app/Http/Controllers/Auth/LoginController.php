@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -35,5 +38,27 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function username()
+    {
+        return 'phone';
+    }
+
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        $user = User::where('phone', $request->get('phone'))->firstOrFail();
+        if ($user != null) {
+            $password = md5($request->get('password') . $user->salt);
+            if ($password === $user->password) {
+                Auth::login($user, true);
+                return $this->sendLoginResponse($request);
+            }
+        }
+
+        return $this->sendFailedLoginResponse($request);
+
     }
 }

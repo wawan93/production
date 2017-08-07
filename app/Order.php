@@ -33,6 +33,7 @@ class Order extends Model
 	public function getStatus()
 	{
 		$all = [
+			'' => 'Чооооооо?',
 			'approved' => 'Согласован',
 			'invoices' => 'Выставлены счета',
 			'paid' => 'Оплачено',

@@ -27,8 +27,10 @@ class User extends Authenticatable
 	 * @var array
 	 */
 	protected $hidden = [
-		'password', 'remember_token',
+		'password',
 	];
+
+    protected $guarded = ['password', 'salt'];
 
 	public static function managers()
 	{
