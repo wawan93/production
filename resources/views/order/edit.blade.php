@@ -59,7 +59,11 @@
                                             <p>
                                                 <strong>{{ $user->surname }} {{  $user->name }}</strong>
                                                 <a target="_blank" href="https://dmachine.gudkov.ru/chainsigns/ajax/ajax_ext_attach.php?context=previewSignchain&download_hash_md5={{$invoice->download_hash_md5}}">Счёт отправлен</a></p>
-                                        @else
+                                                <?php $payment = $order->payments()->where('user_id', $user->id)->first() ?>
+                                                @if($payment)
+                                                    <a target="_blank" href="https://dmachine.gudkov.ru/chainsigns/ajax/ajax_ext_attach.php?context=previewSignchain&download_hash_md5={{$payment->download_hash_md5}}">Платёжка оплачена</a></p>
+                                                @endif
+                                            @else
                                             {!! Form::open() !!}
                                             <label for="gdfile_upload_input"
                                                    onclick="fileUploader.initLoaderWith.apply(this, ['production_doc', fileUploader.onSuccessUploaded_question_doc]); fileUploader.container = $(this) ;"

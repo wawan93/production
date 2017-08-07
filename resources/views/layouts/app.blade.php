@@ -100,8 +100,7 @@
                         order_id: fileUploader.container.attr('data-order'),
                     }, function(msg){
 
-                        fileUploader.container.closest('form').before('<div><b>Отправлен счёт</b></div>');
-                    	fileUploader.container.closest('form').remove();
+                        location.reload();
 
                     }, function(msg){
                     	console.log(msg.error_text);
