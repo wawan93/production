@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AllowedManufacturers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -64,7 +65,14 @@ class ManufacturerController extends Controller
         
         $requestData = $request->all();
         
-        Manufacturer::create($requestData);
+        $manufacturer = Manufacturer::create($requestData);
+
+        foreach ($requestData['restricted'] as $restricted) {
+            AllowedManufacturers::create([
+                'manufacturer_id' => $manufacturer->id,
+                'region_name' => $restricted,
+            ]);
+        }
 
         Session::flash('flash_message', 'Manufacturer added!');
 
@@ -114,6 +122,13 @@ class ManufacturerController extends Controller
         
         $manufacturer = Manufacturer::findOrFail($id);
         $manufacturer->update($requestData);
+
+        foreach ($requestData['restricted'] as $restricted) {
+            AllowedManufacturers::create([
+                'manufacturer_id' => $manufacturer->id,
+                'region_name' => $restricted,
+            ]);
+        }
 
         Session::flash('flash_message', 'Manufacturer updated!');
 

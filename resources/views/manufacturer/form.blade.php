@@ -42,6 +42,13 @@
         {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
+<div class="form-group {{ $errors->has('email') ? 'has-error' : ''}}">
+    {!! Form::label('email', 'НЕ показывать для районов', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::select('restricted[]', \App\RegionNames::forSelect(), null,  array('multiple','class' => 'form-control'), ['class' => 'form-control']) !!}
+        {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
 
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">
