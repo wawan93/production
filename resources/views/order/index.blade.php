@@ -9,7 +9,9 @@
                     <div class="panel-heading">Order</div>
                     <div class="panel-body">
                         <div class="table-responsive">
+                            {!! Form::open(['class' => 'filter-form', 'action' => 'OrderController@index', 'method' => 'GET']) !!}
                             <table class="table table-borderless table-striped table-hover">
+
                                 <thead>
                                     <tr>
                                         <th>Район</th>
@@ -27,21 +29,22 @@
                                         <th>Контакт</th>
                                     </tr>
                                     <tr>
-                                        <th>{!! Form::select('region_name', \App\RegionNames::forSelect(), @$filter['region_name'], ['class' => 'form-control']) !!}</th>
-                                        <th><input type="text" class="form-control"/></th>
-                                        <th><input type="text" class="form-control"/></th>
-                                        <th><input type="text" class="form-control"/></th>
-                                        <th><input type="text" class="form-control"/></th>
-                                        <th><input type="text" class="form-control"/></th>
-                                        <th><input type="text" class="form-control"/></th>
-                                        <th><input type="text" class="form-control"/></th>
-                                        <th><input type="text" class="form-control"/></th>
-                                        <th><input type="text" class="form-control"/></th>
-                                        <th><input type="text" class="form-control"/></th>
-                                        <th><input type="text" class="form-control"/></th>
-                                        <th><input type="text" class="form-control"/></th>
+                                        <th>{!! Form::select('filter[region_name]', \App\RegionNames::forSelect(), @$filter['region_name'], ['class' => 'form-control filter']) !!}</th>
+                                        <th>{!! Form::text('filter[district]',  @$filter['district'],['class' => 'form-control filter']) !!}</th>
+                                        <th>{!! Form::text('filter[code_name]',  @$filter['code_name'],['class' => 'form-control filter']) !!}</th>
+                                        <th>{!! Form::select('filter[manager]', \App\User::managers(), @$filter['manager'], ['class' => 'form-control filter']) !!}</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
                                 @foreach($order as $item)
                                     <tr onclick="document.location = '{{ url('/order/' . $item->id . '/edit') }}';">
@@ -62,6 +65,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            {!! Form::close() !!}
                             <div class="pagination-wrapper"> {!! $order->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
 
@@ -70,4 +74,26 @@
             </div>
         </div>
     </div>
+
+    @section('scripts')
+        <script type="text/javascript">
+            (function($) {
+                var filters = {
+                    'region_name': '',
+                    'district': 0,
+                    'code_name': '',
+                    'manager': 0,
+                };
+                $(document).ready(function(){
+                    $('.filter').on('change', function (e) {
+                        var _this = $(this);
+                        var filter = _this.attr('name').split(/.+\[(.+)\]/)[1];
+                        var value = _this.val();
+                        filters[filter] = value;
+                        console.log($('.filter-form').submit());
+                    });
+                });
+            })($ || jQuery);
+        </script>
+    @endsection
 @endsection

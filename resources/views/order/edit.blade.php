@@ -84,4 +84,41 @@
             </div>
         </div>
     </div>
+
+    @section('scripts')
+        <div style="display: none;">
+            <form class="FileUploadForm" enctype="multipart/form-data" method="POST" action="">
+                <input id="gdfile_upload_input" type="file" name="fileupload" class="" file_callback="onSuccessUploaded_question_doc" onchange="fileUploader.beginUploadFile.apply(this, []);">
+            </form>
+        </div>
+        <script type="text/javascript">
+            (function($) {
+                $(document).ready(function(){
+                    fileUploader.onSuccessUploaded_question_doc = function(data){
+
+                        console.log('Uploaded file');
+                        console.log(data);
+
+                        smartAjax('/invoice/save', {
+                            data: JSON.stringify(data),
+                            user_id: fileUploader.container.attr('data-user'),
+                            order_id: fileUploader.container.attr('data-order'),
+                        }, function(msg){
+
+                            location.reload();
+
+                        }, function(msg){
+                            console.log(msg.error_text);
+                        });
+
+                    };
+                    fileUploader.initListener();
+                    fileUploader.setOriginMode('laravel');
+
+
+                });
+                console.log('kljasdfkjasdf');
+            })($ || jQuery);
+        </script>
+    @endsection
 @endsection

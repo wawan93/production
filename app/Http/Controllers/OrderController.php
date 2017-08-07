@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Mail\OrderRequest;
 use App\Order;
+use App\Team;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Mail;
@@ -26,31 +27,32 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25000;
+        $order = Order::where('id', '>', 0);
 
-        if (!empty($keyword)) {
-            $order = Order::where('team_id', 'LIKE', "%$keyword%")
-                ->orWhere('code_name', 'LIKE', "%$keyword%")
-                ->orWhere('polygraphy_type', 'LIKE', "%$keyword%")
-                ->orWhere('manager_id', 'LIKE', "%$keyword%")
-                ->orWhere('alert', 'LIKE', "%$keyword%")
-                ->orWhere('edition_initial', 'LIKE', "%$keyword%")
-                ->orWhere('status', 'LIKE', "%$keyword%")
-                ->orWhere('polygraphy_format', 'LIKE', "%$keyword%")
-                ->orWhere('edition_final', 'LIKE', "%$keyword%")
-                ->orWhere('manufacturer', 'LIKE', "%$keyword%")
-                ->orWhere('paid_date', 'LIKE', "%$keyword%")
-                ->orWhere('final_date', 'LIKE', "%$keyword%")
-                ->orWhere('ship_date', 'LIKE', "%$keyword%")
-                ->orWhere('contact', 'LIKE', "%$keyword%")
-                ->orderBy('created_at', 'desc')
-                ->paginate($perPage);
-        } else {
-            $order = Order::paginate($perPage);
+        $filter = (array)$request->get('filter');
+
+        $teams = [];
+        if (@$filter['region_name']) {
+            $select = Team::where('region_name', $filter['region_name'])->get()->toArray();
+            $teams = array_column($select, 'team_id');
+        }
+        if (@$filter['district']) {
+            $select = Team::where('district_number', $filter['district'])->get()->toArray();
+            $teams = array_merge($teams, array_column($select, 'team_id'));
+        }
+        if ($teams) {
+            $order->whereIn('team_id', $teams);
         }
 
-        return view('order.index', compact('order'));
+        if (@$filter['manager']) {
+            $order->where('manager', $filter['manager']);
+        }
+
+        if (@$filter['code_name']) {
+            $order->where('code_name', 'like', $filter['code_name']);
+        }
+
+        return view('order.index', ['order'=> $order->paginate(10000), 'filter' => $filter]);
     }
 
     /**

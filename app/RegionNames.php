@@ -12,7 +12,8 @@ class RegionNames extends Model
     {
         $regions = self::all(['region_name'])->map(function($item) {
             return $item->region_name;
-        });
-        return array_combine($regions->toArray(), $regions->toArray());
+        })->toArray();
+        $regions[0] = '';
+        return array_combine($regions, $regions);
     }
 }
