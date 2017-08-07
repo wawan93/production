@@ -6,6 +6,7 @@ use App\GdLogEntry;
 use App\Invoice;
 use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InvoiceController extends Controller
 {
