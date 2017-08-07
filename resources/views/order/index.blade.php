@@ -17,6 +17,7 @@
                                         <th>Заказ</th>
                                         <th>Менеджер</th>
                                         <th>Статус</th>
+                                        <th>💰</th>
                                         <th>Тираж начальный</th>
                                         <th>Тираж финальный</th>
                                         <th>Изготовитель</th>
@@ -31,6 +32,7 @@
                                         <th>{!! Form::select('filter[status]', \App\Order::allStatuses(), @$filter['status'], ['class' => 'form-control filter']) !!}</th>
                                         <th></th>
                                         <th></th>
+                                        <th></th>
                                         <th>{!! Form::select('filter[manufacturer]', \App\Manufacturer::forSelect(), null, ['class' => 'form-control filter']) !!}</th>
                                         <th>{!! Form::date('filter[paid_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;']) !!}</th>
                                         <th>{!! Form::date('filter[final_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;']) !!}</th>
@@ -41,10 +43,15 @@
 
                                 <tbody>
                                 @foreach($order as $item)
-                                    <tr onclick="document.location = '{{ url('/order/' . $item->id . '/edit') }}';">
+                                    <tr onclick="this.className=''; document.location = '{{ url('/order/' . $item->id . '/edit') }}';">
                                         <td>{{ $item->code_name }}</td>
                                         <td>{{ $item->manager()->name . ' ' . $item->manager()->surname }}</td>
                                         <td>{{ $item->getStatus() }}</td>
+                                        <td>
+                                            @if ($item->status == 'fundraising_finished')
+                                                {{ ($item->alert == false) ? '✅' : '🆘' }}
+                                            @endif
+                                        </td>
                                         <td>{{ $item->edition_initial }}</td>
                                         <td>{{ $item->edition_final }}</td>
                                         <td>{{ $item->manufacturer() ? $item->manufacturer()->short_name : '' }}</td>

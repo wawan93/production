@@ -20,14 +20,15 @@
                         @endif
 
                         <div class="col-md-offset-4 col-md-8">
-                        @foreach($order->team()->members() as $user)
-                            <p>{{ $user->surname }} {{ $user->name }} {{ $user->middlename }} (#{{ $user->id }})</p>
-                        @endforeach
+                            @foreach($order->team()->members() as $user)
+                                <p>{{ $user->surname }} {{ $user->name }} {{ $user->middlename }} (#{{ $user->id }})</p>
+                            @endforeach
 
-                        <h3>Заказ: {{ $order->code_name }}</h3>
-                        <p><strong>{!! $order->type()->mat_name !!}, Изначальный тираж: {{ $order->edition_initial }}</strong></p>
-                        <p>{!! nl2br($order->type()->mat_descr) !!}</p>
+                            <h3>Заказ: {{ $order->code_name }}</h3>
+                            <p><strong>{!! $order->type()->mat_name !!}, Изначальный тираж: {{ $order->edition_initial }}</strong></p>
+                            <p>{!! nl2br($order->type()->mat_descr) !!}</p>
 
+                            <hr>
                             @if($order->status == 'fundraising_finished')
                                 @if($order->alert == false)
                                     <p>👍💅💰 <strong>Деньги собраны! Можно печатать</strong></p>
@@ -40,7 +41,7 @@
                                 @if($order->mail_sent)
                                     <p><strong>Письмо отправлено</strong></p>
                                 @else
-                                    <p><a href="/viewMail/{{ $order->id }}" class="btn btn-primary">Написать письмо</a></p>
+                                    <p><a href="/viewMail/{{ $order->id }}" class="btn btn-primary">Написать в типографию</a></p>
                                 @endif
                             @endif
 
@@ -59,6 +60,8 @@
                         @include ('order.form', ['submitButtonText' => 'Update'])
 
                         {!! Form::close() !!}
+
+                        <hr>
 
                         <div class="form-horizontal">
                             <div class="form-group {{ $errors->has('invoice_subject') ? 'has-error' : ''}}">
