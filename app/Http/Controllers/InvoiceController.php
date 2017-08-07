@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function save(Request $request)
     {
         $json = json_decode($request->get('data'), true);

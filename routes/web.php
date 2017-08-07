@@ -11,16 +11,16 @@
 |
 */
 
-Route::get('/', 'OrderController@index');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'OrderController@index')->middleware('auth');
+Route::get('/home', 'HomeController@index')->middleware('auth')->name('home');
 
-Route::get('/viewMail/{id}', 'OrderController@viewMail');
-Route::post('/sendMail/{id}', 'OrderController@sendMail');
+Route::get('/viewMail/{id}', 'OrderController@viewMail')->middleware('auth');
+Route::post('/sendMail/{id}', 'OrderController@sendMail')->middleware('auth');
 
-Route::get('/invoice/save', 'InvoiceController@save');
+Route::get('/invoice/save', 'InvoiceController@save')->middleware('auth');
 
 Route::resource('order', 'OrderController');
 Route::resource('polygraphy-type', 'PolygraphyTypeController');

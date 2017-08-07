@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    protected $perPage = 1000;
+
     protected $table = 'polygraphy_orders';
 
 	protected $fillable = [
