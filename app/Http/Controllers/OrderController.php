@@ -168,7 +168,7 @@ class OrderController extends Controller
         $template = new OrderRequest($order, $request->get('intro'), $request->get('signature'));
         dump($template);
 
-        Mail::to($order->manufacturer())->send($template);
+        Mail::to($order->manufacturer())->bcc('prod@gudkov.ru')->send($template);
         $order->mail_sent = 1;
         $order->saveOrFail();
 
