@@ -45,14 +45,14 @@ class OrderController extends Controller
         }
 
         if (@$filter['manager']) {
-            $order->where('manager', $filter['manager']);
+            $order->where('manager_id', $filter['manager']);
         }
 
         if (@$filter['code_name']) {
-            $order->where('code_name', 'like', $filter['code_name']);
+            $order->where('code_name', 'like', '%' . $filter['code_name'] . '%');
         }
 
-        return view('order.index', ['order'=> $order->paginate(10000), 'filter' => $filter]);
+        return view('order.index', ['order'=> $order->paginate(10000), 'filter' => $filter, 'count' => $order->count()]);
     }
 
     /**

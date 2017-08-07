@@ -6,7 +6,7 @@
 
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Order</div>
+                    <div class="panel-heading">Заказы (Всего {{ $count }})</div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             {!! Form::open(['class' => 'filter-form', 'action' => 'OrderController@index', 'method' => 'GET']) !!}
