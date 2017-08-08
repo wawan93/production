@@ -19,7 +19,13 @@
 </div><div class="form-group {{ $errors->has('manufacturer') ? 'has-error' : ''}}">
     {!! Form::label('manufacturer', 'Изготовитель', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::select('manufacturer', \App\Manufacturer::allowedFor($order->team()->region_name)->pluck('short_name', 'id'), null, ['class' => 'form-control']) !!}
+        {!! Form::select(
+            'manufacturer',
+            \App\Manufacturer::allowedFor($order->team()
+                ->region_name)->pluck('short_name', 'id')->prepend('не выбран', 0),
+            null,
+            ['class' => 'form-control']
+        ) !!}
         {!! $errors->first('manufacturer', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('paid_date') ? 'has-error' : ''}}">
