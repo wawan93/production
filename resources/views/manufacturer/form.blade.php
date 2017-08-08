@@ -45,7 +45,12 @@
 <div class="form-group {{ $errors->has('email') ? 'has-error' : ''}}">
     {!! Form::label('email', 'НЕ показывать для районов', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::select('restricted[]', \App\RegionNames::forSelect(), null,  array('multiple','class' => 'form-control'), ['class' => 'form-control']) !!}
+        {!! Form::select(
+            'restricted[]',
+            \App\RegionNames::forSelect(),
+            null,
+            ['multiple','class' => 'form-control', 'style' => 'height: 400px;']
+        ) !!}
         {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

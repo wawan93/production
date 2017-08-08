@@ -43,13 +43,15 @@ class Manufacturer extends Model
     {
         $restricted = AllowedManufacturers::where('region_name', $region_name)
             ->get()
-            ->pluck('manufacturer_id')->toArray();
+            ->pluck('manufacturer_id')
+            ->toArray();
         return $query->whereNOtIn('id', $restricted);
     }
 
     public function getRestrictedAttribute()
     {
-        $regions =  $this->hasMany(AllowedManufacturers::class, 'manufacturer_id', 'id')->pluck('region_name','region_name');
+        $regions =  $this->hasMany(AllowedManufacturers::class, 'manufacturer_id', 'id')
+            ->pluck('region_name','region_name');
         return $regions;
     }
 
