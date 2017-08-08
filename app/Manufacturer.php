@@ -41,9 +41,10 @@ class Manufacturer extends Model
      */
     public function scopeAllowedFor($query, $region_name)
     {
-        return $query->whereDoesntHave('allowed_manufacturer_region', function ($query) use ($region_name) {
-            $query->where('region_name', $region_name);
-        });
+        $restricted = AllowedManufacturers::where('region_name', $region_name)
+            ->get()
+            ->pluck('manufacturer_id')->toArray();
+        return $query->whereNOtIn('id', $restricted);
     }
 
     public function getRestrictedAttribute()
