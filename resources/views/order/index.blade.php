@@ -10,21 +10,21 @@
                     <div class="panel-body">
                         <div class="table-responsive">
                             {!! Form::open(['class' => 'filter-form', 'action' => 'OrderController@index', 'method' => 'GET']) !!}
-                            <table class="table table-borderless table-striped table-hover">
+                            <table class="table table-borderless table-striped table-hover sorting tablesorter">
 
                                 <thead>
-                                    <tr>
-                                        <th>Заказ</th>
-                                        <th>Менеджер</th>
-                                        <th>Статус</th>
-                                        <th>💰</th>
-                                        <th>Тираж начальный</th>
-                                        <th>Тираж финальный</th>
-                                        <th>Изготовитель</th>
-                                        <th>Дата оплаты</th>
-                                        <th>Дата выхода</th>
-                                        <th>Дата доставки</th>
-                                        <th>Контакт</th>
+                                    <tr class="">
+                                        <th data-direction="asc" data-field="code_name">Заказ</th>
+                                        <th data-direction="asc" data-field="manager_id">Менеджер</th>
+                                        <th data-direction="asc" data-field="status">Статус</th>
+                                        <th data-direction="asc" data-field="alert">💰</th>
+                                        <th data-direction="asc" data-field="edition_initial">Тираж начальный</th>
+                                        <th data-direction="asc" data-field="edition_final">Тираж финальный</th>
+                                        <th data-direction="asc" data-field="manufacturer">Изготовитель</th>
+                                        <th data-direction="asc" data-field="paid_date">Дата оплаты</th>
+                                        <th data-direction="asc" data-field="final_date">Дата выхода</th>
+                                        <th data-direction="asc" data-field="ship_date">Дата доставки</th>
+                                        <th data-direction="asc" data-field="contact">Контакт</th>
                                     </tr>
                                     <tr>
                                         <th>{!! Form::text('filter[code_name]',  @$filter['code_name'],['class' => 'form-control filter']) !!}</th>
@@ -74,6 +74,7 @@
     </div>
 
     @section('scripts')
+        <script type="text/javascript" src="/js/jquery.tablesorter.min.js"></script>
         <script type="text/javascript">
             (function($) {
                 var filters = {
@@ -81,6 +82,7 @@
                     'manager': 0,
                     'status': '',
                 };
+
                 $(document).ready(function(){
                     $('.filter').on('change', function (e) {
                         var _this = $(this);
@@ -89,6 +91,8 @@
                         filters[filter] = value;
                         console.log($('.filter-form').submit());
                     });
+
+                    $('.tablesorter').tablesorter();
                 });
             })($ || jQuery);
         </script>
