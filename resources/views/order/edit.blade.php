@@ -160,31 +160,35 @@
                             code_name: '{{ $order->code_name }}',
 
                         }, function(msg){
-                            _this.remove();
+                            location.reload();
                         }, function(msg){
                         	console.log(msg.error_text);
                         }, 'approve-maket', 'POST');
                     });
 
                     $('.invoices').on('click', '.delete-invoice', function(e) {
-                        smartAjax('/ajax/delete/invoice', {
-                            id: $(this).data('id'),
-                        }, function(msg){
-                            location.reload();
-                        }, function(msg){
-                            console.log(msg.error_text);
-                        }, 'delete_invoice', 'DELETE');
+                        if (confirm('Удалить счёт?')) {
+                            smartAjax('/ajax/delete/invoice', {
+                                id: $(this).data('id'),
+                            }, function(msg){
+                                location.reload();
+                            }, function(msg){
+                                console.log(msg.error_text);
+                            }, 'delete_invoice', 'DELETE');
+                        }
                         return false;
                     });
 
                     $('.invoices').on('click', '.delete-payment', function(e) {
-                        smartAjax('/ajax/delete/payment', {
-                            id: $(this).data('id'),
-                        }, function(msg){
-                            location.reload();
-                        }, function(msg){
-                            console.log(msg.error_text);
-                        }, 'delete_payment', 'DELETE');
+                        if (confirm('Удалить платёжку?')) {
+                            smartAjax('/ajax/delete/payment', {
+                                id: $(this).data('id'),
+                            }, function(msg) {
+                                location.reload();
+                            }, function(msg) {
+                                console.log(msg.error_text);
+                            }, 'delete_payment', 'DELETE');
+                        }
                         return false;
                     });
 
