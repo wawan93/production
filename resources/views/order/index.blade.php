@@ -43,8 +43,8 @@
 
                                 <tbody>
                                 @foreach($order as $item)
-                                    <tr onclick="this.className=''; document.location = '{{ url('/order/' . $item->id . '/edit') }}';">
-                                        <td>{{ $item->code_name }}</td>
+                                    <tr>
+                                        <td onclick="this.className=''; document.location = '{{ url('/order/' . $item->id . '/edit') }}';">{{ $item->code_name }}</td>
                                         <td>{{ $item->manager()->name . ' ' . $item->manager()->surname }}</td>
                                         <td>{{ $item->getStatus() }}</td>
                                         <td>
@@ -53,11 +53,56 @@
                                             @endif
                                         </td>
                                         <td>{{ $item->edition_initial }}</td>
-                                        <td>{{ $item->edition_final }}</td>
+                                        <td>
+                                            {{ $item->edition_final }}
+                                            {{--{!! Form::number(--}}
+                                                {{--'edition_final',--}}
+                                                {{--$item->edition_final,--}}
+                                                {{--[--}}
+                                                    {{--'class' => 'form-control',--}}
+                                                    {{--'data-id' => $item->edition_final,--}}
+                                                    {{--'data-field' => 'edition_final',--}}
+                                                {{--]--}}
+                                            {{--) !!}--}}
+                                        </td>
                                         <td>{{ $item->manufacturer() ? $item->manufacturer()->short_name : '' }}</td>
                                         <td>{{ $item->paid_date ? date('d.m.Y', strtotime($item->paid_date)) : '' }}</td>
-                                        <td>{{ $item->final_date ? date('d.m.Y', strtotime($item->final_date)) : '' }}</td>
-                                        <td>{{ $item->ship_date ? date('d.m.Y', strtotime($item->ship_date)) : '' }} {{ $item->ship_time  }}</td>
+                                        <td>
+                                            {{ $item->final_date }}
+                                            {{--{!! Form::date(--}}
+                                                {{--'final_date',--}}
+                                                {{--$item->final_date,--}}
+                                                {{--[--}}
+                                                    {{--'class' => 'form-control',--}}
+                                                    {{--'data-id' => $item->code_name,--}}
+                                                    {{--'data-field' => 'final_date',--}}
+                                                {{--]--}}
+                                            {{--) !!}--}}
+                                        </td>
+                                        <td>
+                                            {{$item->ship_date}}
+                                            {{--{!! Form::date(--}}
+                                                {{--'ship_date',--}}
+                                                {{--$item->ship_date,--}}
+                                                {{--[--}}
+                                                    {{--'class' => 'form-control',--}}
+                                                    {{--'data-id' => $item->code_name,--}}
+                                                    {{--'data-field' => 'ship_date',--}}
+                                                {{--]--}}
+                                            {{--) !!}--}}
+                                        </td>
+                                        <td>
+                                            {{ $item->ship_time}}
+                                            {{--{!! Form::time(--}}
+                                                {{--'ship_time',--}}
+                                                {{--$item->ship_time,--}}
+                                                {{--[--}}
+                                                    {{--'class' => 'form-control',--}}
+                                                    {{--'data-id' => $item->code_name,--}}
+                                                    {{--'data-field' => 'ship_time',--}}
+                                                {{--]--}}
+                                            {{--) !!}--}}
+                                        </td>
                                         <td>{{ $item->contact }}</td>
                                     </tr>
                                 @endforeach
@@ -83,6 +128,12 @@
                     'status': '',
                 };
 
+                var textExtractor = function(node) {
+                    var $node = $(node);
+                    var value =  $node.find('input').val() || $node.text();
+                    return value;
+                };
+
                 $(document).ready(function(){
                     $('.filter').on('change', function (e) {
                         var _this = $(this);
@@ -92,7 +143,26 @@
                         console.log($('.filter-form').submit());
                     });
 
-                    $('.tablesorter').tablesorter();
+                    $('.tablesorter').tablesorter({
+                        textExtraction: textExtractor
+                    });
+
+                    $('tbody').on('change', '.form-control', function() {
+                        var _this = $(this);
+                        var code_name = _this.data('id');
+                        var field = _this.data('field');
+                        var value = _this.val();
+
+                        smartAjax('/ajax/save_order', {
+                            code_name: code_name,
+                            field: field,
+                            value: value,
+                        }, function(msg){
+                            console.log(msg);
+                        }, function(msg){
+                            alert(msg.error_text);
+                        }, 'order_flow', 'POST');
+                    });
                 });
             })($ || jQuery);
         </script>

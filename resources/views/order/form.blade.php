@@ -10,13 +10,15 @@
         {!! Form::select('status', \App\Order::allStatuses(), null, ['class' => 'form-control']) !!}
         {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('edition_final') ? 'has-error' : ''}}">
+</div>
+<div class="form-group {{ $errors->has('edition_final') ? 'has-error' : ''}}">
     {!! Form::label('edition_final', 'Тираж финальный', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::number('edition_final', null, ['class' => 'form-control']) !!}
         {!! $errors->first('edition_final', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('manufacturer') ? 'has-error' : ''}}">
+</div>
+<div class="form-group {{ $errors->has('manufacturer') ? 'has-error' : ''}}">
     {!! Form::label('manufacturer', 'Изготовитель', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::select(

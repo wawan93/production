@@ -100,6 +100,9 @@
                                 {!! Form::label('invoice_subject', 'Ссылка на макет', ['class' => 'col-md-4 control-label']) !!}
                                 <div class="col-md-6">
                                     <a href="{{ $order->maket_url }}" target="_blank" class="btn btn-success">Просмотреть</a>
+                                    @if(!$order->maket_ok)
+                                        <a href="#" class="btn btn-danger approve-maket">Утвердить</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -124,7 +127,7 @@
                         console.log('Uploaded file');
                         console.log(data);
 
-                        smartAjax('/invoice/save', {
+                        smartAjax('/ajax/save_invoice', {
                             data: JSON.stringify(data),
                             user_id: fileUploader.container.attr('data-user'),
                             order_id: fileUploader.container.attr('data-order'),
@@ -140,9 +143,20 @@
                     fileUploader.initListener();
                     fileUploader.setOriginMode('laravel');
 
+                    $('.approve-maket').on('click', function() {
+                        var _this = $(this);
+                        smartAjax('/ajax/approve_maket', {
+                            code_name: '{{ $order->code_name }}',
+
+                        }, function(msg){
+                            _this.remove();
+                        }, function(msg){
+                        	console.log(msg.error_text);
+                        }, 'approve-maket', 'POST');
+                    });
+
 
                 });
-                console.log('kljasdfkjasdf');
             })($ || jQuery);
         </script>
     @endsection

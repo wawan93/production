@@ -20,7 +20,9 @@ Route::get('/home', 'HomeController@index')->middleware('auth')->name('home');
 Route::get('/viewMail/{id}', 'OrderController@viewMail')->middleware('auth');
 Route::post('/sendMail/{id}', 'OrderController@sendMail')->middleware('auth');
 
-Route::get('/invoice/save', 'InvoiceController@save')->middleware('auth');
+Route::get('/ajax/save_invoice', 'InvoiceController@save')->middleware('auth');
+Route::post('/ajax/save_order', 'OrderController@save')->middleware('auth');
+Route::post('/ajax/approve_maket', 'OrderController@approveMaket')->middleware('auth');
 
 Route::resource('order', 'OrderController');
 Route::resource('polygraphy-type', 'PolygraphyTypeController');

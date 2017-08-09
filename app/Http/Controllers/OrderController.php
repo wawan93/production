@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\OrderRequest;
 use App\Order;
 use App\Team;
+use Dompdf\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Mail;
@@ -172,6 +173,22 @@ class OrderController extends Controller
         $order->mail_sent = 1;
         $order->saveOrFail();
 
-		return redirect('/order/' . $order->id . '/edit');
-	}
+        return redirect('/order/' . $order->id . '/edit');
+    }
+
+    public function approveMaket(Request $request)
+    {
+        $output = ['error' => 'false'];
+        try {
+            $order = Order::where('code_name', $request->get('code_name'))->first();
+            $order->maket_ok = true;
+            $order->save();
+        } catch (Exception $e) {
+            $output = [
+                'error' => 'true',
+                'error_text' => 'не удалось сохранить макет'
+            ];
+        }
+        return response()->json($output);
+    }
 }
