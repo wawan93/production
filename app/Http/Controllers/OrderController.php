@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\GdLogEntry;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Mail\OrderRequest;
 use App\Order;
 use App\Team;
+use Auth;
 use Dompdf\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -183,6 +185,12 @@ class OrderController extends Controller
             $order = Order::where('code_name', $request->get('code_name'))->first();
             $order->maket_ok = true;
             $order->save();
+
+            GdLogEntry::create([
+                'user_id' => Auth::id(),
+                'tg_bot_status' => 'none',
+                'details' => serialize(['order_id' => $order->id])
+            ]);
         } catch (Exception $e) {
             $output = [
                 'error' => 'true',
