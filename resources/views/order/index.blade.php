@@ -112,8 +112,6 @@
                                                     'data-field' => 'ship_date',
                                                 ]
                                             ) !!}
-                                        </td>
-                                        <td>
                                             {!! Form::time(
                                                 'ship_time',
                                                 $item->ship_time,
@@ -150,7 +148,7 @@
 
                 var textExtractor = function(node) {
                     var $node = $(node);
-                    var value =  $node.find('input').val() || $node.text();
+                    var value =  $node.find('input').val() || $node.find('select').val() || $node.text();
                     return value;
                 };
 
@@ -186,5 +184,14 @@
                 });
             })($ || jQuery);
         </script>
+        <style>
+            input[type="date"].form-control {
+                width: 150px;
+            }
+            .table>tbody>tr>td {
+                padding: 2px;
+                vertical-align: middle;
+            }
+        </style>
     @endsection
 @endsection

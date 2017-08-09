@@ -21,6 +21,7 @@ Route::get('/viewMail/{id}', 'OrderController@viewMail')->middleware('auth');
 Route::post('/sendMail/{id}', 'OrderController@sendMail')->middleware('auth');
 
 Route::get('/ajax/save_invoice', 'InvoiceController@save')->middleware('auth');
+Route::delete('/ajax/delete/{type}', 'InvoiceController@delete')->middleware('auth');
 Route::post('/ajax/save_order', 'OrderController@ajaxUpdate')->middleware('auth');
 Route::post('/ajax/approve_maket', 'OrderController@approveMaket')->middleware('auth');
 

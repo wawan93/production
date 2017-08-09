@@ -7,6 +7,7 @@ use App\Invoice;
 use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class InvoiceController extends Controller
 {
@@ -55,6 +56,15 @@ class InvoiceController extends Controller
             $order->status = 'invoices';
             $order->save();
         }
+
+        return response(json_encode(['error' => 'false']));
+    }
+
+    public function delete($type, Request $request)
+    {
+        Invoice::destroy($request->get('id'));
+
+        Session::flash('flash_message', 'Счёт удалён!');
 
         return response(json_encode(['error' => 'false']));
     }

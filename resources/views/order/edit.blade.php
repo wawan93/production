@@ -29,14 +29,17 @@
                             <p>{!! nl2br($order->type()->mat_descr) !!}</p>
 
                             <hr>
-                            @if($order->status == 'fundraising_finished')
+                            @if($order->status !== 'approved')
                                 @if($order->alert == false)
                                     <p>👍💅💰 <strong>Деньги собраны! Можно печатать</strong></p>
                                 @else
                                     <p>👎😱🐋 <strong>Денег нет, но вы свяжитесь</strong><br>с отделом дипломатии и согласуйте новый тираж</p>
                                 @endif
                             @endif
+                            <p><a href="{{ url('http://mundep.gudkov.ru/fundraising/team/' . $order->team_id) }}" target="_blank" class="btn btn-default">страница фандрайзинга</a></p>
 
+
+                            <hr>
                             @if($order->manufacturer)
                                 @if($order->mail_sent)
                                     <p><strong>Письмо отправлено</strong></p>
@@ -65,18 +68,21 @@
                         <div class="form-horizontal">
                             <div class="form-group {{ $errors->has('invoice_subject') ? 'has-error' : ''}}">
                                 {!! Form::label('invoice_subject', 'Счёт', ['class' => 'col-md-4 control-label']) !!}
-                                <div class="col-md-6">
+                                <div class="col-md-6 invoices">
                                     @foreach($order->team()->members() as $user)
                                         <?php $invoice = $order->invoices()->where('user_id', $user->id)->first() ?>
                                         @if($invoice)
                                             <p>
                                                 <strong>{{ $user->surname }} {{  $user->name }}</strong>
                                                 <a target="_blank" class="btn btn-default" href="https://dmachine.gudkov.ru/chainsigns/ajax/ajax_ext_attach.php?context=previewSignchain&download_hash_md5={{$invoice->download_hash_md5}}">Счёт</a>
-                                                <a class="btn btn-danger" href="{{ url('InvoiceController@delete') }}">Удалить счёт</a>
+                                                <a class="btn btn-danger delete-invoice" data-id="{{ $invoice->id }}">Удалить счёт</a>
                                             </p>
                                                 <?php $payment = $order->payments()->where('user_id', $user->id)->first() ?>
                                                 @if($payment)
-                                                    <a target="_blank" class="btn btn-default" href="https://dmachine.gudkov.ru/chainsigns/ajax/ajax_ext_attach.php?context=previewSignchain&download_hash_md5={{$payment->download_hash_md5}}">Платёжка</a></p>
+                                                    <p>
+                                                    <a target="_blank" class="btn btn-default" href="https://dmachine.gudkov.ru/chainsigns/ajax/ajax_ext_attach.php?context=previewSignchain&download_hash_md5={{$payment->download_hash_md5}}">Платёжка</a>
+                                                    <a class="btn btn-danger delete-payment" data-id="{{ $payment->id }}">Удалить платёжку</a>
+                                                    </p>
                                                 @endif
                                             @else
                                             {!! Form::open() !!}
@@ -156,6 +162,27 @@
                         }, 'approve-maket', 'POST');
                     });
 
+                    $('.invoices').on('click', '.delete-invoice', function(e) {
+                        smartAjax('/ajax/delete/invoice', {
+                            id: $(this).data('id'),
+                        }, function(msg){
+                            location.reload();
+                        }, function(msg){
+                            console.log(msg.error_text);
+                        }, 'delete_invoice', 'DELETE');
+                        return false;
+                    });
+
+                    $('.invoices').on('click', '.delete-payment', function(e) {
+                        smartAjax('/ajax/delete/payment', {
+                            id: $(this).data('id'),
+                        }, function(msg){
+                            location.reload();
+                        }, function(msg){
+                            console.log(msg.error_text);
+                        }, 'delete_payment', 'DELETE');
+                        return false;
+                    });
 
                 });
             })($ || jQuery);
