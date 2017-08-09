@@ -93,6 +93,17 @@
                             </div>
                         </div>
 
+                        <hr>
+
+                        <div class="form-horizontal">
+                            <div class="form-group {{ $errors->has('invoice_subject') ? 'has-error' : ''}}">
+                                {!! Form::label('invoice_subject', 'Ссылка на макет', ['class' => 'col-md-4 control-label']) !!}
+                                <div class="col-md-6">
+                                    <a href="{{ $order->maket_url }}" target="_blank" class="btn btn-success">Просмотреть</a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
