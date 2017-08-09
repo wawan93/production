@@ -181,12 +181,20 @@ class OrderController extends Controller
     public function approveMaket(Request $request)
     {
         $output = ['error' => 'false'];
+
+        if (strpos(Auth::user()->extra_class, 'c_maket_approve') === false) {
+            return response()->json([
+                'error' => 'true',
+                'error_text' => 'не удалось сохранить макет'
+            ]);
+        }
         try {
             $order = Order::where('code_name', $request->get('code_name'))->first();
             $order->maket_ok = true;
             $order->save();
 
             GdLogEntry::create([
+                'type' => 'maket_f_approve',
                 'user_id' => Auth::id(),
                 'tg_bot_status' => 'none',
                 'details' => serialize(['order_id' => $order->id])

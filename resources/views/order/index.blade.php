@@ -9,7 +9,7 @@
                     <div class="panel-heading">Заказы (Всего {{ $count }})</div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            {!! Form::open(['class' => 'filter-form', 'action' => 'OrderController@index', 'method' => 'GET']) !!}
+                            {!! Form::open(['id' => 'filter-form', 'action' => 'OrderController@index', 'method' => 'GET']) !!}
                             <table class="table table-borderless table-striped table-hover sorting tablesorter">
 
                                 <thead>
