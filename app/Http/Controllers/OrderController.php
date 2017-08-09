@@ -195,8 +195,9 @@ class OrderController extends Controller
 
             GdLogEntry::create([
                 'type' => 'maket_f_approve',
-                'user_id' => Auth::id(),
                 'tg_bot_status' => 'none',
+                'user_id' => Auth::id(),
+                'arg_id' => Auth::id(),
                 'details' => serialize(['order_id' => $order->id])
             ]);
         } catch (Exception $e) {
