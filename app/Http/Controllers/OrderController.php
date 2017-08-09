@@ -135,6 +135,9 @@ class OrderController extends Controller
         $requestData = $request->all();
 
         $order = Order::findOrFail($id);
+        if ($order->manufacturer != $requestData['manufacturer']) {
+            $order->mail_sent = false;
+        }
         $order->update($requestData);
 
         Session::flash('flash_message', 'Order updated!');
@@ -224,6 +227,9 @@ class OrderController extends Controller
                 'to' => $request->get('value')
             ])
         ]);
+        if ($request->get('value') == 'manufacturer') {
+            $order->mail_sent = false;
+        }
         $order->{$request->get('field')} = $request->get('value');
         $order->save();
 

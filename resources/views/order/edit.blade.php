@@ -40,9 +40,8 @@
                             @if($order->manufacturer)
                                 @if($order->mail_sent)
                                     <p><strong>Письмо отправлено</strong></p>
-                                @else
-                                    <p><a href="/viewMail/{{ $order->id }}" class="btn btn-primary">Написать в типографию</a></p>
                                 @endif
+                                <p><a href="/viewMail/{{ $order->id }}" class="btn btn-primary">Написать в типографию</a></p>
                             @endif
 
                         </div>
@@ -72,10 +71,12 @@
                                         @if($invoice)
                                             <p>
                                                 <strong>{{ $user->surname }} {{  $user->name }}</strong>
-                                                <a target="_blank" href="https://dmachine.gudkov.ru/chainsigns/ajax/ajax_ext_attach.php?context=previewSignchain&download_hash_md5={{$invoice->download_hash_md5}}">Счёт отправлен</a></p>
+                                                <a target="_blank" class="btn btn-default" href="https://dmachine.gudkov.ru/chainsigns/ajax/ajax_ext_attach.php?context=previewSignchain&download_hash_md5={{$invoice->download_hash_md5}}">Счёт</a>
+                                                <a class="btn btn-danger" href="{{ url('InvoiceController@delete') }}">Удалить счёт</a>
+                                            </p>
                                                 <?php $payment = $order->payments()->where('user_id', $user->id)->first() ?>
                                                 @if($payment)
-                                                    <a target="_blank" href="https://dmachine.gudkov.ru/chainsigns/ajax/ajax_ext_attach.php?context=previewSignchain&download_hash_md5={{$payment->download_hash_md5}}">Платёжка оплачена</a></p>
+                                                    <a target="_blank" class="btn btn-default" href="https://dmachine.gudkov.ru/chainsigns/ajax/ajax_ext_attach.php?context=previewSignchain&download_hash_md5={{$payment->download_hash_md5}}">Платёжка</a></p>
                                                 @endif
                                             @else
                                             {!! Form::open() !!}
