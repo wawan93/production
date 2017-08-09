@@ -10,6 +10,7 @@
                     <div class="panel-body">
                         <div class="table-responsive">
                             {!! Form::open(['id' => 'filter-form', 'action' => 'OrderController@index', 'method' => 'GET']) !!}
+                            {!! Form::close() !!}
                             <table class="table table-borderless table-striped table-hover sorting tablesorter">
 
                                 <thead>
@@ -27,16 +28,16 @@
                                         <th data-direction="asc" data-field="contact">Контакт</th>
                                     </tr>
                                     <tr>
-                                        <td>{!! Form::text('filter[code_name]',  @$filter['code_name'],['class' => 'form-control filter']) !!}</td>
-                                        <td>{!! Form::select('filter[manager]', \App\User::managers(), @$filter['manager'], ['class' => 'form-control filter']) !!}</td>
-                                        <td>{!! Form::select('filter[status]', \App\Order::allStatuses(), @$filter['status'], ['class' => 'form-control filter']) !!}</td>
+                                        <td>{!! Form::text('filter[code_name]',  @$filter['code_name'],['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
+                                        <td>{!! Form::select('filter[manager]', \App\User::managers(), @$filter['manager'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
+                                        <td>{!! Form::select('filter[status]', \App\Order::allStatuses(), @$filter['status'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>{!! Form::select('filter[manufacturer]', \App\Manufacturer::forSelect(), null, ['class' => 'form-control filter']) !!}</td>
-                                        <td>{!! Form::date('filter[paid_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;']) !!}</td>
-                                        <td>{!! Form::date('filter[final_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;']) !!}</td>
-                                        <td>{!! Form::date('filter[ship_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;']) !!}</td>
+                                        <td>{!! Form::select('filter[manufacturer]', \App\Manufacturer::forSelect(), null, ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
+                                        <td>{!! Form::date('filter[paid_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;', 'form' => 'filter-form']) !!}</td>
+                                        <td>{!! Form::date('filter[final_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;', 'form' => 'filter-form']) !!}</td>
+                                        <td>{!! Form::date('filter[ship_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;', 'form' => 'filter-form']) !!}</td>
                                         <td></td>
                                     </tr>
                                 </thead>
@@ -44,9 +45,19 @@
                                 <tbody>
                                 @foreach($order as $item)
                                     <tr>
-                                        <td onclick="this.className=''; document.location = '{{ url('/order/' . $item->id . '/edit') }}';">{{ $item->code_name }}</td>
-                                        <td>{{ $item->manager()->name . ' ' . $item->manager()->surname }}</td>
-                                        <td>{{ $item->getStatus() }}</td>
+                                        <td>
+                                            <a href="{{ url('/order/' . $item->id . '/edit') }}">{{ $item->code_name }}</a>
+                                        </td>
+                                        <td>
+                                            {{ $item->manager()->name . ' ' . $item->manager()->surname }}
+                                        </td>
+                                        <td>
+                                            {!! Form::select('status', \App\Order::allStatuses(), $item->status, [
+                                                'class' => 'form-control',
+                                                'data-id' => $item->code_name,
+                                                'data-field' => 'status'
+                                            ]) !!}
+                                        </td>
                                         <td>
                                             @if ($item->status == 'fundraising_finished')
                                                 {{ ($item->alert == false) ? '✅' : '🆘' }}
@@ -54,61 +65,70 @@
                                         </td>
                                         <td>{{ $item->edition_initial }}</td>
                                         <td>
-                                            {{ $item->edition_final }}
-                                            {{--{!! Form::number(--}}
-                                                {{--'edition_final',--}}
-                                                {{--$item->edition_final,--}}
-                                                {{--[--}}
-                                                    {{--'class' => 'form-control',--}}
-                                                    {{--'data-id' => $item->edition_final,--}}
-                                                    {{--'data-field' => 'edition_final',--}}
-                                                {{--]--}}
-                                            {{--) !!}--}}
+                                            {!! Form::number(
+                                                'edition_final',
+                                                $item->edition_final,
+                                                [
+                                                    'class' => 'form-control',
+                                                    'data-id' => $item->code_name,
+                                                    'data-field' => 'edition_final',
+                                                ]
+                                            ) !!}
                                         </td>
-                                        <td>{{ $item->manufacturer() ? $item->manufacturer()->short_name : '' }}</td>
+                                        <td>
+{{--                                            {{ $item->manufacturer() ? $item->manufacturer()->short_name : '' }}--}}
+                                            {!! Form::select(
+                                                'manufacturer',
+                                                \App\Manufacturer::allowedFor($item->team()
+                                                    ->region_name)->pluck('short_name', 'id')->prepend('не выбран', 0),
+                                                    $item->manufacturer() ? $item->manufacturer()->id : '',
+                                                [
+                                                    'class' => 'form-control',
+                                                    'data-id' => $item->code_name,
+                                                    'data-field' => 'edition_final',
+                                                ]
+                                            ) !!}
+
+                                        </td>
                                         <td>{{ $item->paid_date ? date('d.m.Y', strtotime($item->paid_date)) : '' }}</td>
                                         <td>
-                                            {{ $item->final_date }}
-                                            {{--{!! Form::date(--}}
-                                                {{--'final_date',--}}
-                                                {{--$item->final_date,--}}
-                                                {{--[--}}
-                                                    {{--'class' => 'form-control',--}}
-                                                    {{--'data-id' => $item->code_name,--}}
-                                                    {{--'data-field' => 'final_date',--}}
-                                                {{--]--}}
-                                            {{--) !!}--}}
+                                            {!! Form::date(
+                                                'final_date',
+                                                $item->final_date,
+                                                [
+                                                    'class' => 'form-control',
+                                                    'data-id' => $item->code_name,
+                                                    'data-field' => 'final_date',
+                                                ]
+                                            ) !!}
                                         </td>
                                         <td>
-                                            {{$item->ship_date}}
-                                            {{--{!! Form::date(--}}
-                                                {{--'ship_date',--}}
-                                                {{--$item->ship_date,--}}
-                                                {{--[--}}
-                                                    {{--'class' => 'form-control',--}}
-                                                    {{--'data-id' => $item->code_name,--}}
-                                                    {{--'data-field' => 'ship_date',--}}
-                                                {{--]--}}
-                                            {{--) !!}--}}
+                                            {!! Form::date(
+                                                'ship_date',
+                                                $item->ship_date,
+                                                [
+                                                    'class' => 'form-control',
+                                                    'data-id' => $item->code_name,
+                                                    'data-field' => 'ship_date',
+                                                ]
+                                            ) !!}
                                         </td>
                                         <td>
-                                            {{ $item->ship_time}}
-                                            {{--{!! Form::time(--}}
-                                                {{--'ship_time',--}}
-                                                {{--$item->ship_time,--}}
-                                                {{--[--}}
-                                                    {{--'class' => 'form-control',--}}
-                                                    {{--'data-id' => $item->code_name,--}}
-                                                    {{--'data-field' => 'ship_time',--}}
-                                                {{--]--}}
-                                            {{--) !!}--}}
+                                            {!! Form::time(
+                                                'ship_time',
+                                                $item->ship_time,
+                                                [
+                                                    'class' => 'form-control',
+                                                    'data-id' => $item->code_name,
+                                                    'data-field' => 'ship_time',
+                                                ]
+                                            ) !!}
                                         </td>
                                         <td>{{ $item->contact }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                            {!! Form::close() !!}
                             <div class="pagination-wrapper"> {!! $order->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
 
@@ -140,7 +160,7 @@
                         var filter = _this.attr('name').split(/.+\[(.+)\]/)[1];
                         var value = _this.val();
                         filters[filter] = value;
-                        console.log($('.filter-form').submit());
+                        console.log($('#filter-form').submit());
                     });
 
                     $('.tablesorter').tablesorter({
@@ -160,7 +180,7 @@
                         }, function(msg){
                             console.log(msg);
                         }, function(msg){
-                            alert(msg.error_text);
+                            console.log(msg.error_text);
                         }, 'order_flow', 'POST');
                     });
                 });

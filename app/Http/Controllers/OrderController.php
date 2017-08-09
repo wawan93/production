@@ -195,7 +195,7 @@ class OrderController extends Controller
 
             GdLogEntry::create([
                 'type' => 'maket_f_approve',
-                'tg_bot_status' => 'none',
+                'tg_bot_status' => 'inqueue',
                 'user_id' => Auth::id(),
                 'arg_id' => Auth::id(),
                 'details' => serialize(['order_id' => $order->id])
@@ -207,5 +207,26 @@ class OrderController extends Controller
             ];
         }
         return response()->json($output);
+    }
+
+    public function ajaxUpdate(Request $request)
+    {
+        /** @var Order $order */
+        $order = Order::where('code_name', $request->get('code_name'))->firstOrFail();
+
+        GdLogEntry::create([
+            'type' => 'ajax_update_order',
+            'user_id' => Auth::id(),
+            'arg_id' => $order->id,
+            'details' => serialize([
+                'field' => $request->get('field'),
+                'form' => $order->{$request->get('field')},
+                'to' => $request->get('value')
+            ])
+        ]);
+        $order->{$request->get('field')} = $request->get('value');
+        $order->save();
+
+        return response()->json(['error' => 'false']);
     }
 }
