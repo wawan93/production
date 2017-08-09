@@ -15,6 +15,7 @@
 
                                 <thead>
                                     <tr class="">
+                                        <th data-direction="asc" data-field="code_name">ID</th>
                                         <th data-direction="asc" data-field="code_name">Заказ</th>
                                         <th data-direction="asc" data-field="manager_id">Менеджер</th>
                                         <th data-direction="asc" data-field="status">Статус</th>
@@ -28,6 +29,7 @@
                                         <th data-direction="asc" data-field="contact">Контакт</th>
                                     </tr>
                                     <tr>
+                                        <td></td>
                                         <td>{!! Form::text('filter[code_name]',  @$filter['code_name'],['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td>{!! Form::select('filter[manager]', \App\User::managers(), @$filter['manager'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td>{!! Form::select('filter[status]', \App\Order::allStatuses(), @$filter['status'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
@@ -45,6 +47,7 @@
                                 <tbody>
                                 @foreach($order as $item)
                                     <tr>
+                                        <td>{{ $item->id }}</td>
                                         <td>
                                             <a href="{{ url('/order/' . $item->id . '/edit') }}">{{ $item->code_name }}</a>
                                         </td>
