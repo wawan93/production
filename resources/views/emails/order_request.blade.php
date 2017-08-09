@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p><strong>Общий тираж: {{ $order->edition_final }}</strong></p>
+        <p><strong>Суммарный тираж: {{ $order->edition_final }}</strong></p>
         <p>{!! nl2br($order->type()->mat_descr) !!}</p>
         <p>{!! nl2br($intro) !!}</p>
         @foreach($order->team()->members() as $user)
