@@ -74,13 +74,17 @@
                                         @if($invoice)
                                             <p>
                                                 <strong>{{ $user->surname }} {{  $user->name }}</strong>
-                                                <a target="_blank" class="btn btn-default" href="https://dmachine.gudkov.ru/chainsigns/ajax/ajax_ext_attach.php?context=previewSignchain&download_hash_md5={{$invoice->download_hash_md5}}">Счёт</a>
+                                                <a target="_blank" class="btn btn-default" href="https://dmachine.gudkov.ru/chainsigns/ajax/ajax_ext_attach.php?context=previewSignchain&download_hash_md5={{$invoice->download_hash_md5}}">
+                                                    Счёт (загружен {{ $invoice->timeAgo }} назад)
+                                                </a>
                                                 <a class="btn btn-danger delete-invoice" data-id="{{ $invoice->id }}">Удалить счёт</a>
                                             </p>
                                                 <?php $payment = $order->payments()->where('user_id', $user->id)->first() ?>
                                                 @if($payment)
                                                     <p>
-                                                    <a target="_blank" class="btn btn-default" href="https://dmachine.gudkov.ru/chainsigns/ajax/ajax_ext_attach.php?context=previewSignchain&download_hash_md5={{$payment->download_hash_md5}}">Платёжка</a>
+                                                    <a target="_blank" class="btn btn-default" href="https://dmachine.gudkov.ru/chainsigns/ajax/ajax_ext_attach.php?context=previewSignchain&download_hash_md5={{$payment->download_hash_md5}}">
+                                                        Платёжка (загружен {{ $payment->timeAgo }} назад)
+                                                    </a>
                                                     <a class="btn btn-danger delete-payment" data-id="{{ $payment->id }}">Удалить платёжку</a>
                                                     </p>
                                                 @endif
