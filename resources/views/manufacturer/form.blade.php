@@ -22,13 +22,22 @@
         {!! Form::text('inn', null, ['class' => 'form-control']) !!}
         {!! $errors->first('inn', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('domicile') ? 'has-error' : ''}}">
-    {!! Form::label('domicile', 'Юридический адрес', ['class' => 'col-md-4 control-label']) !!}
+</div>
+<div class="form-group {{ $errors->has('domicile') ? 'has-error' : ''}}">
+    {!! Form::label('domicile', 'Адрес для выходных данных', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::textarea('domicile', null, ['class' => 'form-control']) !!}
         {!! $errors->first('domicile', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('contact') ? 'has-error' : ''}}">
+</div>
+<div class="form-group {{ $errors->has('domicile') ? 'has-error' : ''}}">
+    {!! Form::label('full_address', 'Полный юридический адрес', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::textarea('full_address', null, ['class' => 'form-control']) !!}
+        {!! $errors->first('full_address', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
+<div class="form-group {{ $errors->has('contact') ? 'has-error' : ''}}">
     {!! Form::label('contact', 'Contact', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::textarea('contact', null, ['class' => 'form-control']) !!}

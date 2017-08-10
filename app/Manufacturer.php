@@ -25,7 +25,9 @@ class Manufacturer extends Model
      *
      * @var array
      */
-    protected $fillable = ['short_name', 'full_name', 'full_name_decl', 'inn', 'domicile', 'contact', 'email'];
+    protected $fillable = [
+        'short_name', 'full_name', 'full_name_decl', 'inn', 'domicile', 'contact', 'email', 'full_address'
+    ];
 
     public static function forSelect()
     {

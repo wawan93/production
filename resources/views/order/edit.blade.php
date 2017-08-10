@@ -162,7 +162,7 @@
                         }, function(msg){
                             location.reload();
                         }, function(msg){
-                        	console.log(msg.error_text);
+                            console.log(msg.error_text);
                         }, 'approve-maket', 'POST');
                     });
 
