@@ -27,6 +27,7 @@
                                         <th data-direction="asc" data-field="final_date">Дата выхода</th>
                                         <th data-direction="asc" data-field="ship_date">Дата доставки</th>
                                         <th data-direction="asc" data-field="contact">Контакт</th>
+                                        <th data-direction="asc" data-field="comment">Коммент</th>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -40,6 +41,7 @@
                                         <td>{!! Form::date('filter[paid_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;', 'form' => 'filter-form']) !!}</td>
                                         <td>{!! Form::date('filter[final_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;', 'form' => 'filter-form']) !!}</td>
                                         <td>{!! Form::date('filter[ship_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;', 'form' => 'filter-form']) !!}</td>
+                                        <td></td>
                                         <td></td>
                                     </tr>
                                 </thead>
@@ -79,7 +81,6 @@
                                             ) !!}
                                         </td>
                                         <td>
-{{--                                            {{ $item->manufacturer() ? $item->manufacturer()->short_name : '' }}--}}
                                             {!! Form::select(
                                                 'manufacturer',
                                                 \App\Manufacturer::allowedFor($item->team()
@@ -126,6 +127,17 @@
                                             ) !!}
                                         </td>
                                         <td>{{ $item->contact }}</td>
+                                        <td>
+                                            {!! Form::textarea(
+                                                'comment',
+                                                $item->comment,
+                                                [
+                                                    'class' => 'form-control',
+                                                    'data-id' => $item->code_name,
+                                                    'data-field' => 'comment',
+                                                ]
+                                            ) !!}
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -190,7 +202,7 @@
     @endsection
 
     @section('styles')
-        <style>
+        <style type="text/css">
             input[type="date"].form-control {
                 width: 150px;
             }
@@ -200,6 +212,10 @@
             }
             #flow-table .table .sorting th {
                 cursor: pointer !important;
+            }
+            #flow-table .table td textarea {
+                width: 300px;
+                height: 70px;
             }
         </style>
     @endsection

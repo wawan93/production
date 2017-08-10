@@ -4,6 +4,7 @@ namespace App;
 
 use App\Team;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Order extends Model
 {
@@ -88,5 +89,34 @@ class Order extends Model
     public function payments()
     {
         return $this->hasMany(Invoice::class, 'order_id', 'id')->where('direction', 'payment');
+    }
+
+    public function getCommentAttribute()
+    {
+        $comment = FlowComment::where(['type' => 'polygraphy_order', 'connected_to' => $this->id])->first();
+        if ($comment) {
+            return $comment->comment;
+        } else {
+            return '';
+        }
+    }
+
+    public function setCommentAttribute($value)
+    {
+        $comment = FlowComment::where([
+            'type' => 'polygraphy_order',
+            'connected_to' => $this->id
+        ])->first();
+
+        if (!$comment) {
+            $comment = FlowComment::create([
+                'comment_author' => Auth::id(),
+                'type' => 'polygraphy_order',
+                'connected_to' => $this->id,
+            ]);
+        }
+
+        $comment->comment = $value;
+        $comment->save();
     }
 }
