@@ -193,7 +193,7 @@ class OrderController extends Controller
         }
         try {
             $order = Order::where('code_name', $request->get('code_name'))->first();
-            $order->maket_ok = true;
+            $order->maket_ok = 1;
             $order->save();
 
             GdLogEntry::create([

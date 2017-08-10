@@ -112,10 +112,10 @@
                                 <div class="col-md-6">
                                     @if(!empty($order->maket_url))
                                         <p><a href="{{ $order->maket_url }}" target="_blank" class="">{{ $order->maket_url }}</a></p>
-                                        @if(!$order->maket_ok)
-                                            <p><a href="#" class="btn btn-danger approve-maket">Утвердить</a></p>
-                                        @else
+                                        @if($order->maket_ok)
                                             <p><strong>утверждён</strong></p>
+                                        @elseif(strpos(Auth::user()->extra_class, 'c_maket_approve') !== false)
+                                            <p><a href="#" class="btn btn-danger approve-maket">Утвердить</a></p>
                                         @endif
                                     @else
                                         <p><strong>пока нет</strong></p>
