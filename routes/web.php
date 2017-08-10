@@ -14,17 +14,21 @@
 
 Auth::routes();
 
-Route::get('/', 'OrderController@index')->middleware('auth');
-Route::get('/home', 'HomeController@index')->middleware('auth')->name('home');
+Route::middleware(['auth'])->group(function() {
 
-Route::get('/viewMail/{id}', 'OrderController@viewMail')->middleware('auth');
-Route::post('/sendMail/{id}', 'OrderController@sendMail')->middleware('auth');
+    Route::get('/', 'OrderController@index');
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/warehouse', 'HomeController@index')->name('warehouse');
 
-Route::get('/ajax/save_invoice', 'InvoiceController@save')->middleware('auth');
-Route::delete('/ajax/delete/{type}', 'InvoiceController@delete')->middleware('auth');
-Route::post('/ajax/save_order', 'OrderController@ajaxUpdate')->middleware('auth');
-Route::post('/ajax/approve_maket', 'OrderController@approveMaket')->middleware('auth');
+    Route::get('/viewMail/{id}', 'OrderController@viewMail')->name('view_mail');
+    Route::post('/sendMail/{id}', 'OrderController@sendMail')->name('send_mail');
 
-Route::resource('order', 'OrderController');
-Route::resource('polygraphy-type', 'PolygraphyTypeController');
-Route::resource('manufacturer', 'ManufacturerController');
+    Route::get('/ajax/save_invoice', 'InvoiceController@save')->name('save_invoice');
+    Route::delete('/ajax/delete/{type}', 'InvoiceController@delete')->name('save_invoice');
+    Route::post('/ajax/save_order', 'OrderController@ajaxUpdate')->name('save_order');
+    Route::post('/ajax/approve_maket', 'OrderController@approveMaket')->name('approve_maket');
+
+    Route::resource('order', 'OrderController');
+    Route::resource('polygraphy-type', 'PolygraphyTypeController');
+    Route::resource('manufacturer', 'ManufacturerController');
+});
