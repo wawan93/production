@@ -31,4 +31,6 @@ Route::middleware(['auth'])->group(function() {
     Route::resource('order', 'OrderController');
     Route::resource('polygraphy-type', 'PolygraphyTypeController');
     Route::resource('manufacturer', 'ManufacturerController');
+
+    Route::get('/warehouse', 'WarehouseController@index')->name('warehouse');
 });
