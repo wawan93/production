@@ -227,7 +227,20 @@ class OrderController extends Controller
                 'to' => $request->get('value')
             ])
         ]);
-        if ($request->get('value') == 'manufacturer') {
+
+        if ($request->get('field') == 'final_date' && !empty($order->{$request->get('field')})) {
+            GdLogEntry::create([
+                'type' => 'pl_print_d_changed',
+                'user_id' => Auth::id(),
+                'arg_id' => $order->id,
+                'details' => serialize([
+                    'order' => $order->id,
+                    'team_id' => $order->team_id
+                ])
+            ]);
+        }
+
+        if ($request->get('field') == 'manufacturer') {
             $order->mail_sent = false;
         }
         $order->{$request->get('field')} = $request->get('value');

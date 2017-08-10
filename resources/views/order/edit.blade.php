@@ -72,8 +72,8 @@
                                     @foreach($order->team()->members() as $user)
                                         <?php $invoice = $order->invoices()->where('user_id', $user->id)->first() ?>
                                         @if($invoice)
+                                            <p><strong>{{ $user->surname }} {{  $user->name }}</strong></p>
                                             <p>
-                                                <strong>{{ $user->surname }} {{  $user->name }}</strong>
                                                 <a target="_blank" class="btn btn-default" href="https://dmachine.gudkov.ru/chainsigns/ajax/ajax_ext_attach.php?context=previewSignchain&download_hash_md5={{$invoice->download_hash_md5}}">
                                                     Счёт (загружен {{ $invoice->timeAgo }} назад)
                                                 </a>
@@ -110,9 +110,15 @@
                             <div class="form-group {{ $errors->has('invoice_subject') ? 'has-error' : ''}}">
                                 {!! Form::label('invoice_subject', 'Ссылка на макет', ['class' => 'col-md-4 control-label']) !!}
                                 <div class="col-md-6">
-                                    <a href="{{ $order->maket_url }}" target="_blank" class="btn btn-success">Просмотреть</a>
-                                    @if(!$order->maket_ok)
-                                        <a href="#" class="btn btn-danger approve-maket">Утвердить</a>
+                                    @if(!empty($order->maket_url))
+                                        <p><a href="{{ $order->maket_url }}" target="_blank" class="">{{ $order->maket_url }}</a></p>
+                                        @if(!$order->maket_ok)
+                                            <p><a href="#" class="btn btn-danger approve-maket">Утвердить</a></p>
+                                        @else
+                                            <p><strong>утверждён</strong></p>
+                                        @endif
+                                    @else
+                                        <p><strong>пока нет</strong></p>
                                     @endif
                                 </div>
                             </div>
