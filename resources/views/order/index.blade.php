@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid" id="flow-table">
         <div class="row">
 
             <div class="col-md-12">
@@ -14,7 +14,7 @@
                             <table class="table table-borderless table-striped table-hover sorting tablesorter">
 
                                 <thead>
-                                    <tr class="">
+                                    <tr class="sorting">
                                         <th data-direction="asc" data-field="code_name">ID</th>
                                         <th data-direction="asc" data-field="code_name">Заказ</th>
                                         <th data-direction="asc" data-field="manager_id">Менеджер</th>
@@ -187,6 +187,9 @@
                 });
             })($ || jQuery);
         </script>
+    @endsection
+
+    @section('styles')
         <style>
             input[type="date"].form-control {
                 width: 150px;
@@ -195,6 +198,10 @@
                 padding: 2px;
                 vertical-align: middle;
             }
+            #flow-table .table .sorting th {
+                cursor: pointer !important;
+            }
         </style>
     @endsection
+
 @endsection
