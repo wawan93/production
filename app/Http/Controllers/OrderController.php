@@ -62,6 +62,10 @@ class OrderController extends Controller
             $order->where('ship_date', $filter['ship_date']);
         }
 
+        if (@$filter['set_id']) {
+            $order->where('set_id', $filter['set_id']);
+        }
+
         return view('order.index', ['order'=> $order->paginate(1000), 'filter' => $filter, 'count' => $order->count()]);
     }
 

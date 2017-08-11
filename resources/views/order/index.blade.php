@@ -22,6 +22,7 @@
                                         <th data-direction="asc" data-field="alert">💰</th>
                                         <th data-direction="asc" data-field="edition_initial">Тираж начальный</th>
                                         <th data-direction="asc" data-field="edition_final">Тираж финальный</th>
+                                        <th data-direction="asc" data-field="set_id">Комплект</th>
                                         <th data-direction="asc" data-field="manufacturer">Изготовитель</th>
                                         <th data-direction="asc" data-field="paid_date">Дата оплаты</th>
                                         <th data-direction="asc" data-field="final_date">Дата выхода</th>
@@ -37,6 +38,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td>{!! Form::number('filter[set_id]', null, ['class' => 'form-control filter', 'style'=>'width:50px;', 'form' => 'filter-form']) !!}</td>
                                         <td>{!! Form::select('filter[manufacturer]', \App\Manufacturer::forSelect(), null, ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td>{!! Form::date('filter[paid_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;', 'form' => 'filter-form']) !!}</td>
                                         <td>{!! Form::date('filter[final_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;', 'form' => 'filter-form']) !!}</td>
@@ -77,6 +79,17 @@
                                                     'class' => 'form-control',
                                                     'data-id' => $item->code_name,
                                                     'data-field' => 'edition_final',
+                                                ]
+                                            ) !!}
+                                        </td>
+                                        <td>
+                                            {!! Form::number(
+                                                'set_id',
+                                                $item->set_id,
+                                                [
+                                                    'class' => 'form-control',
+                                                    'data-id' => $item->code_name,
+                                                    'data-field' => 'set_id',
                                                 ]
                                             ) !!}
                                         </td>

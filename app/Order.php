@@ -28,7 +28,8 @@ class Order extends Model
         'ship_date',
         'contact',
         'invoice_subject',
-        'ship_time'
+        'ship_time',
+        'set_id',
     ];
 
     public function team()
