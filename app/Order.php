@@ -101,17 +101,56 @@ class Order extends Model
         }
     }
 
+    public function getCommentDeliveryAttribute()
+    {
+        $comment = FlowComment::where(['type' => 'polygraphy_order_delivery', 'connected_to' => $this->id])->first();
+        if ($comment) {
+            return $comment->comment;
+        } else {
+            return '';
+        }
+    }
+
+    public function getCommentDocsAttribute()
+    {
+        $comment = FlowComment::where(['type' => 'polygraphy_order_docs', 'connected_to' => $this->id])->first();
+        if ($comment) {
+            return $comment->comment;
+        } else {
+            return '';
+        }
+    }
+
     public function setCommentAttribute($value)
     {
+        $this->saveComment($value, 'polygraphy_order');
+    }
+
+    public function setCommentDeliveryAttribute($value)
+    {
+        $this->saveComment($value, 'polygraphy_order_delivery');
+    }
+
+    public function setCommentDocsAttribute($value)
+    {
+        $this->saveComment($value, 'polygraphy_order_docs');
+    }
+
+    /**
+     * @param $value
+     * @param $type
+     */
+    private function saveComment($value, $type)
+    {
         $comment = FlowComment::where([
-            'type' => 'polygraphy_order',
+            'type' => $type,
             'connected_to' => $this->id
         ])->first();
 
         if (!$comment) {
             $comment = FlowComment::create([
                 'comment_author' => Auth::id(),
-                'type' => 'polygraphy_order',
+                'type' => $type,
                 'connected_to' => $this->id,
             ]);
         }
@@ -119,4 +158,5 @@ class Order extends Model
         $comment->comment = $value;
         $comment->save();
     }
+
 }

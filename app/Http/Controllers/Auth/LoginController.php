@@ -53,8 +53,10 @@ class LoginController extends Controller
         if ($user != null) {
             $password = md5($request->get('password') . $user->salt);
             if ($password === $user->password) {
-                Auth::login($user, true);
-                return $this->sendLoginResponse($request);
+                if ($user->role == 'admin') {
+                    Auth::login($user, true);
+                    return $this->sendLoginResponse($request);
+                }
             }
         }
 

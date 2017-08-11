@@ -4,6 +4,30 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Invoice
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $order_id
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property string|null $data
+ * @property string $download_hash_md5
+ * @property string $direction
+ * @property-read mixed $time_ago
+ * @property-read \App\Order $order
+ * @property-read \App\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Invoice whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Invoice whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Invoice whereDirection($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Invoice whereDownloadHashMd5($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Invoice whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Invoice whereOrderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Invoice whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Invoice whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Invoice extends Model
 {
     protected $table = 'polygraphy_invoices';
