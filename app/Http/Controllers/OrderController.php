@@ -237,6 +237,7 @@ class OrderController extends Controller
                 'type' => 'pl_print_d_changed',
                 'user_id' => Auth::id(),
                 'arg_id' => $order->id,
+                'tg_bot_status' => 'inqueue',
                 'details' => serialize([
                     'order' => $order->id,
                     'team_id' => $order->team_id
@@ -247,7 +248,11 @@ class OrderController extends Controller
         if ($request->get('field') == 'manufacturer') {
             $order->mail_sent = false;
         }
-        $order->{$request->get('field')} = $request->get('value');
+        $value = $request->get('value');
+        if (in_array($value, ['true', 'false'])) {
+            $value = intval($value == 'true');
+        }
+        $order->{$request->get('field')} = $value;
         $order->save();
 
         return response()->json(['error' => 'false']);

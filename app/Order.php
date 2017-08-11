@@ -30,6 +30,10 @@ class Order extends Model
         'invoice_subject',
         'ship_time',
         'set_id',
+        'received',
+        'sorted',
+        'docs',
+        'set_id',
     ];
 
     public function team()
@@ -55,6 +59,7 @@ class Order extends Model
             'fundraising_finished' => 'Фандрайзинг закончился',
             'invoices' => 'Выставлены счета',
             'paid' => 'Оплачено',
+            'ordered' => 'Отправлено',
             'production' => 'В производстве',
             'shipped' => 'Доставлено',
             'cancelled' => 'Отменено',
@@ -158,6 +163,11 @@ class Order extends Model
 
         $comment->comment = $value;
         $comment->save();
+    }
+
+    public function scopeWarehouse($query)
+    {
+        return $query->whereIn('status', ['production', 'shipped']);
     }
 
 }

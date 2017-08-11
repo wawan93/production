@@ -21,12 +21,14 @@
                                         <th data-direction="asc" data-field="manufacturer">Изготовитель</th>
                                         <th data-direction="asc" data-field="ship_date">Доставка</th>
                                         <th data-direction="asc" data-field="contact">Контакт</th>
-                                        <th data-direction="asc" data-field="delivered">Получен</th>
+                                        <th data-direction="asc" data-field="received">Получен</th>
                                         <th data-direction="asc" data-field="sorted">Сортировка</th>
-                                        <th data-direction="asc" data-field="comment">Коммент</th>
+                                        <th data-direction="asc" data-field="commentDelivery">Коммент</th>
                                         <th data-direction="asc" data-field="docs">Документы</th>
-                                        <th data-direction="asc" data-field="docs_in_shtab">Документы в штабе</th>
                                         <th data-direction="asc" data-field="docs_comment">Коммент по докам</th>
+                                        <th data-direction="asc" data-field="docs_in_shtab">Документы в штабе</th>
+                                        <th data-direction="asc" data-field="delivery">Разнос</th>
+                                        <th data-direction="asc" data-field="delivery_count">Кол-во на разнос</th>
                                     </tr>
                                     <tr>
                                         <td>{!! Form::text('filter[code_name]',  @$filter['code_name'],['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
@@ -35,12 +37,14 @@
                                         <td>{!! Form::select('filter[manufacturer]', \App\Manufacturer::forSelect(), null, ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td>{!! Form::date('filter[ship_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;', 'form' => 'filter-form']) !!}</td>
                                         <td></td>
-                                        <td>{!! Form::checkbox('filter[delivered]',  @$filter['delivered'], @$filter['delivered'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
+                                        <td>{!! Form::checkbox('filter[received]',  @$filter['received'], @$filter['received'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td>{!! Form::checkbox('filter[sorted]',  @$filter['delivered'], @$filter['delivered'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td></td>
                                         <td>{!! Form::checkbox('filter[docs]',  @$filter['docs'], @$filter['docs'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
-                                        <td>{!! Form::checkbox('filter[docs_in_shtab]',  @$filter['docs_in_shtab'], @$filter['docs_in_shtab'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td></td>
+                                        <td>{!! Form::checkbox('filter[docs_in_shtab]',  @$filter['docs_in_shtab'], @$filter['docs_in_shtab'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
+                                        <td>{!! Form::checkbox('filter[delivery]',  @$filter['delivery'], @$filter['delivery'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
+                                        <td>{!! Form::number('filter[delivery_count]',  @$filter['delivery_count'], @$filter['delivery_count'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                     </tr>
                                 </thead>
 
@@ -48,7 +52,7 @@
                                 @foreach($order as $item)
                                     <tr>
                                         <td>
-                                            <a href="{{ url('/order/' . $item->id . '/edit') }}">{{ $item->code_name }}</a>
+                                            {{ $item->code_name }}
                                         </td>
                                         <td>
                                             {{ $item->getStatus() }}
@@ -62,10 +66,10 @@
                                         <td>{{ $item->contact }}</td>
 
                                         <td>
-                                            {!! Form::checkbox('delivered', $item->delivered, $item->delivered, [
+                                            {!! Form::checkbox('received', $item->received, $item->received, [
                                                     'class' => 'form-control',
                                                     'data-id' => $item->code_name,
-                                                    'data-field' => 'delivered',
+                                                    'data-field' => 'received',
                                             ]) !!}
                                         </td>
                                         <td>
@@ -94,12 +98,6 @@
                                             ]) !!}
                                         </td>
                                         <td>
-                                            {!! Form::checkbox('docs_in_shtab', $item->docs_in_shtab, $item->docs_in_shtab, [
-                                                    'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
-                                                    'data-field' => 'docs_in_shtab',
-                                            ]) !!}</td>
-                                        <td>
                                             {!! Form::textarea(
                                                 'comment_docs',
                                                 $item->commentDocs,
@@ -109,6 +107,27 @@
                                                     'data-field' => 'comment_docs',
                                                 ]
                                             ) !!}
+                                        </td>
+                                        <td>
+                                            {!! Form::checkbox('docs_in_shtab', $item->docs_in_shtab, $item->docs_in_shtab, [
+                                                    'class' => 'form-control',
+                                                    'data-id' => $item->code_name,
+                                                    'data-field' => 'docs_in_shtab',
+                                            ]) !!}
+                                        </td>
+                                        <td>
+                                            {!! Form::checkbox('delivery', $item->delivery, $item->delivery, [
+                                                    'class' => 'form-control',
+                                                    'data-id' => $item->code_name,
+                                                    'data-field' => 'delivery',
+                                            ]) !!}
+                                        </td>
+                                        <td>
+                                            {!! Form::number('delivery_count', $item->delivery_count, $item->delivery_count, [
+                                                    'class' => 'form-control',
+                                                    'data-id' => $item->code_name,
+                                                    'data-field' => 'delivery_count',
+                                            ]) !!}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -139,6 +158,25 @@
                     return value;
                 };
 
+                var update = function(_this) {
+                    var code_name = _this.data('id');
+                    var field = _this.data('field');
+                    var value = _this.val();
+                    if (_this.attr('type') == 'checkbox') {
+                        value = _this.prop('checked');
+                    }
+
+                    smartAjax('/ajax/save_order', {
+                        code_name: code_name,
+                        field: field,
+                        value: value,
+                    }, function(msg) {
+                        console.log(msg);
+                    }, function(msg) {
+                        console.log(msg.error_text);
+                    }, 'order_flow', 'POST');
+                };
+
                 $(document).ready(function(){
                     $('.filter').on('change', function (e) {
                         var _this = $(this);
@@ -154,19 +192,7 @@
 
                     $('tbody').on('change', '.form-control', function() {
                         var _this = $(this);
-                        var code_name = _this.data('id');
-                        var field = _this.data('field');
-                        var value = _this.val();
-
-                        smartAjax('/ajax/save_order', {
-                            code_name: code_name,
-                            field: field,
-                            value: value,
-                        }, function(msg){
-                            console.log(msg);
-                        }, function(msg){
-                            console.log(msg.error_text);
-                        }, 'order_flow', 'POST');
+                        update(_this);
                     });
                 });
             })($ || jQuery);
