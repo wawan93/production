@@ -25,6 +25,40 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('approve-maket', function($user) {
+            if ($user->role !== 'admin') {
+                return false;
+            }
+
+            if (strpos($user->extra_class, 'c_maket_approve') === false) {
+                return false;
+            }
+
+            return true;
+        });
+
+        Gate::define('update-order', function($user) {
+            if ($user->role !== 'admin') {
+                return false;
+            }
+
+            if (strpos($user->extra_class, 'c_orders_manager') === false) {
+                return false;
+            }
+
+            return true;
+        });
+
+        Gate::define('update-warehouse', function($user) {
+            if ($user->role !== 'admin') {
+                return false;
+            }
+
+            if (strpos($user->extra_class, 'c_warehouse_manager') === false) {
+                return false;
+            }
+
+            return true;
+        });
     }
 }

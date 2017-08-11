@@ -13,6 +13,7 @@ use Auth;
 use Dompdf\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Gate;
 use Mail;
 use Session;
 
@@ -136,6 +137,11 @@ class OrderController extends Controller
      */
     public function update($id, Request $request)
     {
+        if (Gate::denies('update-order')) {
+            Session::flash('flash_message', 'Нет прав!');
+            return redirect('/order/' . $id . '/edit');
+        }
+
         $requestData = $request->all();
 
         $order = Order::findOrFail($id);
@@ -218,6 +224,49 @@ class OrderController extends Controller
 
     public function ajaxUpdate(Request $request)
     {
+        $orderFields = [
+            'manager_id',
+            'status',
+            'edition_final',
+            'manufacturer',
+            'paid_date',
+            'final_date',
+            'ship_date',
+            'ship_time',
+            'contact',
+            'invoice_subject',
+            'mail_sent',
+            'maket_ok',
+            'set_id',
+        ];
+
+        $warehouseFields = [
+            'received',
+            'sorted',
+            'docs',
+            'docs_in_shtab',
+            'delivery',
+            'in_stock',
+        ];
+
+
+        if (!in_array($request->get('field'), array_merge($orderFields, $warehouseFields))) {
+            return response()->json(['error'=>'true', 'error_text'=>'нельзя менять это поле']);
+        }
+
+        if (in_array($request->get('field'), $orderFields)) {
+            if (Gate::denies('update-order')) {
+                return response()->json(['error'=>'true', 'error_text'=>'нет прав на изменение этого поля']);
+            }
+        }
+
+        if (in_array($request->get('field'), $warehouseFields)) {
+            if (Gate::denies('update-warehouse')) {
+                return response()->json(['error'=>'true', 'error_text'=>'нет прав на изменение этого поля']);
+            }
+        }
+
+
         /** @var Order $order */
         $order = Order::where('code_name', $request->get('code_name'))->firstOrFail();
 
