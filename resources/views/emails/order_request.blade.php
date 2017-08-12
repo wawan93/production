@@ -7,9 +7,10 @@
     </head>
 
     <body>
+        <p>{!! nl2br($intro) !!}</p>
+        <p>&nbsp;</p>
         <p><strong>Суммарный тираж: {{ $order->edition_final }}</strong></p>
         <p>{!! nl2br($order->type()->mat_descr) !!}</p>
-        <p>{!! nl2br($intro) !!}</p>
         @foreach($order->team()->members() as $user)
             <p><strong>Кандидат {{ $user->surname }} {{ $user->name }} {{ $user->middlename }}</strong></p>
             <p><em>В счёте-договоре в поле Заказчик нужно написать</em></p>
