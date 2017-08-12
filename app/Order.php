@@ -170,4 +170,9 @@ class Order extends Model
         return $query->whereIn('status', ['production', 'shipped']);
     }
 
+    public function responsible()
+    {
+        return $this->hasOne(User::class, 'id', 's_responsible');
+    }
+
 }

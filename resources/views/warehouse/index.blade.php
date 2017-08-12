@@ -23,12 +23,15 @@
                                         <th data-direction="asc" data-field="contact">Контакт</th>
                                         <th data-direction="asc" data-field="received">Получен</th>
                                         <th data-direction="asc" data-field="delivery">Разнос</th>
+                                        <th data-direction="asc" data-field="responsible">ФИО кандидата</th>
+                                        <th data-direction="asc" data-field="s_promised_money">согласована сумма</th>
+                                        <th data-direction="asc" data-field="s_promised_money">тираж к разносу</th>
+                                        <th data-direction="asc" data-field="s_comment">Коммент дипломатии</th>
+                                        <th data-direction="asc" data-field="comment_delivery">Коммент</th>
                                         <th data-direction="asc" data-field="sorted">Сортировка</th>
-                                        <th data-direction="asc" data-field="commentDelivery">Коммент</th>
                                         <th data-direction="asc" data-field="docs">Документы</th>
                                         <th data-direction="asc" data-field="docs_comment">Коммент по докам</th>
                                         <th data-direction="asc" data-field="docs_in_shtab">Документы в штабе</th>
-                                        <th data-direction="asc" data-field="delivery_count">Кол-во на разнос</th>
                                     </tr>
                                     <tr>
                                         <td>{!! Form::text('filter[code_name]',  @$filter['code_name'],['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
@@ -39,12 +42,15 @@
                                         <td></td>
                                         <td>{!! Form::checkbox('filter[received]',  @$filter['received'], @$filter['received'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td>{!! Form::checkbox('filter[delivery]',  @$filter['delivery'], @$filter['delivery'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
-                                        <td>{!! Form::checkbox('filter[sorted]',  @$filter['delivered'], @$filter['delivered'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{!! Form::checkbox('filter[sorted]',  @$filter['delivered'], @$filter['delivered'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td>{!! Form::checkbox('filter[docs]',  @$filter['docs'], @$filter['docs'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td></td>
                                         <td>{!! Form::checkbox('filter[docs_in_shtab]',  @$filter['docs_in_shtab'], @$filter['docs_in_shtab'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
-                                        <td>{!! Form::number('filter[delivery_count]',  @$filter['delivery_count'], @$filter['delivery_count'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                     </tr>
                                 </thead>
 
@@ -80,28 +86,35 @@
                                             ]) !!}
                                         </td>
                                         <td>
-                                        {!! Form::number('delivery_count', $item->delivery_count, $item->delivery_count, [
-                                                'class' => 'form-control',
-                                                'data-id' => $item->code_name,
-                                                'data-field' => 'delivery_count',
-                                        ]) !!}
+                                            @if( $item->responsible()->first())
+                                                {{ $item->responsible()->first()->surname }}
+                                                {{ $item->responsible()->first()->name }}
+                                                {{ $item->responsible()->first()->middlename }}
+                                                {{ $item->responsible()->first()->phone }}
+                                            @endif
+                                        </td>
+                                        <td>{{ $item->s_promised_money }}</td>
+                                        <td>{{ round($item->s_promised_money / 1.7) }}</td>
+                                        <td>
+                                            {{ $item->s_comment }}
+                                        </td>
+                                        <td>
+                                            {!! Form::textarea(
+                                                'comment_docs',
+                                                $item->commentDocs,
+                                                [
+                                                    'class' => 'form-control',
+                                                    'data-id' => $item->code_name,
+                                                    'data-field' => 'comment_docs',
+                                                ]
+                                            ) !!}
+                                        </td>
                                         <td>
                                             {!! Form::checkbox('sorted', $item->sorted, $item->sorted, [
                                                     'class' => 'form-control',
                                                     'data-id' => $item->code_name,
                                                     'data-field' => 'sorted',
                                             ]) !!}
-                                        </td>
-                                        <td>
-                                            {!! Form::textarea(
-                                                'commentDelivery',
-                                                $item->commentDelivery,
-                                                [
-                                                    'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
-                                                    'data-field' => 'commentDelivery',
-                                                ]
-                                            ) !!}
                                         </td>
                                         <td>
                                             {!! Form::checkbox('docs', $item->docs, $item->docs, [
@@ -127,7 +140,6 @@
                                                     'data-id' => $item->code_name,
                                                     'data-field' => 'docs_in_shtab',
                                             ]) !!}
-                                        </td>
                                         </td>
                                     </tr>
                                 @endforeach
