@@ -238,6 +238,7 @@ class OrderController extends Controller
             'mail_sent',
             'maket_ok',
             'set_id',
+            'comment',
         ];
 
         $warehouseFields = [
@@ -247,6 +248,8 @@ class OrderController extends Controller
             'docs_in_shtab',
             'delivery',
             'in_stock',
+            'comment_delivery',
+            'comment_docs',
         ];
 
 

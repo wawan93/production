@@ -102,7 +102,7 @@
                                                 [
                                                     'class' => 'form-control',
                                                     'data-id' => $item->code_name,
-                                                    'data-field' => 'edition_final',
+                                                    'data-field' => 'manufacturer',
                                                 ]
                                             ) !!}
 
