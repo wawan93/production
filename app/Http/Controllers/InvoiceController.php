@@ -31,7 +31,7 @@ class InvoiceController extends Controller
             'download_hash_md5' => $list['download_hash_md5'],
         ]);
 
-        GdLogEntry::create([
+        $logArray = [
             'type' => 'invoice_polygraphy',
             'tg_bot_status' => 'inqueue',
             'user_id' => Auth::id(),
@@ -42,7 +42,14 @@ class InvoiceController extends Controller
                 'order_id' => $request->get('order_id'),
                 'user_id' => $request->get('user_id'),
             ]),
-        ]);
+        ];
+
+        $count = Invoice::whereOrderId($request->get('order_id'))->count();
+        if ($count == 0) {
+            $logArray['details']['is_first_invoice'] = true;
+        }
+
+        GdLogEntry::create($logArray);
 
         $allInvoicesUploaded = true;
         foreach ($order->team()->members() as $user) {
