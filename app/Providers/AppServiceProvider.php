@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Observers\OrderUpdateObserver;
+use App\Order;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Order::observe(OrderUpdateObserver::class);
     }
 
     /**
@@ -23,8 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-		if ($this->app->environment() == 'local') {
-			$this->app->register('Appzcoder\CrudGenerator\CrudGeneratorServiceProvider');
-		}
-	}
+        if ($this->app->environment() == 'local') {
+            $this->app->register('Appzcoder\CrudGenerator\CrudGeneratorServiceProvider');
+        }
+    }
 }

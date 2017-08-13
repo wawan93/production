@@ -145,13 +145,6 @@ class OrderController extends Controller
         $requestData = $request->all();
 
         $order = Order::findOrFail($id);
-        if ($order->manufacturer != $requestData['manufacturer']) {
-            $order->mail_sent = false;
-        }
-        if (isset($requestData['recieved']) && $requestData['recieved'] == 'true') {
-            $order->status = 'shipped';
-            $order->receive_time = time();
-        }
 
         $order->update($requestData);
 
@@ -210,14 +203,6 @@ class OrderController extends Controller
             $order = Order::where('code_name', $request->get('code_name'))->first();
             $order->maket_ok = 1;
             $order->save();
-
-            GdLogEntry::create([
-                'type' => 'maket_f_approve',
-                'tg_bot_status' => 'inqueue',
-                'user_id' => Auth::id(),
-                'arg_id' => Auth::id(),
-                'details' => serialize(['order_id' => $order->id])
-            ]);
         } catch (Exception $e) {
             $output = [
                 'error' => 'true',
@@ -309,6 +294,14 @@ class OrderController extends Controller
         if ($request->get('field') == 'received') {
             $order->status = 'shipped';
             $order->receive_time = time();
+
+            GdLogEntry::create([
+                'type' => 'received_to_stock',
+                'tg_bot_status' => 'inqueue',
+                'user_id' => Auth::id(),
+                'arg_id' => Auth::id(),
+                'details' => serialize(['order_id' => $order->id])
+            ]);
         }
         $value = $request->get('value');
         if (in_array($value, ['true', 'false'])) {
