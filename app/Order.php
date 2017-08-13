@@ -35,6 +35,7 @@ class Order extends Model
         'docs',
         'set_id',
         'receive_time',
+        'in_progress',
     ];
 
     public function team()

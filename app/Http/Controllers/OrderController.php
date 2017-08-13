@@ -180,7 +180,7 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         $template = new OrderRequest($order, $request->get('intro'), $request->get('signature'));
-        dump($template);
+//        dump($template);
 
         Mail::to($order->manufacturer())->bcc('prod@gudkov.ru')->send($template);
         $order->mail_sent = 1;
@@ -228,6 +228,7 @@ class OrderController extends Controller
             'mail_sent',
             'maket_ok',
             'set_id',
+            'in_progress',
             'comment',
         ];
 

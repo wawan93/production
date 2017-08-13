@@ -19,7 +19,7 @@
                                         <th data-direction="asc" data-field="code_name">Заказ</th>
                                         <th data-direction="asc" data-field="manager_id">Менеджер</th>
                                         <th data-direction="asc" data-field="status">Статус</th>
-                                        <th data-direction="asc" data-field="alert">💰</th>
+                                        <th data-direction="asc" data-field="alert">📌</th>
                                         <th data-direction="asc" data-field="edition_initial">Тираж начальный</th>
                                         <th data-direction="asc" data-field="edition_final">Тираж финальный</th>
                                         <th data-direction="asc" data-field="set_id">Комплект</th>
@@ -66,9 +66,11 @@
                                             ]) !!}
                                         </td>
                                         <td>
-                                            @if ($item->status == 'fundraising_finished')
-                                                {{ ($item->alert == false) ? '✅' : '🆘' }}
-                                            @endif
+                                            {!! Form::checkbox('in_progress', $item->in_progress, $item->in_progress, [
+                                                     'class' => 'form-control',
+                                                     'data-id' => $item->code_name,
+                                                     'data-field' => 'in_progress',
+                                             ]) !!}
                                         </td>
                                         <td>{{ $item->edition_initial }}</td>
                                         <td>
@@ -180,6 +182,25 @@
                     return value;
                 };
 
+                var update = function(_this) {
+                    var code_name = _this.data('id');
+                    var field = _this.data('field');
+                    var value = _this.val();
+                    if (_this.attr('type') == 'checkbox') {
+                        value = _this.prop('checked');
+                    }
+
+                    smartAjax('/ajax/save_order', {
+                        code_name: code_name,
+                        field: field,
+                        value: value,
+                    }, function(msg) {
+                        console.log(msg);
+                    }, function(msg) {
+                        console.log('error: ', msg.error_text);
+                    }, 'order_flow', 'POST');
+                };
+
                 $(document).ready(function(){
                     $('.filter').on('change', function (e) {
                         var _this = $(this);
@@ -195,19 +216,7 @@
 
                     $('tbody').on('change', '.form-control', function() {
                         var _this = $(this);
-                        var code_name = _this.data('id');
-                        var field = _this.data('field');
-                        var value = _this.val();
-
-                        smartAjax('/ajax/save_order', {
-                            code_name: code_name,
-                            field: field,
-                            value: value,
-                        }, function(msg){
-                            console.log(msg);
-                        }, function(msg){
-                            console.log(msg.error_text);
-                        }, 'order_flow', 'POST');
+                        update(_this);
                     });
                 });
             })($ || jQuery);
