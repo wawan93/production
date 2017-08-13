@@ -148,6 +148,11 @@ class OrderController extends Controller
         if ($order->manufacturer != $requestData['manufacturer']) {
             $order->mail_sent = false;
         }
+        if (isset($requestData['recieved']) && $requestData['recieved'] == 'true') {
+            $order->status = 'shipped';
+            $order->receive_time = time();
+        }
+
         $order->update($requestData);
 
         Session::flash('flash_message', 'Order updated!');
@@ -250,6 +255,7 @@ class OrderController extends Controller
             'in_stock',
             'comment_delivery',
             'comment_docs',
+            'receive_time',
         ];
 
 
@@ -299,6 +305,10 @@ class OrderController extends Controller
 
         if ($request->get('field') == 'manufacturer') {
             $order->mail_sent = false;
+        }
+        if ($request->get('field') == 'received') {
+            $order->status = 'shipped';
+            $order->receive_time = time();
         }
         $value = $request->get('value');
         if (in_array($value, ['true', 'false'])) {

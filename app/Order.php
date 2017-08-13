@@ -34,6 +34,7 @@ class Order extends Model
         'sorted',
         'docs',
         'set_id',
+        'receive_time',
     ];
 
     public function team()
