@@ -6,6 +6,7 @@ use App\Mail\MaketsSet;
 use App\Mail\OrderRequest;
 use App\Manufacturer;
 use App\Order;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
