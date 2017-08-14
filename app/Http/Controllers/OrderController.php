@@ -67,6 +67,10 @@ class OrderController extends Controller
             $order->where('set_id', $filter['set_id']);
         }
 
+        if (@$filter['in_progress']) {
+            $order->where('in_progress', 1);
+        }
+
         return view('order.index', ['order'=> $order->paginate(1000), 'filter' => $filter, 'count' => $order->count()]);
     }
 

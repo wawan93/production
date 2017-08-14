@@ -18,9 +18,11 @@ class OrderUpdateObserver
             $order->mail_sent = false;
         }
 
-        if (in_array('recieved', $changedFields) && $order->recieved == 'true') {
+        if (in_array('recieved', $changedFields) && $order->recieved == true) {
             $order->status = 'shipped';
-            $order->receive_time = time();
+            $order->receive_time = date('Y-m-d H:i:s');
+        } elseif ($order->received == false) {
+            $order->status = 'production';
         }
 
         if (in_array('maket_ok', $changedFields)) {
@@ -33,7 +35,9 @@ class OrderUpdateObserver
             ]);
         }
 
-
+        if (in_array('status', $changedFields) && $order->status == 'production') {
+            $order->in_progress = 0;
+        }
 
 
     }
