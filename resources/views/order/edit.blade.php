@@ -153,7 +153,7 @@
                             location.reload();
 
                         }, function(msg){
-                            console.log(msg.error_text);
+                            alert(msg.error_text);
                         });
 
                     };
@@ -168,7 +168,7 @@
                         }, function(msg){
                             location.reload();
                         }, function(msg){
-                            console.log(msg.error_text);
+                            alert(msg.error_text);
                         }, 'approve-maket', 'POST');
                     });
 
@@ -179,7 +179,7 @@
                             }, function(msg){
                                 location.reload();
                             }, function(msg){
-                                console.log(msg.error_text);
+                                alert(msg.error_text);
                             }, 'delete_invoice', 'DELETE');
                         }
                         return false;
@@ -192,7 +192,7 @@
                             }, function(msg) {
                                 location.reload();
                             }, function(msg) {
-                                console.log(msg.error_text);
+                                alert(msg.error_text);
                             }, 'delete_payment', 'DELETE');
                         }
                         return false;

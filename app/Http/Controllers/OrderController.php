@@ -193,12 +193,13 @@ class OrderController extends Controller
     {
         $output = ['error' => 'false'];
 
-        if (strpos(Auth::user()->extra_class, 'c_maket_approve') === false) {
+        if (strpos(Auth::user()->extra_class, 'maket_approve') === false) {
             return response()->json([
                 'error' => 'true',
-                'error_text' => 'не удалось сохранить макет'
+                'error_text' => 'нет прав'
             ]);
         }
+
         try {
             $order = Order::where('code_name', $request->get('code_name'))->first();
             $order->maket_ok = 1;
@@ -226,7 +227,6 @@ class OrderController extends Controller
             'contact',
             'invoice_subject',
             'mail_sent',
-            'maket_ok',
             'set_id',
             'in_progress',
             'comment',
@@ -245,7 +245,7 @@ class OrderController extends Controller
         ];
 
 
-        if (!in_array($request->get('field'), array_merge($orderFields, $warehouseFields))) {
+        if (!in_array($request->get('field'), array_merge($orderFields, $warehouseFields, ['maket_ok']))) {
             return response()->json(['error'=>'true', 'error_text'=>'нельзя менять это поле']);
         }
 
@@ -294,7 +294,7 @@ class OrderController extends Controller
         }
         if ($request->get('field') == 'received') {
             $order->status = 'shipped';
-            $order->receive_time = time();
+            $order->receive_time = date('Y-m-d H:i:s');
 
             GdLogEntry::create([
                 'type' => 'received_to_stock',

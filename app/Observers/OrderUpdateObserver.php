@@ -5,6 +5,7 @@ namespace App\Observers;
 
 use App\GdLogEntry;
 use App\Order;
+use Illuminate\Support\Facades\Auth;
 
 class OrderUpdateObserver
 {
