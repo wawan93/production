@@ -27,6 +27,7 @@ class MailController extends Controller
         );
 
         Mail::to(Manufacturer::find($request->get('manufacturer')))
+            ->bcc('prod@gudkov.ru')
             ->send($template);
 
         Session::flash('flash_message', 'Отправлено!');

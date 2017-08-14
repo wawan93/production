@@ -26,6 +26,9 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/preview-mail/{type}/{id}', 'MailController@preview')->name('preview_mail');
     Route::post('/send-mail/{type}/{id}', 'MailController@send')->name('send_mail');
 
+    Route::get('/sets', 'OrderController@sets');
+
+
     Route::get('/ajax/save_invoice', 'InvoiceController@save')->name('save_invoice');
     Route::delete('/ajax/delete/{type}', 'InvoiceController@delete')->name('save_invoice');
     Route::post('/ajax/save_order', 'OrderController@ajaxUpdate')->name('save_order');

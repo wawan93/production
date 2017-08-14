@@ -317,4 +317,10 @@ class OrderController extends Controller
 
         return response()->json(['error' => 'false']);
     }
+
+    public function sets()
+    {
+        $sets = Order::where('set_id', '>', 0)->groupBy('set_id')->get(['set_id']);
+        return view('order.sets', compact('sets'));
+    }
 }
