@@ -304,7 +304,7 @@ class OrderController extends Controller
                 'type' => 'received_to_stock',
                 'tg_bot_status' => 'inqueue',
                 'user_id' => Auth::id(),
-                'arg_id' => Auth::id(),
+                'arg_id' => $order->id,
                 'details' => serialize(['order_id' => $order->id])
             ]);
         }

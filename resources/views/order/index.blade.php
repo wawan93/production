@@ -197,7 +197,7 @@
                     }, function(msg) {
                         console.log(msg);
                     }, function(msg) {
-                        console.log('error: ', msg.error_text);
+                        alert('error: ', msg.error_text);
                     }, 'order_flow', 'POST');
                 };
 
