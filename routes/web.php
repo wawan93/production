@@ -21,7 +21,10 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/warehouse', 'HomeController@index')->name('warehouse');
 
     Route::get('/viewMail/{id}', 'OrderController@viewMail')->name('view_mail');
-    Route::post('/sendMail/{id}', 'OrderController@sendMail')->name('send_mail');
+    Route::post('/sendMail/{id}', 'OrderController@sendMail');
+
+    Route::get('/preview-mail/{type}/{id}', 'MailController@preview')->name('preview_mail');
+    Route::post('/send-mail/{type}/{id}', 'MailController@send')->name('send_mail');
 
     Route::get('/ajax/save_invoice', 'InvoiceController@save')->name('save_invoice');
     Route::delete('/ajax/delete/{type}', 'InvoiceController@delete')->name('save_invoice');
