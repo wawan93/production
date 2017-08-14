@@ -21,8 +21,6 @@ class OrderUpdateObserver
         if (in_array('recieved', $changedFields) && $order->recieved == true) {
             $order->status = 'shipped';
             $order->receive_time = date('Y-m-d H:i:s');
-        } elseif ($order->received == false) {
-            $order->status = 'production';
         }
 
         if (in_array('maket_ok', $changedFields)) {
