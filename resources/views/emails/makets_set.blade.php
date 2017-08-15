@@ -8,7 +8,8 @@
     <body>
         <p>{!! nl2br($intro) !!}</p>
         @foreach($orders as $order)
-            <p><strong>Заказ {{ $order->polygraphy_format }} {{ $order->edition_final }}шт. {{ $order->code_name }}</strong> - {{ $order->maket_url }}</p>
+            <p><strong>Заказ {{ $order->polygraphy_format }} {{ $order->edition_final }}шт. {{ $order->code_name }}</strong>
+                - <a href="{{ $order->maket_url }}" target="_blank">{{ $order->maket_url }}</a></p>
         @endforeach
         <p>{!! nl2br($signature) !!}</p>
     </body>
