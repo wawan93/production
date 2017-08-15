@@ -27,7 +27,7 @@
                             {!! Form::select(
                                 'manufacturer',
                                 \App\Manufacturer::all()->pluck('short_name', 'id')->prepend('не выбран', 0),
-                                null,
+                                $orders->first()->manufacturer,
                                 ['class' => 'form-control']
                             ) !!}
                             </p>
