@@ -41,6 +41,7 @@
                         <li><a href="/warehouse">Склад</a></li>
                         <li><a href="/polygraphy-type">Форматы</a></li>
                         <li><a href="/manufacturer">Изготовители</a></li>
+                        <li><a href="/sets">Комплекты</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
