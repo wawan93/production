@@ -11,6 +11,7 @@
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4",
+        "lloricode/laravel-html-table": "^1.2",
         "unisharp/laravel-ckeditor": "^4.6"
     },
     "require-dev": {
