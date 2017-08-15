@@ -30,6 +30,17 @@ class OrderUpdateObserver
         }
 
         if (in_array('status', $changedFields)) {
+            GdLogEntry::create([
+                'type' => 'ajax_update_order',
+                'tg_bot_status' => 'none',
+                'user_id' => Auth::id(),
+                'arg_id' => $order->id,
+                'details' => serialize([
+                    'order_id' => $order->id,
+                    'from' => $order->getOriginal('status'),
+                    'to' => $order->status
+                ])
+            ]);
             $this->resetInProgressWhenProductionStarted($order, $changedFields);
         }
 
