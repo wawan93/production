@@ -59,7 +59,7 @@ class InvoiceController extends Controller
                 break;
             }
         }
-        if ($allInvoicesUploaded) {
+        if ($allInvoicesUploaded && in_array($order->status, ['approved', 'fundraising_finished'])) {
             $order->status = 'invoices';
             $order->save();
         }
