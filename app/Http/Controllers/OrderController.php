@@ -217,6 +217,30 @@ class OrderController extends Controller
         return response()->json($output);
     }
 
+    public function approveMaketCorrections(Request $request)
+    {
+        $output = ['error' => 'false'];
+
+        if (strpos(Auth::user()->extra_class, 'c_maket_corrections_approve') === false) {
+            return response()->json([
+                'error' => 'true',
+                'error_text' => 'нет прав'
+            ]);
+        }
+
+        try {
+            $order = Order::find($request->get('order_id'));
+            $order->maket_ok_final = 1;
+            $order->save();
+        } catch (Exception $e) {
+            $output = [
+                'error' => 'true',
+                'error_text' => 'не удалось сохранить макет'
+            ];
+        }
+        return response()->json($output);
+    }
+
     public function ajaxUpdate(Request $request)
     {
         $orderFields = [

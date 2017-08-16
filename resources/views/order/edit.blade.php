@@ -113,12 +113,32 @@
                                     @if(!empty($order->maket_url))
                                         <p><a href="{{ $order->maket_url }}" target="_blank" class="">{{ $order->maket_url }}</a></p>
                                         @if($order->maket_ok)
-                                            <p><strong>утверждён</strong></p>
+                                            <p><strong>✅ утверждён цензором</strong></p>
                                         @elseif(strpos(Auth::user()->extra_class, 'c_maket_approve') !== false)
                                             <p><a href="#" class="btn btn-danger approve-maket">Утвердить</a></p>
+                                        @else
+                                            <p><strong>❌ пока не утверждён цензором</strong></p>
+                                        @endif
+
+                                        @if($order->polygraphy_approved()->maket_agree_with === 'true')
+                                            <p><strong>✅ все кандидаты ознакомились с макетом</strong></p>
+                                        @else
+                                            <p><strong>пока не все видели макет</strong></p>
+                                        @endif
+
+                                        @if ($order->needCorrections())
+                                            @if($order->maket_ok_final)
+                                                <p><strong>✅ правочки утверждены</strong></p>
+                                            @elseif(strpos(Auth::user()->extra_class, 'c_maket_corrections_approve') !== false)
+                                                <p><a href="#" class="btn btn-danger approve-maket-corrections">Утвердить последние правочки</a></p>
+                                            @else
+                                                <p><strong>❌ пока не утверждёны все правки</strong></p>
+                                            @endif
+                                        @else
+                                            <p><strong>✅ правок не было</strong></p>
                                         @endif
                                     @else
-                                        <p><strong>пока нет</strong></p>
+                                        <p>нет макета</p>
                                     @endif
                                 </div>
                             </div>
@@ -161,15 +181,29 @@
                     fileUploader.setOriginMode('laravel');
 
                     $('.approve-maket').on('click', function() {
-                        var _this = $(this);
-                        smartAjax('/ajax/approve_maket', {
-                            code_name: '{{ $order->code_name }}',
+                        if (confirm('утвердить макет?')) {
+                            var _this = $(this);
+                            smartAjax('/ajax/approve_maket', {
+                                code_name: '{{ $order->code_name }}',
+                            }, function(msg) {
+                                location.reload();
+                            }, function(msg) {
+                                alert(msg.error_text);
+                            }, 'approve-maket', 'POST');
+                        }
+                    });
 
-                        }, function(msg){
-                            location.reload();
-                        }, function(msg){
-                            alert(msg.error_text);
-                        }, 'approve-maket', 'POST');
+                    $('.approve-maket-corrections').on('click', function() {
+                        if (confirm('утвердить правки по макету?')) {
+                            var _this = $(this);
+                            smartAjax('/ajax/approve_maket_corrections', {
+                                order_id: '{{ $order->id }}',
+                            }, function(msg) {
+                                location.reload();
+                            }, function(msg) {
+                                alert(msg.error_text);
+                            }, 'approve-maket', 'POST');
+                        }
                     });
 
                     $('.invoices').on('click', '.delete-invoice', function(e) {

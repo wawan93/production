@@ -36,6 +36,7 @@ class Order extends Model
         'set_id',
         'receive_time',
         'in_progress',
+        'maket_ok_final',
     ];
 
     public function team()
@@ -179,4 +180,28 @@ class Order extends Model
         return $this->hasOne(User::class, 'id', 's_responsible');
     }
 
+    public function polygraphy_approved()
+    {
+        return PolygraphyApproved::where([
+            'polygraphy_type' => $this->polygraphy_type,
+            'team_id' => $this->team_id,
+        ])->first();
+    }
+
+    public function needCorrections()
+    {
+        $teamMembers = $this->team()->members()->pluck('id')->toArray();
+
+        $everyoneAgree = PolygraphyPeople::where('polygraphy_type', $this->polygraphy_type)
+            ->whereIn('user_id', $teamMembers)
+            ->pluck('maket_agree_with')
+            ->reduce(function($carry, $item) {
+                if ($item == 'false') {
+                    $carry = false;
+                }
+                return $carry;
+            }, true);
+
+        return !$everyoneAgree;
+    }
 }

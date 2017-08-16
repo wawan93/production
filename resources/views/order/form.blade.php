@@ -4,11 +4,19 @@
         {!! Form::select('manager_id', \App\User::managers(), null, ['class' => 'form-control']) !!}
         {!! $errors->first('manager_id', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
+</div>
+<div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
     {!! Form::label('status', 'Статус', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::select('status', \App\Order::allStatuses(), null, ['class' => 'form-control']) !!}
         {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
+<div class="form-group {{ $errors->has('polygraphy_format') ? 'has-error' : ''}}">
+    {!! Form::label('polygraphy_format', 'Формат', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::select('polygraphy_format', ['A3' => 'A3', 'A4' => 'A4'], null, ['class' => 'form-control']) !!}
+        {!! $errors->first('polygraphy_format', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 <div class="form-group {{ $errors->has('edition_final') ? 'has-error' : ''}}">
@@ -30,13 +38,15 @@
         ) !!}
         {!! $errors->first('manufacturer', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('paid_date') ? 'has-error' : ''}}">
+</div>
+<div class="form-group {{ $errors->has('paid_date') ? 'has-error' : ''}}">
     {!! Form::label('paid_date', 'Дата оплаты', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::date('paid_date', null, ['class' => 'form-control']) !!}
         {!! $errors->first('paid_date', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('final_date') ? 'has-error' : ''}}">
+</div>
+<div class="form-group {{ $errors->has('final_date') ? 'has-error' : ''}}">
     {!! Form::label('final_date', 'Дата выхода', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::date('final_date', null, ['class' => 'form-control', 'pattern'=>"[0-9]{4}-[0-9]{2}-[0-9]{2}"]) !!}
