@@ -293,21 +293,6 @@ class OrderController extends Controller
             ]);
         }
 
-        if ($request->get('field') == 'manufacturer') {
-            $order->mail_sent = false;
-        }
-        if ($request->get('field') == 'received') {
-            $order->status = 'shipped';
-            $order->receive_time = date('Y-m-d H:i:s');
-
-            GdLogEntry::create([
-                'type' => 'received_to_stock',
-                'tg_bot_status' => 'inqueue',
-                'user_id' => Auth::id(),
-                'arg_id' => $order->id,
-                'details' => serialize(['order_id' => $order->id])
-            ]);
-        }
         $value = $request->get('value');
         if (in_array($value, ['true', 'false'])) {
             $value = intval($value == 'true');

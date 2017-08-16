@@ -63,9 +63,9 @@ class Order extends Model
             'paid' => 'Оплачено',
             'ordered' => 'Отправлено',
             'production' => 'В производстве',
-            'delivered' => 'Разнесено',
-            'delivering' => 'В доставке',
             'shipped' => 'Доставлено',
+            'delivering' => 'В доставке',
+            'delivered' => 'Разнесено',
             'cancelled' => 'Отменено',
         ];
 
