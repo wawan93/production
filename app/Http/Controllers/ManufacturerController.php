@@ -123,6 +123,8 @@ class ManufacturerController extends Controller
         $manufacturer = Manufacturer::findOrFail($id);
         $manufacturer->update($requestData);
 
+        $allAllowed = AllowedManufacturers::where('manufacturer_id', $id)->forceDelete();
+
         foreach ($requestData['restricted'] as $restricted) {
             AllowedManufacturers::firstOrCreate([
                 'manufacturer_id' => $manufacturer->id,
