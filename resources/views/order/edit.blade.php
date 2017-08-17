@@ -7,6 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Заказ команды #{{ $order->team_id }} ({{ $order->team()->region_name }} {{ $order->team()->district_number }})
+                        <strong><a target="_blank" href="https://t.me/{{ str_replace('@', '', $order->team()->diplomat()['tg']) }}">{{ $order->team()->diplomat()['фио'] }}</a> </strong>
                     </div>
                     <div class="panel-body">
                         <a href="{{ url('/order') }}" title="Back"><button class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>

@@ -12,6 +12,13 @@
         {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
+<div class="form-group {{ $errors->has('set_id') ? 'has-error' : ''}}">
+    {!! Form::label('set_id', 'Комплект', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::number('set_id', null, ['class' => 'form-control']) !!}
+        {!! $errors->first('set_id', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
 <div class="form-group {{ $errors->has('polygraphy_format') ? 'has-error' : ''}}">
     {!! Form::label('polygraphy_format', 'Формат', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
