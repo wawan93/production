@@ -332,4 +332,14 @@ class OrderController extends Controller
         $sets = Order::where('set_id', '>', 0)->groupBy('set_id')->get(['set_id']);
         return view('order.sets', compact('sets'));
     }
+
+    public function achtung(Request $request)
+    {
+        $order = Order::find($request->get('id'));
+
+        $order->s_diplo_warning = 'true';
+        $order->save();
+
+        return response()->json(['error' => 'false']);
+    }
 }

@@ -30,22 +30,16 @@ class OrderUpdateObserver
         }
 
         if (in_array('status', $changedFields)) {
-            GdLogEntry::create([
-                'type' => 'ajax_update_order',
-                'tg_bot_status' => 'none',
-                'user_id' => Auth::id(),
-                'arg_id' => $order->id,
-                'details' => serialize([
-                    'order_id' => $order->id,
-                    'from' => $order->getOriginal('status'),
-                    'to' => $order->status
-                ])
-            ]);
+            $this->logStatusChange($order);
             $this->resetInProgressWhenProductionStarted($order, $changedFields);
         }
 
         if (in_array('edition_final', $changedFields)) {
             $this->notifyEditionChanged($order, $changedFields);
+        }
+
+        if (in_array('s_diplo_warning', $changedFields)) {
+            $this->logDiploWarning($order);
         }
     }
 
@@ -124,5 +118,39 @@ class OrderUpdateObserver
                 ])
             ]);
         }
+    }
+
+    /**
+     * @param Order $order
+     */
+    private function logStatusChange(Order $order)
+    {
+        GdLogEntry::create([
+            'type' => 'ajax_update_order',
+            'tg_bot_status' => 'none',
+            'user_id' => Auth::id(),
+            'arg_id' => $order->id,
+            'details' => serialize([
+                'order_id' => $order->id,
+                'from' => $order->getOriginal('status'),
+                'to' => $order->status
+            ])
+        ]);
+    }
+
+    /**
+     * @param Order $order
+     */
+    private function logDiploWarning(Order $order)
+    {
+        GdLogEntry::create([
+            'type' => 's_diplo_warning',
+            'tg_bot_status' => 'inqueue',
+            'user_id' => Auth::id(),
+            'arg_id' => $order->id,
+            'details' => serialize([
+                'order_id' => $order->id,
+            ])
+        ]);
     }
 }

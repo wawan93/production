@@ -5,7 +5,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Заказ команды #{{ $order->team_id }} ({{ $order->team()->region_name }} {{ $order->team()->district_number }})</div>
+                    <div class="panel-heading">
+                        Заказ команды #{{ $order->team_id }} ({{ $order->team()->region_name }} {{ $order->team()->district_number }})
+                        <a href="#" class="btn btn-danger achtung" data-id="{{$order->id}}">Ахтунг дипломату!</a>
+                    </div>
                     <div class="panel-body">
                         <a href="{{ url('/order') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
@@ -229,6 +232,17 @@
                                 alert(msg.error_text);
                             }, 'delete_payment', 'DELETE');
                         }
+                        return false;
+                    });
+
+                    $('.panel-heading').on('click', '.achtung', function(e) {
+                        smartAjax('/ajax/achtung', {
+                            id: $(this).data('id'),
+                        }, function(msg) {
+                            location.reload();
+                        }, function(msg) {
+                            alert(msg.error_text);
+                        }, 'achtung', 'POST');
                         return false;
                     });
 
