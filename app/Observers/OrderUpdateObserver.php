@@ -21,7 +21,7 @@ class OrderUpdateObserver
             $this->setMailSent($order, $changedFields);
         }
 
-        if (in_array('recieved', $changedFields)) {
+        if (in_array('received', $changedFields)) {
             $this->setShippedStatus($order, $changedFields);
         }
 
@@ -62,7 +62,7 @@ class OrderUpdateObserver
      */
     private function setShippedStatus(Order $order, $changedFields)
     {
-        if ($order->recieved == true) {
+        if ($order->received == true) {
             $order->status = 'shipped';
             $order->receive_time = date('Y-m-d H:i:s');
 
