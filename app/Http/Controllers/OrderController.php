@@ -4,15 +4,11 @@ namespace App\Http\Controllers;
 
 use App\GdLogEntry;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
 use App\Mail\OrderRequest;
 use App\Order;
-use App\Team;
 use Auth;
 use Dompdf\Exception;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Gate;
 use Mail;
 use Session;
@@ -331,6 +327,17 @@ class OrderController extends Controller
     {
         $sets = Order::where('set_id', '>', 0)->groupBy('set_id')->get(['set_id']);
         return view('order.sets', compact('sets'));
+    }
+
+    public function delivered(Request $request)
+    {
+        $orders = Order::whereIn('status', ['delivered', 'delivering', 'shipped']);
+
+        if ($request->get('manufacturer')) {
+            $orders->where('manufacturer', $request->get('manufacturer'));
+        }
+
+        return view('order.delivered', ['orders' => $orders->get()]);
     }
 
     public function achtung(Request $request)

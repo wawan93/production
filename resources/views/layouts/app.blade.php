@@ -37,11 +37,17 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li><a href="/order">Карточки заказов</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Заказы <span class="caret"></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('order') }}">Карточки заказов</a></li>
+                                <li><a href="{{ url('sets') }}">Комплекты</a></li>
+                                <li><a href="{{ url('delivered') }}">Выполненные заказы</a></li>
+                            </ul>
+                        </li>
                         <li><a href="/warehouse">Склад</a></li>
                         <li><a href="/polygraphy-type">Форматы</a></li>
                         <li><a href="/manufacturer">Изготовители</a></li>
-                        <li><a href="/sets">Комплекты</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

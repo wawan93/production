@@ -14,7 +14,7 @@
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function() {
+Route::middleware(['auth'])->group(function () {
 
     Route::get('/', 'OrderController@index');
     Route::get('/home', 'HomeController@index')->name('home');
@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/send-mail/{type}/{id}', 'MailController@send')->name('send_mail');
 
     Route::get('/sets', 'OrderController@sets');
+    Route::get('/delivered', 'OrderController@delivered')->name('delivered');
 
 
     Route::get('/ajax/save_invoice', 'InvoiceController@save')->name('save_invoice');
