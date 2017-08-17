@@ -337,7 +337,7 @@ class OrderController extends Controller
     {
         $order = Order::find($request->get('id'));
 
-        $order->s_diplo_warning = 'true';
+        $order->s_diplo_warning = ($request->get('status') == 'on') ? 'true' : 'false';
         $order->save();
 
         return response()->json(['error' => 'false']);

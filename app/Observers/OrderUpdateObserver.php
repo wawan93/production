@@ -150,6 +150,7 @@ class OrderUpdateObserver
             'arg_id' => $order->id,
             'details' => serialize([
                 'order_id' => $order->id,
+                'status' => $order->s_diplo_warning
             ])
         ]);
     }

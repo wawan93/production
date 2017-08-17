@@ -7,7 +7,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Заказ команды #{{ $order->team_id }} ({{ $order->team()->region_name }} {{ $order->team()->district_number }})
-                        <a href="#" class="btn btn-danger achtung" data-id="{{$order->id}}">Ахтунг дипломату!</a>
+                        @if ($order->s_diplo_warning == 'false')
+                            <a href="#" class="btn btn-danger achtung" data-id="{{$order->id}}" data-status="on">Ахтунг дипломату!</a>
+                        @else
+                            <a href="#" class="btn btn-success achtung" data-id="{{$order->id}}" data-status="off">отменить ахтунг</a>
+                        @endif
                     </div>
                     <div class="panel-body">
                         <a href="{{ url('/order') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
@@ -238,6 +242,7 @@
                     $('.panel-heading').on('click', '.achtung', function(e) {
                         smartAjax('/ajax/achtung', {
                             id: $(this).data('id'),
+                            status: $(this).data('status')
                         }, function(msg) {
                             location.reload();
                         }, function(msg) {
