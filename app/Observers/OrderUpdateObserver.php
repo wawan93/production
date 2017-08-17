@@ -41,6 +41,10 @@ class OrderUpdateObserver
         if (in_array('s_diplo_warning', $changedFields)) {
             $this->logDiploWarning($order);
         }
+
+        if (in_array('polygraphy_format', $changedFields)) {
+            $this->changeFormat($order, $order->polygraphy_format);
+        }
     }
 
     /**
@@ -153,5 +157,20 @@ class OrderUpdateObserver
                 'status' => $order->s_diplo_warning
             ])
         ]);
+    }
+
+    /**
+     * @param Order $order
+     * @param string $format
+     */
+    private function changeFormat($order, $format)
+    {
+        if ($format == 'A3') {
+            $order->code_name = str_replace('_КА4', '_КА3', $order->code_name);
+            $order->invoice_subject = str_replace('A4', 'A3', $order->invoice_subject);
+        } elseif ($format == 'A4') {
+            $order->code_name = str_replace('_КА3', '_КА4', $order->code_name);
+            $order->invoice_subject = str_replace('A3', 'A4', $order->invoice_subject);
+        }
     }
 }

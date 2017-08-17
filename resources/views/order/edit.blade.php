@@ -7,18 +7,26 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Заказ команды #{{ $order->team_id }} ({{ $order->team()->region_name }} {{ $order->team()->district_number }})
-                        @if ($order->s_diplo_warning == 'false')
-                            <a href="#" class="btn btn-danger achtung" data-id="{{$order->id}}" data-status="on">Ахтунг дипломату!</a>
-                        @else
-                            <a href="#" class="btn btn-success achtung" data-id="{{$order->id}}" data-status="off">отменить ахтунг</a>
-                        @endif
                     </div>
                     <div class="panel-body">
-                        <a href="{{ url('/order') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/order') }}" title="Back"><button class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
+                        {!! Form::open([
+                            'method'=>'DELETE',
+                            'url' => ['order', $order->id],
+                            'style' => 'display:inline'
+                        ]) !!}
+                        {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
+                                'type' => 'submit',
+                                'class' => 'btn btn-danger btn-sm',
+                                'title' => 'Delete order',
+                                'onclick'=>'return confirm("Confirm delete?")'
+                        ))!!}
+                        {!! Form::close() !!}
 
-                        @if ($errors->any())
+
+                    @if ($errors->any())
                             <ul class="alert alert-danger">
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
