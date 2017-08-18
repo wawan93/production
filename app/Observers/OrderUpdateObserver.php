@@ -34,6 +34,10 @@ class OrderUpdateObserver
             $this->resetInProgressWhenProductionStarted($order, $changedFields);
         }
 
+        if (in_array('status', $changedFields) || in_array('ship_date', $changedFields)) {
+            $this->notifyCandidates($order);
+        }
+
         if (in_array('edition_final', $changedFields)) {
             $this->notifyEditionChanged($order, $changedFields);
         }
@@ -136,6 +140,7 @@ class OrderUpdateObserver
             'arg_id' => $order->id,
             'details' => serialize([
                 'order_id' => $order->id,
+                'field' => 'status',
                 'from' => $order->getOriginal('status'),
                 'to' => $order->status
             ])
@@ -171,6 +176,40 @@ class OrderUpdateObserver
         } elseif ($format == 'A4') {
             $order->code_name = str_replace('_КА3', '_КА4', $order->code_name);
             $order->invoice_subject = str_replace('A3', 'A4', $order->invoice_subject);
+        }
+    }
+
+    private function notifyCandidates(Order $order)
+    {
+        if ($order->status == 'ordered' && in_array($order->getOriginal('status'), ['approved', 'fundraising_finished', 'invoices', 'paid'])) {
+            GdLogEntry::create([
+                'type' => 'set_was_ordered',
+                'tg_bot_status' => 'inqueue',
+                'user_id' => Auth::id(),
+                'arg_id' => $order->id,
+                'details' => serialize([
+                    'order_id' => $order->id,
+                    'team_id' => $order->team_id,
+                    'set_id' => $order->set_id,
+                    'status' => 'ordered',
+                ])
+            ]);
+        }
+
+        if ($order->getOriginal('ship_date') !== $order->ship_date && in_array($order->status, ['ordered', 'production', 'shipped'])) {
+            GdLogEntry::create([
+                'type' => 'ship_date_changed',
+                'tg_bot_status' => 'inqueue',
+                'user_id' => Auth::id(),
+                'arg_id' => $order->id,
+                'details' => serialize([
+                    'order_id' => $order->id,
+                    'team_id' => $order->team_id,
+                    'set_id' => $order->set_id,
+                    'from' => $order->getOriginal('ship_date'),
+                    'to' => $order->ship_date
+                ])
+            ]);
         }
     }
 }
