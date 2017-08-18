@@ -31,16 +31,29 @@ class OrderController extends Controller
 
         $filter = (array)$request->get('filter');
 
+        if (!isset($filter['statuses'])) {
+            $filter['statuses'] = [
+                'approved',
+                'fundraising_finished',
+                'invoices',
+                'paid',
+                'ordered',
+                'production',
+            ];
+        }
+
+        if (@$filter['status']) {
+            $order->where('status', $filter['status']);
+        } else {
+            $order->whereIn('status', $filter['statuses']);
+        }
+
         if (@$filter['manager']) {
             $order->where('manager_id', $filter['manager']);
         }
 
         if (@$filter['code_name']) {
             $order->where('code_name', 'like', '%' . $filter['code_name'] . '%');
-        }
-
-        if (@$filter['status']) {
-            $order->where('status', $filter['status']);
         }
 
         if (@$filter['manufacturer']) {
