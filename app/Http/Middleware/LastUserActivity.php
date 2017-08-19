@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class LaastUserActivity
+class LastUserActivity
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,9 @@ class LaastUserActivity
      */
     public function handle($request, Closure $next)
     {
-        Auth::user();
+        $user = Auth::user();
+        $user->last_activity = date('Y-m-d H:i:s');
+        $user->save();
         return $next($request);
     }
 }

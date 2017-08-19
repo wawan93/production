@@ -32,6 +32,8 @@ class User extends Authenticatable
 
     protected $guarded = ['password', 'salt'];
 
+    public $timestamps = false;
+
 	public static function managers()
 	{
 		$users = static::where('extra_class', 'like', '%c_orders_manager%')->get();
