@@ -76,7 +76,7 @@
                                         <td>
                                             {!! Form::checkbox('received', $item->received, $item->received, [
                                                     'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
+                                                    'data-id' => $item->id,
                                                     'data-field' => 'received',
                                             ]) !!}
                                         </td>
@@ -86,7 +86,7 @@
                                                 $item->receive_time,
                                                 [
                                                     'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
+                                                    'data-id' => $item->id,
                                                     'data-field' => 'receive_time',
                                                 ]
                                             ) !!}
@@ -94,7 +94,7 @@
                                         <td>
                                             {!! Form::checkbox('delivery', $item->delivery, $item->delivery, [
                                                     'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
+                                                    'data-id' => $item->id,
                                                     'data-field' => 'delivery',
                                             ]) !!}
                                         </td>
@@ -117,7 +117,7 @@
                                                 $item->commentDocs,
                                                 [
                                                     'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
+                                                    'data-id' => $item->id,
                                                     'data-field' => 'comment_docs',
                                                 ]
                                             ) !!}
@@ -125,14 +125,14 @@
                                         <td>
                                             {!! Form::checkbox('sorted', $item->sorted, $item->sorted, [
                                                     'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
+                                                    'data-id' => $item->id,
                                                     'data-field' => 'sorted',
                                             ]) !!}
                                         </td>
                                         <td>
                                             {!! Form::checkbox('docs', $item->docs, $item->docs, [
                                                     'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
+                                                    'data-id' => $item->id,
                                                     'data-field' => 'docs',
                                             ]) !!}
                                         </td>
@@ -142,7 +142,7 @@
                                                 $item->commentDocs,
                                                 [
                                                     'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
+                                                    'data-id' => $item->id,
                                                     'data-field' => 'comment_docs',
                                                 ]
                                             ) !!}
@@ -150,7 +150,7 @@
                                         <td>
                                             {!! Form::checkbox('docs_in_shtab', $item->docs_in_shtab, $item->docs_in_shtab, [
                                                     'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
+                                                    'data-id' => $item->id,
                                                     'data-field' => 'docs_in_shtab',
                                             ]) !!}
                                         </td>
@@ -184,7 +184,7 @@
                 };
 
                 var update = function(_this) {
-                    var code_name = _this.data('id');
+                    var id = _this.data('id');
                     var field = _this.data('field');
                     var value = _this.val();
                     if (_this.attr('type') == 'checkbox') {
@@ -192,7 +192,7 @@
                     }
 
                     smartAjax('/ajax/save_order', {
-                        code_name: code_name,
+                        id: id,
                         field: field,
                         value: value,
                     }, function(msg) {

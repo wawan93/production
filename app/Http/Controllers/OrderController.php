@@ -300,7 +300,7 @@ class OrderController extends Controller
 
 
         /** @var Order $order */
-        $order = Order::where('code_name', $request->get('code_name'))->firstOrFail();
+        $order = Order::where('id', $request->get('id'))->firstOrFail();
 
         GdLogEntry::create([
             'type' => 'ajax_update_order',

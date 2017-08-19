@@ -74,14 +74,14 @@
                                         <td>
                                             {!! Form::select('status', \App\Order::allStatuses(), $item->status, [
                                                 'class' => 'form-control',
-                                                'data-id' => $item->code_name,
+                                                'data-id' => $item->id,
                                                 'data-field' => 'status'
                                             ]) !!}
                                         </td>
                                         <td>
                                             {!! Form::checkbox('in_progress', $item->in_progress, $item->in_progress, [
                                                      'class' => 'form-control',
-                                                     'data-id' => $item->code_name,
+                                                     'data-id' => $item->id,
                                                      'data-field' => 'in_progress',
                                              ]) !!}
                                         </td>
@@ -92,7 +92,7 @@
                                                 $item->edition_final,
                                                 [
                                                     'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
+                                                    'data-id' => $item->id,
                                                     'data-field' => 'edition_final',
                                                 ]
                                             ) !!}
@@ -103,7 +103,7 @@
                                                 $item->set_id,
                                                 [
                                                     'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
+                                                    'data-id' => $item->id,
                                                     'data-field' => 'set_id',
                                                 ]
                                             ) !!}
@@ -116,7 +116,7 @@
                                                     $item->manufacturer() ? $item->manufacturer()->id : '',
                                                 [
                                                     'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
+                                                    'data-id' => $item->id,
                                                     'data-field' => 'manufacturer',
                                                 ]
                                             ) !!}
@@ -129,7 +129,7 @@
                                                 $item->final_date,
                                                 [
                                                     'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
+                                                    'data-id' => $item->id,
                                                     'data-field' => 'final_date',
                                                 ]
                                             ) !!}
@@ -140,7 +140,7 @@
                                                 $item->ship_date,
                                                 [
                                                     'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
+                                                    'data-id' => $item->id,
                                                     'data-field' => 'ship_date',
                                                 ]
                                             ) !!}
@@ -149,7 +149,7 @@
                                                 $item->ship_time,
                                                 [
                                                     'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
+                                                    'data-id' => $item->id,
                                                     'data-field' => 'ship_time',
                                                 ]
                                             ) !!}
@@ -161,7 +161,7 @@
                                                 $item->comment,
                                                 [
                                                     'class' => 'form-control',
-                                                    'data-id' => $item->code_name,
+                                                    'data-id' => $item->id,
                                                     'data-field' => 'comment',
                                                 ]
                                             ) !!}
@@ -196,7 +196,7 @@
                 };
 
                 var update = function(_this) {
-                    var code_name = _this.data('id');
+                    var id = _this.data('id');
                     var field = _this.data('field');
                     var value = _this.val();
                     if (_this.attr('type') == 'checkbox') {
@@ -204,7 +204,7 @@
                     }
 
                     smartAjax('/ajax/save_order', {
-                        code_name: code_name,
+                        id: id,
                         field: field,
                         value: value,
                     }, function(msg) {
