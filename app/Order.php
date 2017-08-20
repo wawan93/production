@@ -64,14 +64,14 @@ class Order extends Model
         $all = [
             '' => '',
             'approved' => 'Согласован',
-            'fundraising_finished' => 'Фандрайзинг закончился',
-            'invoices' => 'Выставлены счета',
+            'fundraising_finished' => 'Нафандрайзили',
+            'invoices' => 'Выставлены счета',
             'paid' => 'Оплачено',
             'ordered' => 'Отправлено',
-            'production' => 'В производстве',
+            'production' => 'В производстве',
             'shipped' => 'Доставлено',
-            'delivering' => 'В доставке',
-            'qa_deliver' => 'qa_deliver',
+            'qa_deliver' => 'QA+Оплата',
+            'delivering' => 'В доставке',
             'delivered' => 'Разнесено',
             'cancelled' => 'Отменено',
         ];
@@ -178,7 +178,7 @@ class Order extends Model
 
     public function scopeWarehouse($query)
     {
-        return $query->whereIn('status', ['production', 'shipped']);
+        return $query->whereIn('status', ['production', 'shipped', 'delivering', 'qa_deliver', 'delivered']);
     }
 
     public function responsible()
