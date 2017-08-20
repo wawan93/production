@@ -22,7 +22,6 @@
                                         <th data-direction="asc" data-field="ship_date">Доставка</th>
                                         <th data-direction="asc" data-field="contact">Контакт</th>
                                         <th data-direction="asc" data-field="received">Получен</th>
-                                        <th data-direction="asc" data-field="receive_time">Поступил на склад</th>
                                         <th data-direction="asc" data-field="delivery">Разнос</th>
                                         <th data-direction="asc" data-field="responsible">ФИО кандидата</th>
                                         <th data-direction="asc" data-field="s_promised_money">согласована сумма</th>
@@ -42,7 +41,6 @@
                                         <td>{!! Form::date('filter[ship_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;', 'form' => 'filter-form']) !!}</td>
                                         <td></td>
                                         <td>{!! Form::checkbox('filter[received]',  @$filter['received'], @$filter['received'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
-                                        <td></td>
                                         <td>{!! Form::checkbox('filter[delivery]',  @$filter['delivery'], @$filter['delivery'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td></td>
                                         <td></td>
@@ -79,17 +77,6 @@
                                                     'data-id' => $item->id,
                                                     'data-field' => 'received',
                                             ]) !!}
-                                        </td>
-                                        <td>
-                                            {!! Form::datetimeLocal(
-                                                'receive_time',
-                                                $item->receive_time,
-                                                [
-                                                    'class' => 'form-control',
-                                                    'data-id' => $item->id,
-                                                    'data-field' => 'receive_time',
-                                                ]
-                                            ) !!}
                                         </td>
                                         <td>
                                             {!! Form::checkbox('delivery', $item->delivery, $item->delivery, [
