@@ -69,7 +69,7 @@
                                             <a href="{{ url('/order/' . $item->id . '/edit') }}">{{ $item->code_name }}</a>
                                         </td>
                                         <td>
-                                            {{ $item->manager()->name . ' ' . $item->manager()->surname }}
+                                            {{ $item->manager()->name }}
                                         </td>
                                         <td>
                                             {!! Form::select('status', \App\Order::allStatuses(), $item->status, [
