@@ -68,6 +68,7 @@ class OrderUpdateObserver
     {
         if ($order->received == true) {
             $order->status = 'shipped';
+            $order->status_changed_at = date('Y-m-d H:i:s');
             $order->receive_time = date('Y-m-d H:i:s');
 
             GdLogEntry::create([
