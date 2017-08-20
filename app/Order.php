@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Team;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,6 +12,10 @@ class Order extends Model
     protected $perPage = 1000;
 
     protected $table = 'polygraphy_orders';
+
+    protected $dates = [
+        'status_changed_at',
+    ];
 
     protected $fillable = [
         'team_id',
@@ -66,6 +71,7 @@ class Order extends Model
             'production' => 'В производстве',
             'shipped' => 'Доставлено',
             'delivering' => 'В доставке',
+            'qa_deliver' => 'qa_deliver',
             'delivered' => 'Разнесено',
             'cancelled' => 'Отменено',
         ];
@@ -203,5 +209,13 @@ class Order extends Model
             }, true);
 
         return !$everyoneAgree;
+    }
+
+    public function getAlarmAttribute()
+    {
+        if ($this->status !== 'fundraising_finished')
+            return false;
+
+        return $this->status_changed_at->diff(Carbon::now())->h >= 23;
     }
 }

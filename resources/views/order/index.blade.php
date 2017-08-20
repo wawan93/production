@@ -63,7 +63,7 @@
 
                                 <tbody>
                                 @foreach($order as $item)
-                                    <tr>
+                                    <tr {!! ($item->alarm) ? 'class="alarm"' : '' !!}>
                                         <td>{{ $item->id }}</td>
                                         <td>
                                             <a href="{{ url('/order/' . $item->id . '/edit') }}">{{ $item->code_name }}</a>
@@ -251,6 +251,9 @@
             #flow-table .table td textarea {
                 width: 300px;
                 height: 70px;
+            }
+            #flow-table .table>tbody>tr.alarm>td {
+                background-color: #FCC;
             }
         </style>
     @endsection

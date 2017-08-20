@@ -35,6 +35,7 @@ class OrderUpdateObserver
         }
 
         if (in_array('status', $changedFields) || in_array('ship_date', $changedFields)) {
+            $order->status_changed_at = date('Y-m-d H:i:s');
             $this->notifyCandidates($order);
         }
 
