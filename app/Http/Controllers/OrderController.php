@@ -80,6 +80,14 @@ class OrderController extends Controller
             $order->where('in_progress', 1);
         }
 
+        if (@$filter['docs']) {
+            $order->where('docs', 0);
+        }
+
+        if (@$filter['docs_in_shtab']) {
+            $order->where('docs_in_shtab', 0);
+        }
+
         return view('order.index', ['order'=> $order->paginate(1000), 'filter' => $filter, 'count' => $order->count()]);
     }
 

@@ -33,15 +33,18 @@
                                         <th data-direction="asc" data-field="manager_id">Менеджер</th>
                                         <th data-direction="asc" data-field="status">Статус</th>
                                         <th data-direction="asc" data-field="alert">📌</th>
-                                        <th data-direction="asc" data-field="edition_initial">Тираж начальный</th>
+                                        <th data-direction="asc" data-field="edition_initial">Тираж</th>
                                         <th data-direction="asc" data-field="edition_final">Тираж финальный</th>
-                                        <th data-direction="asc" data-field="set_id">Комплект</th>
+                                        <th data-direction="asc" data-field="set_id">Компл</th>
                                         <th data-direction="asc" data-field="manufacturer">Изготовитель</th>
                                         <th data-direction="asc" data-field="paid_date">Дата оплаты</th>
                                         <th data-direction="asc" data-field="final_date">Дата выхода</th>
                                         <th data-direction="asc" data-field="ship_date">Дата доставки</th>
                                         <th data-direction="asc" data-field="contact">Контакт</th>
                                         <th data-direction="asc" data-field="comment">Коммент</th>
+                                        <th data-direction="asc" data-field="docs">Документы</th>
+                                        <th data-direction="asc" data-field="docs_comment">Коммент по докам</th>
+                                        <th data-direction="asc" data-field="docs_in_shtab">Документы в штабе</th>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -58,6 +61,9 @@
                                         <td>{!! Form::date('filter[ship_date]', null, ['class' => 'form-control filter', 'style'=>'width:100px;', 'form' => 'filter-form']) !!}</td>
                                         <td></td>
                                         <td></td>
+                                        <td>{!! Form::checkbox('filter[docs]',  @$filter['docs'], @$filter['docs'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
+                                        <td></td>
+                                        <td>{!! Form::checkbox('filter[docs_in_shtab]',  @$filter['docs_in_shtab'], @$filter['docs_in_shtab'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                     </tr>
                                 </thead>
 
@@ -80,7 +86,6 @@
                                         </td>
                                         <td>
                                             {!! Form::checkbox('in_progress', $item->in_progress, $item->in_progress, [
-                                                     'class' => 'form-control',
                                                      'data-id' => $item->id,
                                                      'data-field' => 'in_progress',
                                              ]) !!}
@@ -128,6 +133,7 @@
                                                 'final_date',
                                                 $item->final_date,
                                                 [
+                                                    'style'=>'width:120px;',
                                                     'class' => 'form-control',
                                                     'data-id' => $item->id,
                                                     'data-field' => 'final_date',
@@ -142,6 +148,7 @@
                                                     'class' => 'form-control',
                                                     'data-id' => $item->id,
                                                     'data-field' => 'ship_date',
+                                                     'style'=>'width:120px;',
                                                 ]
                                             ) !!}
                                             {!! Form::time(
@@ -165,6 +172,23 @@
                                                     'data-field' => 'comment',
                                                 ]
                                             ) !!}
+                                        </td>
+                                        <td>
+                                            {!! Form::checkbox('docs', $item->docs, $item->docs, [
+                                                    'class' => 'form-control',
+                                                    'data-id' => $item->id,
+                                                    'data-field' => 'docs',
+                                            ]) !!}
+                                        </td>
+                                        <td>
+                                            {{ $item->commentDocs }}
+                                        </td>
+                                        <td>
+                                            {!! Form::checkbox('docs_in_shtab', $item->docs_in_shtab, $item->docs_in_shtab, [
+                                                    'class' => 'form-control',
+                                                    'data-id' => $item->id,
+                                                    'data-field' => 'docs_in_shtab',
+                                            ]) !!}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -249,7 +273,7 @@
                 cursor: pointer !important;
             }
             #flow-table .table td textarea {
-                width: 300px;
+                width: 200px;
                 height: 70px;
             }
             #flow-table .table>tbody>tr.alarm>td {
