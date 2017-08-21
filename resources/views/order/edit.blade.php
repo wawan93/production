@@ -200,7 +200,7 @@
                         if (confirm('утвердить макет?')) {
                             var _this = $(this);
                             smartAjax('/ajax/approve_maket', {
-                                code_name: '{{ $order->code_name }}',
+                                order_id: '{{ $order->id }}',
                             }, function(msg) {
                                 location.reload();
                             }, function(msg) {

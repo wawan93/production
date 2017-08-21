@@ -214,7 +214,7 @@ class OrderController extends Controller
         }
 
         try {
-            $order = Order::where('code_name', $request->get('code_name'))->first();
+            $order = Order::find($request->get('order_id'));
             $order->maket_ok = 1;
             $order->save();
         } catch (Exception $e) {
