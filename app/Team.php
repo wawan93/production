@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Team extends Model {
     protected $table = 'district_teams';
 
+    protected $primaryKey = 'team_id';
+
     public static $diplomats;
 
     public function members()
