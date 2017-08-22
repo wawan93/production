@@ -31,7 +31,7 @@
                                         <th data-direction="asc" data-field="code_name">ID</th>
                                         <th data-direction="asc" data-field="code_name">Заказ</th>
                                         <th data-direction="asc" data-field="manager_id">Менеджер</th>
-                                        <th data-direction="asc" data-field="status">Статус</th>
+                                        <th data-direction="asc" data-field="status">Текущий статус</th>
                                         <th data-direction="asc" data-field="alert">📌</th>
                                         <th data-direction="asc" data-field="edition_initial">Тираж</th>
                                         <th data-direction="asc" data-field="edition_final">Тираж финальный</th>
@@ -42,9 +42,9 @@
                                         <th data-direction="asc" data-field="ship_date">Дата доставки</th>
                                         <th data-direction="asc" data-field="contact">Контакт</th>
                                         <th data-direction="asc" data-field="comment">Коммент</th>
-                                        <th data-direction="asc" data-field="docs">Документы</th>
-                                        <th data-direction="asc" data-field="docs_comment">Коммент по докам</th>
-                                        <th data-direction="asc" data-field="docs_in_shtab">Документы в штабе</th>
+                                        <th data-direction="asc" data-field="docs">Доки</th>
+                                        <th data-direction="asc" data-field="docs_comment">Коммент по докам</th>
+                                        <th data-direction="asc" data-field="docs_in_shtab">Доки в штабе</th>
                                     </tr>
                                     <tr>
                                         <td></td>

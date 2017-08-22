@@ -29,9 +29,9 @@
                                         <th data-direction="asc" data-field="s_comment">Коммент дипломатии</th>
                                         <th data-direction="asc" data-field="comment_delivery">Коммент</th>
                                         <th data-direction="asc" data-field="sorted">Сортировка</th>
-                                        <th data-direction="asc" data-field="docs">Документы</th>
+                                        <th data-direction="asc" data-field="docs">Доки</th>
                                         <th data-direction="asc" data-field="docs_comment">Коммент по докам</th>
-                                        <th data-direction="asc" data-field="docs_in_shtab">Документы в штабе</th>
+                                        <th data-direction="asc" data-field="docs_in_shtab">Доки в штабе</th>
                                     </tr>
                                     <tr>
                                         <td>{!! Form::text('filter[code_name]',  @$filter['code_name'],['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>

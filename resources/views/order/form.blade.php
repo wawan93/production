@@ -1,3 +1,26 @@
+@if (!isset($order))
+    <div class="form-group {{ $errors->has('code_name') ? 'has-error' : ''}}">
+        {!! Form::label('code_name', 'code_name', ['class' => 'col-md-4 control-label']) !!}
+        <div class="col-md-6">
+            {!! Form::text('code_name', null, ['class' => 'form-control']) !!}
+            {!! $errors->first('code_name', '<p class="help-block">:message</p>') !!}
+        </div>
+    </div>
+    <div class="form-group {{ $errors->has('team_id') ? 'has-error' : ''}}">
+        {!! Form::label('team_id', 'team_id', ['class' => 'col-md-4 control-label']) !!}
+        <div class="col-md-6">
+            {!! Form::text('team_id', null, ['class' => 'form-control']) !!}
+            {!! $errors->first('team_id', '<p class="help-block">:message</p>') !!}
+        </div>
+    </div>
+    <div class="form-group {{ $errors->has('polygraphy_type') ? 'has-error' : ''}}">
+        {!! Form::label('polygraphy_type', 'polygraphy_type', ['class' => 'col-md-4 control-label']) !!}
+        <div class="col-md-6">
+            {!! Form::text('polygraphy_type', null, ['class' => 'form-control']) !!}
+            {!! $errors->first('polygraphy_type', '<p class="help-block">:message</p>') !!}
+        </div>
+    </div>
+@endif
 <div class="form-group {{ $errors->has('manager_id') ? 'has-error' : ''}}">
     {!! Form::label('manager_id', 'Менеджер', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
@@ -36,13 +59,22 @@
 <div class="form-group {{ $errors->has('manufacturer') ? 'has-error' : ''}}">
     {!! Form::label('manufacturer', 'Изготовитель', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::select(
+        @if (isset($order))
+            {!! Form::select(
+                'manufacturer',
+                \App\Manufacturer::allowedFor($order->team()
+                    ->region_name)->pluck('short_name', 'id')->prepend('не выбран', 0),
+                null,
+                ['class' => 'form-control']
+            ) !!}
+        @else
+            {!! Form::select(
             'manufacturer',
-            \App\Manufacturer::allowedFor($order->team()
-                ->region_name)->pluck('short_name', 'id')->prepend('не выбран', 0),
+            \App\Manufacturer::forSelect(),
             null,
             ['class' => 'form-control']
         ) !!}
+        @endif
         {!! $errors->first('manufacturer', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
@@ -63,14 +95,14 @@
 <div class="form-group {{ $errors->has('ship_date') ? 'has-error' : ''}}">
     {!! Form::label('ship_date', 'Дата доставки', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::date('ship_date', $order->ship_date, ['class' => 'form-control']) !!}
+        {!! Form::date('ship_date', null, ['class' => 'form-control']) !!}
         {!! $errors->first('ship_date', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 <div class="form-group {{ $errors->has('ship_date') ? 'has-error' : ''}}">
     {!! Form::label('ship_date', 'Время доставки', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::time('ship_time', $order->ship_time, ['class' => 'form-control']) !!}
+        {!! Form::time('ship_time', null, ['class' => 'form-control']) !!}
         {!! $errors->first('ship_time', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
