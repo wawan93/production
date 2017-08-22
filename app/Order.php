@@ -218,4 +218,10 @@ class Order extends Model
 
         return $this->status_changed_at->diff(Carbon::now())->h >= 23;
     }
+
+    public function members()
+    {
+        return $this->polygraphy_approved()->members() ?: $this->team()->members();
+    }
+
 }

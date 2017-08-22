@@ -85,7 +85,7 @@
                             <div class="form-group {{ $errors->has('invoice_subject') ? 'has-error' : ''}}">
                                 {!! Form::label('invoice_subject', 'Счёт', ['class' => 'col-md-4 control-label']) !!}
                                 <div class="col-md-6 invoices">
-                                    @foreach(($order->polygraphy_approved()->members() ?: $order->team()->members()) as $user)
+                                    @foreach($order->members() as $user)
                                         <?php $invoice = $order->invoices()->where('user_id', $user->id)->first() ?>
                                         @if($invoice)
                                             <p><strong>{{ $user->surname }} {{  $user->name }}</strong></p>

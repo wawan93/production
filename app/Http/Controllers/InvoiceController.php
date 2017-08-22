@@ -52,7 +52,7 @@ class InvoiceController extends Controller
         GdLogEntry::create($logArray);
 
         $allInvoicesUploaded = true;
-        foreach (($order->polygraphy_approved()->members() ?: $order->team()->members()) as $user) {
+        foreach ($order->members() as $user) {
             $invoice = $order->invoices()->where('user_id', $user->id)->first();
             if ($invoice == null) {
                 $allInvoicesUploaded = false;
