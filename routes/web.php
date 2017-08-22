@@ -37,6 +37,8 @@ Route::middleware(['auth', 'last_activity'])->group(function () {
     Route::post('/ajax/approve_maket_corrections', 'OrderController@approveMaketCorrections')
         ->name('approve_corrections');
     Route::post('/ajax/achtung', 'OrderController@achtung');
+    Route::post('/ajax/remove_team_member', 'OrderController@removeMember');
+    Route::post('/ajax/its_ok', 'OrderController@itsOk');
 
     Route::resource('order', 'OrderController');
     Route::resource('polygraphy-type', 'PolygraphyTypeController');

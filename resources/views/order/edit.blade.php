@@ -8,6 +8,9 @@
                     <div class="panel-heading">
                         Заказ команды #{{ $order->team_id }} ({{ $order->team()->region_name }} {{ $order->team()->district_number }})
                         <strong><a target="_blank" href="https://t.me/{{ str_replace('@', '', $order->team()->diplomat()['tg']) }}">{{ $order->team()->diplomat()['фио'] }}</a> </strong>
+                        @if($order->alert)
+                            <strong><span class="actualize_required">ТРЕБУЕТСЯ АКТУАЛИЗАЦИЯ!</span></strong> <button class="btn btn-xs btn-danger its-ok">Всё ок</button>
+                        @endif
                     </div>
                     <div class="panel-body">
                         <a href="{{ url('/order') }}" title="Back"><button class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
@@ -37,7 +40,10 @@
 
                         <div class="col-md-offset-4 col-md-8">
                             @foreach(($order->polygraphy_approved()->members() ?: $order->team()->members()) as $user)
-                                <p>{{ $user->surname }} {{ $user->name }} {{ $user->middlename }} (#{{ $user->id }})</p>
+                                <p>
+                                    {{ $user->surname }} {{ $user->name }} {{ $user->middlename }} (#{{ $user->id }})
+                                    <i class="glyphicon glyphicon-remove remove-team-member" data-id="{{ $user->id }}"> </i>
+                                </p>
                             @endforeach
 
                             <h3>Заказ: {{ $order->code_name }}</h3>
@@ -45,13 +51,6 @@
                             <p>{!! nl2br($order->type()->mat_descr) !!}</p>
 
                             <hr>
-                            @if($order->status !== 'approved')
-                                @if($order->alert == false)
-                                    <p>👍💅💰 <strong>Деньги собраны! Можно печатать</strong></p>
-                                @else
-                                    <p>👎😱🐋 <strong>Денег нет, но вы свяжитесь</strong><br>с отделом дипломатии и согласуйте новый тираж</p>
-                                @endif
-                            @endif
                             <p><a href="{{ url('http://mundep.gudkov.ru/fundraising/team/' . $order->team_id) }}" target="_blank" class="btn btn-default">страница фандрайзинга</a></p>
 
 
@@ -166,6 +165,18 @@
         </div>
     </div>
 
+    @section('styles')
+        <style>
+            .actualize_required {
+                color: #bf5329;
+            }
+            .remove-team-member {
+                color: #bf5329;
+                cursor: pointer;
+            }
+        </style>
+    @endsection
+
     @section('scripts')
         <div style="display: none;">
             <form class="FileUploadForm" enctype="multipart/form-data" method="POST" action="">
@@ -260,6 +271,32 @@
                         return false;
                     });
 
+                    $('.remove-team-member').on('click', function(e) {
+                        if (confirm('Убрать кандидата из заказа?')) {
+                            smartAjax('/ajax/remove_team_member', {
+                                order_id: {{ $order->id }},
+                                user_id: $(this).data('id')
+                            }, function(msg){
+                                console.log('Удален юзер ' + $(this).data('id'))
+                                location.reload();
+                            }, function(msg){
+                                alert(msg.error_text);
+                            }, '', 'POST');
+                        }
+                    });
+
+                    $('.its-ok').on('click', function(e) {
+                        if (confirm('Порешали вопросики?')) {
+                            smartAjax('/ajax/its_ok', {
+                            	order_id: {{ $order->id }},
+                            }, function(msg){
+                            	console.log('it\'s ok!');
+                            	location.reload();
+                            }, function(msg){
+                            	alert(msg.error_text);
+                            });
+                        }
+                    });
                 });
             })($ || jQuery);
         </script>

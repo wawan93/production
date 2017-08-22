@@ -6,6 +6,7 @@ use App\GdLogEntry;
 use App\Http\Requests;
 use App\Mail\OrderRequest;
 use App\Order;
+use App\User;
 use Auth;
 use Dompdf\Exception;
 use Illuminate\Http\Request;
@@ -369,5 +370,36 @@ class OrderController extends Controller
         $order->save();
 
         return response()->json(['error' => 'false']);
+    }
+
+    public function removeMember(Request $request)
+    {
+        $order = Order::findOrFail($request->get('order_id'));
+
+        $poly_approved = $order->polygraphy_approved();
+        $members = $poly_approved->members();
+        if (!$members) {
+            $members = $order->team()->members();
+        }
+
+        $userId = $request->get('user_id');
+        $members = collect($members)->reject(function($value, $key) use ($userId) {
+            return $value->id == $userId;
+        });
+
+        $poly_approved->members_ids = implode(',', $members->pluck('id')->toArray());
+        $poly_approved->save();
+
+        return response()->json([
+            'error' => 'false',
+            'members' => $members,
+        ]);
+    }
+
+    public function itsOk(Request $request)
+    {
+        $order = Order::findOrFail($request->get('order_id'));
+        $order->alert = 0;
+        $order->save();
     }
 }
