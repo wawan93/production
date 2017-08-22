@@ -351,6 +351,12 @@ class OrderController extends Controller
         return view('order.sets', compact('sets'));
     }
 
+    public function alerts()
+    {
+        $order = Order::where('alert', 1);
+        return view('order.index', ['order'=> $order->paginate(1000), 'filter' => [], 'count' => $order->count()]);
+    }
+
     public function delivered(Request $request)
     {
         $orders = Order::whereIn('status', ['delivered', 'delivering', 'shipped']);
@@ -401,5 +407,9 @@ class OrderController extends Controller
         $order = Order::findOrFail($request->get('order_id'));
         $order->alert = 0;
         $order->save();
+
+        return response()->json([
+            'error' => 'false'
+        ]);
     }
 }

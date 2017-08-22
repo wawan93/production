@@ -43,6 +43,7 @@
                                 <li><a href="{{ url('order') }}">Карточки заказов</a></li>
                                 <li><a href="{{ url('sets') }}">Комплекты</a></li>
                                 <li><a href="{{ url('delivered') }}">Выполненные заказы</a></li>
+                                <li><a href="{{ url('alert') }}">Требуется актуализация <span class="alert-danger">(<b>{{ \App\Order::alertCount() }}</b>)</span> </a></li>
                             </ul>
                         </li>
                         <li><a href="/warehouse">Склад</a></li>

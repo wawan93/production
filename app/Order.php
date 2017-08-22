@@ -224,4 +224,9 @@ class Order extends Model
         return $this->polygraphy_approved()->members() ?: $this->team()->members();
     }
 
+    public static function alertCount()
+    {
+        return static::where('alert', 1)->count();
+    }
+
 }

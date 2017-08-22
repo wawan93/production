@@ -27,6 +27,7 @@ Route::middleware(['auth', 'last_activity'])->group(function () {
     Route::post('/send-mail/{type}/{id}', 'MailController@send')->name('send_mail');
 
     Route::get('/sets', 'OrderController@sets');
+    Route::get('/alert', 'OrderController@alerts');
     Route::get('/delivered', 'OrderController@delivered')->name('delivered');
 
 
@@ -38,7 +39,7 @@ Route::middleware(['auth', 'last_activity'])->group(function () {
         ->name('approve_corrections');
     Route::post('/ajax/achtung', 'OrderController@achtung');
     Route::post('/ajax/remove_team_member', 'OrderController@removeMember');
-    Route::post('/ajax/its_ok', 'OrderController@itsOk');
+    Route::get('/ajax/its_ok', 'OrderController@itsOk');
 
     Route::resource('order', 'OrderController');
     Route::resource('polygraphy-type', 'PolygraphyTypeController');
