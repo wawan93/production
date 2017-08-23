@@ -49,7 +49,11 @@ class LoginController extends Controller
     {
         $this->validateLogin($request);
 
-        $user = User::where('phone', $request->get('phone'))->firstOrFail();
+        $phone = $request->get('phone');
+        $phone = str_replace(['+', '(', ')', ' ', '-'], '', $phone);
+        $phone = preg_replace('/^[78]/', '7', $phone);
+
+        $user = User::where('phone', $phone)->firstOrFail();
         if ($user != null) {
             $password = md5($request->get('password') . $user->salt);
             if ($password === $user->password) {
