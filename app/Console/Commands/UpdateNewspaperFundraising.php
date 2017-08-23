@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Order;
+use App\User;
 use Illuminate\Console\Command;
 
 class UpdateNewspaperFundraising extends Command
@@ -42,11 +43,13 @@ class UpdateNewspaperFundraising extends Command
 
         $this->line('Будет обработано заказов: ' . $orders->count());
 
+        \Auth::login(User::find(1374));
         foreach ($orders->get() as $order) {
             $poly = $order->polygraphy_approved();
             if ($poly->is_fundraising_finished == 'true') {
                 if ($order->status == 'approved') {
                     $order->status = 'fundraising_finished';
+                    $order->save();
                     $this->info("Статус обновлён с approved на fundraising_finished для заказа #{$order->id}");
                 } else {
                     $this->error("Статус заказа #{$order->id} уже {$order->status}");
