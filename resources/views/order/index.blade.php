@@ -86,8 +86,9 @@
                                         </td>
                                         <td>
                                             {!! Form::checkbox('in_progress', $item->in_progress, $item->in_progress, [
-                                                     'data-id' => $item->id,
-                                                     'data-field' => 'in_progress',
+                                                'class' => 'form-control',
+                                                 'data-id' => $item->id,
+                                                 'data-field' => 'in_progress',
                                              ]) !!}
                                         </td>
                                         <td>{{ $item->edition_initial }}</td>
