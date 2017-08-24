@@ -403,4 +403,27 @@ class OrderController extends Controller
             'error' => 'false'
         ]);
     }
+
+    public function addToOrder(Request $request)
+    {
+        $order = Order::findOrFail($request->get('order_id'));
+
+        $poly_approved = $order->polygraphy_approved();
+        $members = $poly_approved->members();
+        if (!$members) {
+            $members = $order->team()->members();
+        }
+
+        $userId = $request->get('user_id');
+
+        $members = collect($members)->pluck('id')->push($userId)->toArray();
+
+        $poly_approved->members_ids = implode(',', $members);
+        $poly_approved->save();
+
+        return response()->json([
+            'error' => 'false',
+            'members' => $members,
+        ]);
+    }
 }

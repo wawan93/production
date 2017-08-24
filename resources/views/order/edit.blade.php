@@ -13,36 +13,58 @@
                         @endif
                     </div>
                     <div class="panel-body">
-                        <a href="{{ url('/order') }}" title="Back"><button class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <br />
-                        <br />
-                        {!! Form::open([
-                            'method'=>'DELETE',
-                            'url' => ['order', $order->id],
-                            'style' => 'display:inline'
-                        ]) !!}
-                        {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
-                                'type' => 'submit',
-                                'class' => 'btn btn-danger btn-sm',
-                                'title' => 'Delete order',
-                                'onclick'=>'return confirm("Confirm delete?")'
-                        ))!!}
-                        {!! Form::close() !!}
+                        <div class="row">
+                        <div class="col-md-4">
+                            <a href="{{ url('/order') }}" title="Back"><button class="btn btn-warning"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                            <br />
+                            <br />
+                            {!! Form::open([
+                                'method'=>'DELETE',
+                                'url' => ['order', $order->id],
+                                'style' => 'display:inline'
+                            ]) !!}
+                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
+                                    'type' => 'submit',
+                                    'class' => 'btn btn-danger btn-sm',
+                                    'title' => 'Delete order',
+                                    'onclick'=>'return confirm("Confirm delete?")'
+                            ))!!}
+                            {!! Form::close() !!}
 
 
-                    @if ($errors->any())
-                            <ul class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
-
-                        <div class="col-md-offset-4 col-md-8">
-                            @foreach(($order->polygraphy_approved()->members() ?: $order->team()->members()) as $user)
+                            @if ($errors->any())
+                                <ul class="alert alert-danger">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </div>
+                        <div class="col-md-8">
+                            @if($order->alert)
+                                <?php
+                                $teamMembers = collect($order->team()->members());
+                                $orderMembers = collect($order->polygraphy_approved()->members());
+                                $diff = $teamMembers->diff($orderMembers);
+                                ?>
+                                @if ($diff->count() > 0)
+                                    {!! Form::open() !!}
+                                        <div class="input-group">
+                                            {!! Form::select('new_members', $diff->pluck('surname', 'id'), null, ['class' => 'form-control user-id']) !!}
+                                            <span class="input-group-btn">
+                                                {!! Form::submit('Добавить в заказ', ['class' => 'btn btn-success add-to-order']) !!}
+                                            </span>
+                                        </div>
+                                    {!! Form::close() !!}
+                                @endif
+                                <hr>
+                            @endif
+                            @foreach($order->members() as $user)
                                 <p>
                                     {{ $user->surname }} {{ $user->name }} {{ $user->middlename }} (#{{ $user->id }})
-                                    <i class="glyphicon glyphicon-remove remove-team-member" data-id="{{ $user->id }}"> </i>
+                                    @if($order->alert)
+                                        <i class="glyphicon glyphicon-remove remove-team-member" data-id="{{ $user->id }}"> </i>
+                                    @endif
                                 </p>
                             @endforeach
 
@@ -50,11 +72,9 @@
                             <p><strong>{!! $order->type()->mat_name !!}, Изначальный тираж: {{ $order->edition_initial }}</strong></p>
                             <p>{!! nl2br($order->type()->mat_descr) !!}</p>
 
-                            <hr>
                             <p><a href="{{ url('http://mundep.gudkov.ru/fundraising/team/' . $order->team_id) }}" target="_blank" class="btn btn-default">страница фандрайзинга</a></p>
 
 
-                            <hr>
                             @if($order->manufacturer)
                                 @if($order->mail_sent)
                                     <p><strong>Письмо отправлено</strong></p>
@@ -63,9 +83,9 @@
                             @endif
 
                         </div>
-                        <br>
-                        <p>&nbsp;</p>
-                        <br>
+
+                        </div>
+                        <hr>
 
                         {!! Form::model($order, [
                             'method' => 'PATCH',
@@ -158,7 +178,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -296,6 +315,20 @@
                             	alert(msg.error_text);
                             });
                         }
+                    });
+
+                    $('.add-to-order').on('click', function(e) {
+                        var user = $(this).closest('.input-group').find('.user-id').val();
+                        smartAjax('/ajax/add_to_order', {
+                            order_id: {{ $order->id }},
+                            user_id: user,
+                        }, function(msg){
+                            location.reload();
+                        }, function(msg){
+                            alert(msg.error_text);
+                        }, '', 'POST');
+
+                        return false;
                     });
                 });
             })($ || jQuery);

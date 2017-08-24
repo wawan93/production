@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/ajax/achtung', 'OrderController@achtung');
     Route::post('/ajax/remove_team_member', 'OrderController@removeMember');
     Route::get('/ajax/its_ok', 'OrderController@itsOk');
+    Route::post('/ajax/add_to_order', 'OrderController@addToOrder');
 
     Route::resource('order', 'OrderController');
     Route::resource('polygraphy-type', 'PolygraphyTypeController');

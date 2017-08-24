@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Observers\OrderUpdateObserver;
+use App\Observers\PolygraphyApprovedUpdateObserver;
 use App\Order;
+use App\PolygraphyApproved;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Order::observe(OrderUpdateObserver::class);
+        PolygraphyApproved::observe(PolygraphyApprovedUpdateObserver::class);
     }
 
     /**
