@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Заказ команды #{{ $order->team_id }} ({{ $order->team()->region_name }} {{ $order->team()->district_number }})
-                        <strong><a target="_blank" href="https://t.me/{{ str_replace('@', '', $order->team()->diplomat()['tg']) }}">{{ $order->team()->diplomat()['фио'] }}</a> </strong>
+                        <strong>{{ $order->team()->diplomat() }} </strong>
                         @if($order->alert)
                             <strong><span class="actualize_required">ТРЕБУЕТСЯ АКТУАЛИЗАЦИЯ!</span></strong> <button class="btn btn-xs btn-danger its-ok">Всё ок</button>
                         @endif
