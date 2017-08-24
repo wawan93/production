@@ -5,6 +5,7 @@ namespace App\Observers;
 
 use App\GdLogEntry;
 use App\Order;
+use App\PolygraphyType;
 use Illuminate\Support\Facades\Auth;
 
 class OrderUpdateObserver
@@ -199,13 +200,9 @@ class OrderUpdateObserver
      */
     private function changeFormat($order, $format)
     {
-        if ($format == 'A3') {
-            $order->code_name = str_replace('_КА4', '_КА3', $order->code_name);
-            $order->invoice_subject = str_replace('A4', 'A3', $order->invoice_subject);
-        } elseif ($format == 'A4') {
-            $order->code_name = str_replace('_КА3', '_КА4', $order->code_name);
-            $order->invoice_subject = str_replace('A3', 'A4', $order->invoice_subject);
-        }
+        $type = PolygraphyType::where('type', $order->type()->type)->where('format', $format)->first();
+        $order->code_name = str_replace($order->type()->order_code, $type->order_code, $order->code_name);
+        $order->invoice_subject = $type->mat_name;
     }
 
     private function notifyCandidates(Order $order)

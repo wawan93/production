@@ -88,8 +88,8 @@ class Order extends Model
     public function type()
     {
         return PolygraphyType::where([
-            'type' => $this->polygraphy_type,
-            'format' => $this->polygraphy_format,
+            'type' => $this->getOriginal('polygraphy_type'),
+            'format' => $this->getOriginal('polygraphy_format'),
         ])->first();
     }
 
