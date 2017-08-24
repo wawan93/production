@@ -15,12 +15,12 @@ class PolygraphyApprovedUpdateObserver
 
         if (in_array('members_ids', $changedFields)) {
             GdLogEntry::create([
-                'type' => 'order_members_changed',
-                'tg_bot_status' => 'none',
+                'type' => 'pl_print_d_changed',
+                'tg_bot_status' => 'inqueue',
                 'user_id' => Auth::id(),
-                'arg_id' => $poly->id,
+                'arg_id' => $poly->order()->id,
                 'details' => serialize([
-                    'polygraphy_approved' => $poly->id,
+                    'order' => $poly->order()->id,
                     'team_id' => $poly->team_id,
                     'from' => $poly->getOriginal('members_ids'),
                     'to' => $poly->members_ids

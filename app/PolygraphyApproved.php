@@ -20,4 +20,11 @@ class PolygraphyApproved extends Model
         }
         return $this->members;
     }
+
+    public function order()
+    {
+        return Order::where('polygraphy_type', $this->polygraphy_type)
+            ->where('team_id', $this->team_id)
+            ->first();
+    }
 }
