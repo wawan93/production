@@ -322,19 +322,6 @@ class OrderController extends Controller
             ])
         ]);
 
-        if ($request->get('field') == 'final_date' && !empty($order->{$request->get('field')})) {
-            GdLogEntry::create([
-                'type' => 'pl_print_d_changed',
-                'user_id' => Auth::id(),
-                'arg_id' => $order->id,
-                'tg_bot_status' => 'inqueue',
-                'details' => serialize([
-                    'order' => $order->id,
-                    'team_id' => $order->team_id
-                ])
-            ]);
-        }
-
         $value = $request->get('value');
         if (in_array($value, ['true', 'false'])) {
             $value = intval($value == 'true');

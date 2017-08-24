@@ -50,6 +50,33 @@ class OrderUpdateObserver
         if (in_array('polygraphy_format', $changedFields)) {
             $this->changeFormat($order, $order->polygraphy_format);
         }
+
+        if (!empty($order->getOriginal('final_date')) && $this->isPrintInfoChanged($order, $changedFields)) {
+            GdLogEntry::create([
+                'type' => 'pl_print_d_changed',
+                'user_id' => Auth::id(),
+                'arg_id' => $order->id,
+                'tg_bot_status' => 'inqueue',
+                'details' => serialize([
+                    'order' => $order->id,
+                    'team_id' => $order->team_id
+                ])
+            ]);
+        }
+
+    }
+
+    private function isPrintInfoChanged(Order $order, $changedFields)
+    {
+        if (in_array('final_date', $changedFields) && !empty($order->getOriginal('final_date'))) {
+            return true;
+        }
+
+        if (in_array('manufacturer', $changedFields) && !empty($order->getOriginal('manufacturer'))) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
