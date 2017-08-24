@@ -77,6 +77,10 @@ class OrderController extends Controller
             $order->where('set_id', $filter['set_id']);
         }
 
+        if (@$filter['polygraphy_type']) {
+            $order->where('polygraphy_type', $filter['polygraphy_type']);
+        }
+
         if (@$filter['in_progress']) {
             $order->where('in_progress', 1);
         }
