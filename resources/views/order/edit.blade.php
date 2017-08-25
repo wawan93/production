@@ -43,12 +43,17 @@
                         <div class="col-md-8">
                             @if($order->alert)
                                 <?php
-                                $teamMembers = collect($order->team()->members());
+                                $districtMembers = \App\User::whereIn('role', ['candidate', 'coordinator'])
+                                    ->where([
+                                        'region_name' => $order->team()->region_name,
+                                        'district' => $order->team()->district_number,
+                                    ])
+                                    ->get();
                                 $orderMembers = collect($order->polygraphy_approved()->members());
-                                $diff = $teamMembers->diff($orderMembers);
+                                $diff = $districtMembers->diff($orderMembers);
                                 ?>
                                 @if ($diff->count() > 0)
-                                    {!! Form::open() !!}
+                                    {!! Form::open(['class' => 'col-md-6 row']) !!}
                                         <div class="input-group">
                                             {!! Form::select('new_members', $diff->pluck('surname', 'id'), null, ['class' => 'form-control user-id']) !!}
                                             <span class="input-group-btn">
@@ -57,6 +62,7 @@
                                         </div>
                                     {!! Form::close() !!}
                                 @endif
+                                <div class="clearfix"> </div>
                                 <hr>
                             @endif
                             @foreach($order->members() as $user)
