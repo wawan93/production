@@ -14,7 +14,7 @@
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'last_activity'])->group(function () {
 
     Route::get('/', 'OrderController@index');
     Route::get('/home', 'HomeController@index')->name('home');
