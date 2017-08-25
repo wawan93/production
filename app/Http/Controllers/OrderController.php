@@ -393,17 +393,6 @@ class OrderController extends Controller
         ]);
     }
 
-    public function itsOk(Request $request)
-    {
-        $order = Order::findOrFail($request->get('order_id'));
-        $order->alert = 0;
-        $order->save();
-
-        return response()->json([
-            'error' => 'false'
-        ]);
-    }
-
     public function addToOrder(Request $request)
     {
         $order = Order::findOrFail($request->get('order_id'));
@@ -424,6 +413,17 @@ class OrderController extends Controller
         return response()->json([
             'error' => 'false',
             'members' => $members,
+        ]);
+    }
+
+    public function itsOk(Request $request)
+    {
+        $order = Order::findOrFail($request->get('order_id'));
+        $order->alert = 0;
+        $order->save();
+
+        return response()->json([
+            'error' => 'false'
         ]);
     }
 }
