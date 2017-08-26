@@ -45,7 +45,9 @@
 <div class="form-group {{ $errors->has('polygraphy_format') ? 'has-error' : ''}}">
     {!! Form::label('polygraphy_format', 'Формат', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::select('polygraphy_format', ['A3' => 'A3', 'A4' => 'A4', 'np' => 'np', 'offset' => 'offset'], null, ['class' => 'form-control']) !!}
+        {!! Form::select('polygraphy_format', [
+            'A3' => 'A3', 'A4' => 'A4', 'np' => 'np', 'offset' => 'offset', 'А3' => 'А3', 'А4х3' => 'колбаса'
+            ], null, ['class' => 'form-control']) !!}
         {!! $errors->first('polygraphy_format', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

@@ -48,7 +48,8 @@ class PolygraphyController extends Controller
             'error' => 'false',
             'team_id' => $request->get('team_id'),
             'polygraphy_type' => $request->get('polygraphy_type'),
-            'code_name' => $code_name
+            'code_name' => $code_name,
+            'invoice_subject' => $format->mat_name,
         ]);
     }
 }
