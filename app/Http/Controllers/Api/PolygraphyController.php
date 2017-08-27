@@ -40,6 +40,8 @@ class PolygraphyController extends Controller
         $format = $polyType->where('format', $format)->first();
 
         $region = $team->region_name;
+        $region = str_replace([' ', '-'], '', $region);
+
         $district = $team->district_number;
 
         $code_name = $region . $district . $format->order_code;
