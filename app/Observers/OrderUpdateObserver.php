@@ -222,20 +222,23 @@ class OrderUpdateObserver
             ]);
         }
 
-        if ($order->getOriginal('ship_date') !== $order->ship_date && in_array($order->status, ['ordered', 'production', 'shipped'])) {
-            GdLogEntry::create([
-                'type' => 'ship_date_changed',
-                'tg_bot_status' => 'inqueue',
-                'user_id' => Auth::id(),
-                'arg_id' => $order->id,
-                'details' => serialize([
-                    'order_id' => $order->id,
-                    'team_id' => $order->team_id,
-                    'set_id' => $order->set_id,
-                    'from' => $order->getOriginal('ship_date'),
-                    'to' => $order->ship_date
-                ])
-            ]);
+        if (in_array($order->status, ['ordered', 'production', 'shipped'])) {
+            if ($order->getOriginal('ship_date') !== $order->ship_date || $order->getOriginal('ship_time') !== $order->ship_time) {
+                GdLogEntry::create([
+                    'type' => 'ship_date_changed',
+                    'tg_bot_status' => 'inqueue',
+                    'user_id' => Auth::id(),
+                    'arg_id' => $order->id,
+                    'details' => serialize([
+                        'order_id' => $order->id,
+                        'team_id' => $order->team_id,
+                        'set_id' => $order->set_id,
+                        'from' => $order->getOriginal('ship_date'),
+                        'to' => $order->ship_date,
+                        'time' => $order->ship_time,
+                    ])
+                ]);
+            }
         }
     }
 }
