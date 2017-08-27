@@ -53,7 +53,7 @@
                                         <td>{!! Form::select('filter[manager]', \App\User::managers(), @$filter['manager'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td>{!! Form::select('filter[status]', \App\Order::allStatuses(), @$filter['status'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td>{!! Form::checkbox('filter[in_progress]',  @$filter['in_progress'], @$filter['in_progress'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
-                                        <td>{!! Form::select('filter[polygraphy_type]', ['' => '','first_listovka' => '📖', 'newspaper1' => '🗞'], @$filter['polygraphy_type'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
+                                        <td>{!! Form::select('filter[polygraphy_type]', \App\PolygraphyType::typesEmoji(), @$filter['polygraphy_type'], ['class' => 'form-control filter', 'form' => 'filter-form']) !!}</td>
                                         <td></td>
                                         <td></td>
                                         <td>{!! Form::number('filter[set_id]', null, ['class' => 'form-control filter', 'style'=>'width:50px;', 'form' => 'filter-form']) !!}</td>
@@ -94,7 +94,7 @@
                                              ]) !!}
                                         </td>
                                         <td>
-                                            {{ $item->polygraphy_type == 'first_listovka' ? '📖' : '🗞' }}
+                                            {{ \App\PolygraphyType::typesEmoji()[$item->polygraphy_type] }}
                                         </td>
                                         <td>{{ $item->edition_initial }}</td>
                                         <td>

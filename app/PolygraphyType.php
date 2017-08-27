@@ -27,5 +27,15 @@ class PolygraphyType extends Model
      */
     protected $fillable = ['type', 'format', 'mat_name', 'mat_descr', 'order_code', 'mat_type'];
 
-    
+    public static function typesEmoji()
+    {
+        return [
+            '' => '',
+            'first_listovka' => '📖',
+            'newspaper1' => '🗞',
+            'snagroll' => '👥'
+        ];
+    }
+
+
 }
