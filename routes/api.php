@@ -17,4 +17,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/code_name', 'Api\PolygraphyController@codeName');
+Route::get('/code_name/{team_id}/{polygraphy_type}/{format?}', 'Api\PolygraphyController@codeName');

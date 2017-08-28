@@ -10,13 +10,13 @@ use Illuminate\Http\Request;
 
 class PolygraphyController extends Controller
 {
-    public function codeName(Request $request)
+    public function codeName($team_id, $polygraphy_type, $format, Request $request)
     {
-        $team = Team::find($request->get('team_id'));
-        $polyType = PolygraphyType::where('type', $request->get('polygraphy_type'));
+        $team = Team::find($team_id);
+        $polyType = PolygraphyType::where('type', $polygraphy_type);
 
-        if (empty($request->get('format'))) {
-            switch ($request->get('polygraphy_type')) {
+        if (empty($format)) {
+            switch ($polygraphy_type) {
                 case 'first_listovka':
                     if ($team->members()->count() >= 3)
                         $format = 'A3';
@@ -24,8 +24,8 @@ class PolygraphyController extends Controller
                         $format = 'A4';
                     break;
                 case 'newspaper1':
-                    $polyApproved = PolygraphyApproved::where('team_id', $request->get('team_id'))
-                        ->where('polygraphy_type', $request->get('polygraphy_type'))
+                    $polyApproved = PolygraphyApproved::where('team_id', $team_id)
+                        ->where('polygraphy_type', $polygraphy_type)
                         ->first();
                     $edition_info = json_decode($polyApproved->edition_info);
                     if (strpos($edition_info->edition_key, 'g50') !== false)
@@ -34,7 +34,7 @@ class PolygraphyController extends Controller
                         $format = 'offset';
             }
         } else {
-            $format = $request->get('format');
+            $format = $format;
         }
 
         $format = $polyType->where('format', $format)->first();
