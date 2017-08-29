@@ -71,7 +71,7 @@
 
                                 <tbody>
                                 @foreach($order as $item)
-                                    <tr {!! ($item->alarm) ? 'class="alarm"' : '' !!}>
+                                    <tr class="{!! ($item->alarm) ? 'alarm' : '' !!} {!! ($item->productionDeadline) ? 'production-deadline' : '' !!} ">
                                         <td>{{ $item->id }}</td>
                                         <td>
                                             <a href="{{ url('/order/' . $item->id . '/edit') }}">{{ $item->code_name }}</a>
@@ -284,6 +284,9 @@
             }
             #flow-table .table>tbody>tr.alarm>td {
                 background-color: #FCC;
+            }
+            #flow-table .table>tbody>tr.production-deadline>td {
+                background-color: #cef;
             }
         </style>
     @endsection
