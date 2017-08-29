@@ -54,7 +54,7 @@ class OrderController extends Controller
         }
 
         if (@$filter['code_name']) {
-            $order->where('code_name', 'like', '%' . $filter['code_name'] . '%');
+            $order->whereRaw('LOWER(`code_name`) LIKE CONCAT("%", ?, "%")', mb_strtolower($filter['code_name'], 'utf-8'));
         }
 
         if (@$filter['manufacturer']) {
