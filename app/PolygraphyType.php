@@ -33,7 +33,8 @@ class PolygraphyType extends Model
             '' => '',
             'first_listovka' => '📖',
             'newspaper1' => '🗞',
-            'snagroll' => '👥'
+            'snagroll' => '👥',
+            'postcard' => '🖼',
         ];
     }
 
