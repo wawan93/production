@@ -216,7 +216,7 @@ class Order extends Model
         if ($this->status !== 'fundraising_finished')
             return false;
 
-        return $this->status_changed_at->diff(Carbon::now())->h >= 23;
+        return $this->status_changed_at->diff(Carbon::now())->h >= 12;
     }
 
     public function getProductionDeadlineAttribute()
