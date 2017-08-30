@@ -11,7 +11,7 @@
         <p>&nbsp;</p>
         <p><strong>Суммарный тираж: {{ $order->edition_final }}</strong></p>
         <p>{!! nl2br($order->type()->mat_descr) !!}</p>
-        @foreach($order->team()->members() as $user)
+        @foreach($order->members() as $user)
             <p><strong>Кандидат {{ $user->surname }} {{ $user->name }} {{ $user->middlename }}</strong></p>
             <p><em>В счёте-договоре в поле Заказчик нужно написать</em></p>
             <p>
@@ -29,7 +29,7 @@
                 <tr>
                     <td>1</td>
                     <td>{{ $order->invoice_subject }}</td>
-                    <td>{{ floor($order->edition_final / count($order->team()->members())) }}</td>
+                    <td>{{ floor($order->edition_final / count($order->members())) }}</td>
                     <td>шт.</td>
                     <td>&lt;цена за единицу&gt;;</td>
                     <td>&lt;сумма заказа&gt;</td>
