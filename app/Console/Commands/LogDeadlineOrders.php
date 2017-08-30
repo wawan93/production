@@ -54,7 +54,7 @@ class LogDeadlineOrders extends Command
                     'arg_id' => $order->id,
                     'user_id' => 1374,
                     'tg_bot_status' => 'inqueue',
-                    'details' => json_encode([
+                    'details' => serialize([
                         'order_id' => $order->id,
                         'status_changed_at' => $order->status_changed_at,
                     ])
