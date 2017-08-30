@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\LogDeadlineOrders;
 use App\Console\Commands\UpdateNewspaperFundraising;
 use App\Console\Commands\UpdatePolygraphyTeams;
 use Illuminate\Console\Scheduling\Schedule;
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         UpdatePolygraphyTeams::class,
         UpdateNewspaperFundraising::class,
+        LogDeadlineOrders::class,
     ];
 
     /**
@@ -27,8 +29,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+         $schedule->command('log:deadline-orders')->everyFiveMinutes();
     }
 
     /**
