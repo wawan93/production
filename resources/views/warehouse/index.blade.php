@@ -86,12 +86,9 @@
                                             ]) !!}
                                         </td>
                                         <td>
-                                            @if( $item->responsible()->first())
-                                                {{ $item->responsible()->first()->surname }}
-                                                {{ $item->responsible()->first()->name }}
-                                                {{ $item->responsible()->first()->middlename }}
-                                                {{ $item->responsible()->first()->phone }}
-                                            @endif
+                                            @foreach($item->members() as $user)
+                                                {{ $user->surname }} {{ $user->name }} {{ $user->phone }}<br>
+                                            @endforeach
                                         </td>
                                         <td>{{ $item->s_promised_money }}</td>
                                         <td>{{ round($item->s_promised_money / 1.7) }}</td>
