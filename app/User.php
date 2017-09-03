@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Cache;
 use Illuminate\Database\Schema\Grammars\RenameColumn;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -21,6 +22,8 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
+    protected static $managers = [];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -36,17 +39,21 @@ class User extends Authenticatable
 
     public static function managers()
     {
+        if (empty(self::$managers)) {
+            self::$managers = Cache::remember('laravel_managers', 36000, function() {
+                $users = static::where('extra_class', 'like', '%c_orders_manager%')->get();
 
-        $users = static::where('extra_class', 'like', '%c_orders_manager%')->get();
-
-        $result = [
-            0 => 'нет'
-        ];
-        foreach ($users as $user) {
-            $result[$user->id] = $user->surname . ' ' . $user->name;
+                $result = [
+                    0 => 'нет'
+                ];
+                foreach ($users as $user) {
+                    $result[$user->id] = $user->surname . ' ' . $user->name;
+                }
+                return $result;
+            });
         }
 
-        return $result;
+        return self::$managers;
     }
 
     public function getElectionAttribute() {

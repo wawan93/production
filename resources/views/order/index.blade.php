@@ -122,9 +122,12 @@
                                         <td>
                                             {!! Form::select(
                                                 'manufacturer',
-                                                \App\Manufacturer::allowedFor($item->team()
-                                                    ->region_name)->pluck('short_name', 'id')->prepend('не выбран', 0),
-                                                    $item->manufacturer() ? $item->manufacturer()->id : '',
+                                                Cache::remember('allowed_for_' . $item->team()->region_name, 36000, function() use ($item) {
+                                                    return \App\Manufacturer::allowedFor($item->team()->region_name)
+                                                        ->pluck('short_name', 'id')
+                                                        ->prepend('не выбран', 0);
+                                                }),
+                                                $item->manufacturer() ? $item->manufacturer()->id : '',
                                                 [
                                                     'class' => 'form-control',
                                                     'data-id' => $item->id,

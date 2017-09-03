@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Cache;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -60,9 +61,11 @@ class Manufacturer extends Model
 
     public static function forSelect()
     {
-        $select = static::all(['id', 'short_name'])->pluck('short_name', 'id');
-        $select->prepend('не выбран', 0);
-        return $select;
+        return Cache::remember('manufacturers_all_select', 36000, function() {
+            $select = static::all(['id', 'short_name'])->pluck('short_name', 'id');
+            $select->prepend('не выбран', 0);
+            return $select;
+        });
     }
 
     /**
@@ -72,10 +75,12 @@ class Manufacturer extends Model
      */
     public function scopeAllowedFor($query, $region_name)
     {
-        $restricted = AllowedManufacturers::where('region_name', $region_name)
-            ->get()
-            ->pluck('manufacturer_id')
-            ->toArray();
+        $restricted = Cache::remember('manufacturer_restricted_for_' . $region_name, 36000, function() use ($region_name) {
+            return AllowedManufacturers::where('region_name', $region_name)
+                ->get()
+                ->pluck('manufacturer_id')
+                ->toArray();
+        });
         return $query->whereNOtIn('id', $restricted);
     }
 
