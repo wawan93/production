@@ -93,7 +93,7 @@ class OrderController extends Controller
             $order->where('docs_in_shtab', 0);
         }
 
-        return view('order.index', ['order'=> $order->paginate(1000), 'filter' => $filter, 'count' => $order->count()]);
+        return view('order.index', ['order'=> $order->paginate(100), 'filter' => $filter, 'count' => $order->count()]);
     }
 
     /**

@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('log:deadline-orders')->everyFiveMinutes();
+         $schedule->command('log:deadline-orders')->everyTenMinutes();
     }
 
     /**
