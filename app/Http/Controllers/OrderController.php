@@ -319,6 +319,7 @@ class OrderController extends Controller
             'type' => 'ajax_update_order',
             'user_id' => Auth::id(),
             'arg_id' => $order->id,
+            'tg_bot_status' => 'inqueue',
             'details' => serialize([
                 'field' => $request->get('field'),
                 'form' => $order->{$request->get('field')},
