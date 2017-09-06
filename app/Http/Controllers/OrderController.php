@@ -355,6 +355,8 @@ class OrderController extends Controller
 
         if ($request->get('manufacturer')) {
             $orders->where('manufacturer', $request->get('manufacturer'));
+        } else {
+            $orders->where('manufacturer', '>', 0);
         }
 
         return view('order.delivered', ['orders' => $orders->get()]);

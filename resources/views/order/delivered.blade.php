@@ -45,7 +45,7 @@
                                             {{ $order->edition_final }}
                                         </td>
                                         <td name="Кандидаты">
-                                            @foreach($order->team()->members() as $user)
+                                            @foreach($order->members() as $user)
                                                 <p>
                                                 {{ $user->surname }} {{ $user->name }} {{ $user->middlename }}
                                                 (#{{ $user->id }})
