@@ -351,12 +351,16 @@ class OrderController extends Controller
 
     public function delivered(Request $request)
     {
-        $orders = Order::whereIn('status', ['delivered', 'delivering', 'shipped']);
+        $orders = Order::whereIn('status', ['delivered', 'delivering', 'shipped', 'qa_deliver']);
 
-        if ($request->get('manufacturer')) {
+        if ($request->get('manufacturer') > 0) {
             $orders->where('manufacturer', $request->get('manufacturer'));
+        }
+
+        if ($request->get('docs')) {
+            $orders->where('docs', 1);
         } else {
-            $orders->where('manufacturer', '>', 0);
+            $orders->where('docs', 0);
         }
 
         return view('order.delivered', ['orders' => $orders->get()]);
