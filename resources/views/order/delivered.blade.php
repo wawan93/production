@@ -40,8 +40,8 @@
                                     <tr>
                                         <td name="Заказ">{{ $order->code_name }}</td>
                                         <td name="Изготовитель">
-                                            @if ($order->manufacturer())
-                                                {{ $order->manufacturer()->short_name }}
+                                            @if ($order->manufacturer()->first())
+                                                {{ $order->manufacturer()->first()->short_name }}
                                             @else
                                                 нет
                                             @endif

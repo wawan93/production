@@ -127,7 +127,7 @@
                                                         ->pluck('short_name', 'id')
                                                         ->prepend('не выбран', 0);
                                                 }),
-                                                $item->manufacturer() ? $item->manufacturer()->id : '',
+                                                $item->manufacturer()->first() ? $item->manufacturer()->first()->id : '',
                                                 [
                                                     'class' => 'form-control',
                                                     'data-id' => $item->id,

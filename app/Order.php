@@ -95,7 +95,7 @@ class Order extends Model
 
     public function manufacturer()
     {
-        return $this->hasOne(Manufacturer::class, 'id', 'manufacturer')->first();
+        return $this->hasOne(Manufacturer::class, 'id', 'manufacturer');
     }
 
     public function invoices()

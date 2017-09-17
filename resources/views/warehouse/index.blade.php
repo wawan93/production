@@ -65,7 +65,7 @@
                                         </td>
                                         <td>{{ $item->edition_final }}</td>
                                         <td>
-                                            {{ $item->manufacturer() ? $item->manufacturer()->short_name : '' }}
+                                            {{ $item->manufacturer()->first() ? $item->manufacturer()->first()->short_name : '' }}
                                         </td>
                                         <td>{{ $item->ship_date ? date('d.m.Y', strtotime($item->ship_date)) : '' }}
                                             {{ $item->ship_time ? date('H:i', strtotime($item->ship_time)) : '' }}</td>

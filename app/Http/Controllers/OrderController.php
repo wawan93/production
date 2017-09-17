@@ -93,7 +93,7 @@ class OrderController extends Controller
             $order->where('docs_in_shtab', 0);
         }
 
-        return view('order.index', ['order'=> $order->paginate(100), 'filter' => $filter, 'count' => $order->count()]);
+        return view('order.index', ['order'=> $order->with('manufacturer')->paginate(100), 'filter' => $filter, 'count' => $order->count()]);
     }
 
     /**
@@ -208,7 +208,7 @@ class OrderController extends Controller
         $template = new OrderRequest($order, $request->get('intro'), $request->get('signature'));
 //        dump($template);
 
-        Mail::to($order->manufacturer())->bcc('prod@gudkov.ru')->send($template);
+        Mail::to($order->manufacturer()->first())->bcc('prod@gudkov.ru')->send($template);
         $order->mail_sent = 1;
         $order->saveOrFail();
 
